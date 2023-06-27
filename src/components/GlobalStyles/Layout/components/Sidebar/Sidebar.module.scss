@@ -1,0 +1,13 @@
+@use '../../../../../styles/' as *;
+
+.sidebar {
+    @include flex(start, center, unset);
+    height: 100vh;
+    width: 3vw;
+    background-color: var(--primary);
+
+    .btn-category {
+        background-color: transparent;
+        border: 0px;
+    }
+}
