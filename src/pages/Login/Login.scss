@@ -1,0 +1,92 @@
+@use '../../styles/' as *;
+
+.wapper {
+    @include flex(center, center, unset);
+    width: 100%;
+    height: 100vh;
+    background-image: url('https://i.pinimg.com/736x/9d/c8/51/9dc8516895c763db4cc6594ee15f84d8.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+
+    .inner {
+        @include flex(start, space-around, unset);
+
+        height: 100%;
+        width: 1350px;
+        margin-top: 50px;
+
+        .content {
+            height: 80%;
+            width: 55%;
+
+            .title {
+                font-size: 30px;
+                font-weight: 700;
+                color: var(--font);
+                margin-bottom: 30px;
+            }
+
+            .poster {
+                @include flex(start, center, column);
+                background-color: var(--common);
+                border-radius: 10px;
+
+                img {
+                    width: 100%;
+                }
+
+                .details {
+                    color: #fff;
+
+                    padding: 16px;
+
+                    span {
+                        font-size: 24px;
+                        font-weight: 700;
+                    }
+
+                    p {
+                        color: #ccc;
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+
+        .rank {
+            width: 40%;
+            height: 80%;
+
+            .header {
+                @include flex(center, space-between, unset);
+                height: auto;
+                color: #fff;
+
+                span {
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+            }
+
+            .body {
+                width: 100%;
+                height: auto;
+                margin-top: 30px;
+                color: #fff;
+                background-color: var(--common);
+                border-radius: 10px;
+                padding: 20px;
+
+                .table {
+                    height: 100%;
+                    width: 100%;
+                    text-align: center;
+
+                    .table-tr {
+                        height: 50px;
+                    }
+                }
+            }
+        }
+    }
+}

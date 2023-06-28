@@ -2,11 +2,14 @@ const routes = {
     // home: '/',
 
     // Authenticated
-    login: '/login',
+    Login: '/login',
     register: '/register',
     information: '/information',
 
+    //User
     Home: '/',
+    Detail: '/detail',
+    Achievements: '/achievements',
 
     SoGiaoDich: '/sogiaodich',
     BaoCao: '/baocao',

@@ -1,0 +1,95 @@
+@use '../../../styles/' as *;
+
+.wapper-achievements {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-image: url('https://i.pinimg.com/736x/9d/c8/51/9dc8516895c763db4cc6594ee15f84d8.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+
+    .title {
+        font-size: 30px;
+        font-weight: 700;
+        color: var(--font);
+        margin-bottom: 30px;
+    }
+
+    .inner-achievements {
+        @include flex(start, space-around, unset);
+
+        height: 100%;
+        width: 1350px;
+        margin-top: 50px;
+
+        .content-achievements {
+            height: 80%;
+            width: 65%;
+
+            .info-achievements {
+                @include flex(start, center, column);
+                background-color: var(--common);
+                border-radius: 10px;
+                height: 600px;
+
+                .table {
+                    background-color: #fff;
+                    border-radius: 10px;
+                    width: 800px;
+                    height: 500px;
+                    margin-left: 35px;
+                    padding-top: 20px;
+                }
+
+                .table-tr {
+                    text-align: center;
+                }
+            }
+        }
+
+        .title-achievements {
+            width: 30%;
+            height: 80%;
+            text-align: center;
+
+            .nav_title {
+                // background-color: var(--common);
+                color: var(--font);
+            }
+
+            .selected {
+                background-color: var(--common);
+                border: 1px solid transparent;
+                border-radius: 4px;
+                font-size: 14px;
+                line-height: 20px;
+                min-height: 44px;
+                padding: 0 10px;
+                margin-top: 20px;
+                padding-top: 10px;
+                color: #fff;
+
+                .title-content {
+                    font-size: 1.5rem;
+                    
+                }
+            }
+
+            .unselected {
+                border: 1px solid transparent;
+                border-radius: 4px;
+                font-size: 14px;
+                line-height: 20px;
+                min-height: 44px;
+                padding: 0 10px;
+                margin-top: 20px;
+                padding-top: 10px;
+
+                .title-content {
+                    font-size: 1.5rem;
+                    
+                }
+            }
+        }
+    }
+}
