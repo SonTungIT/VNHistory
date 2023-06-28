@@ -1,0 +1,25 @@
+@use '../../styles/' as *;
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header,
+.footer {
+    height: 60px;
+    width: 100%;
+    // background-color: red;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    // min-height: 483px;
+}
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -6,12 +6,7 @@ const routes = {
     register: '/register',
     information: '/information',
 
-    Home: '/',
-
-    SoGiaoDich: '/sogiaodich',
-    BaoCao: '/baocao',
-    NganSach: '/ngansach',
-    LichSu: '/lichsu',
+    UserManage: '/',
 };
 
 export default routes;
