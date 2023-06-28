@@ -2,20 +2,23 @@ const routes = {
     // home: '/',
 
     // Authenticated
-    Login: '/login',
+    Login: '/',
+    signIn: '/signIn',
     register: '/register',
-    information: '/information',
 
-    UserManage: '/',
     //User
-    Home: '/',
+    Home: '/home',
     Detail: '/detail',
     Achievements: '/achievements',
 
-    SoGiaoDich: '/sogiaodich',
-    BaoCao: '/baocao',
-    NganSach: '/ngansach',
-    LichSu: '/lichsu',
+    //Admin
+    UserManage: '/UserManage',
+
+    //Editor
+    BaidangMange: '/BaidangMange',
+    TheloaiManage: '/TheloaiManage',
+    CauhoiManage: '/CauhoiManage',
+    SukienManage: '/SukienManage',
 };
 
 export default routes;

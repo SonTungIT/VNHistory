@@ -1,5 +1,5 @@
 import React from 'react';
-import './Table.scss';
+import '../../Admin/Table.scss';
 import Menu from '~/components/Popper/Menu';
 import {
     CancelIcon,
@@ -28,7 +28,7 @@ const MENU_ITEMS = [
     },
 ];
 
-function Table(props) {
+function TableSK(props) {
     return (
         <table className="table-user">
             <thead>
@@ -63,4 +63,4 @@ function Table(props) {
     );
 }
 
-export default Table;
+export default TableSK;

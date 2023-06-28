@@ -16,20 +16,10 @@ function Header() {
                     <div className={cx('right-logo')}>VNHistory</div>
                 </div>
                 <div className={cx('content')}>
-                    <div className={cx('icon-items')}></div>
-                    {/* <div className={cx('btn-user-avatar')}>
-                        <img
-                            className={cx('user-avatar')}
-                            src="https://i.pinimg.com/236x/e1/6c/70/e16c704fc0b655e553dd7a1a8a00475d.jpg"
-                            alt="avatar"
-                        />
-                        <div className={cx('name')}>
-                            <span className={cx('user-name')}>Tung</span>
-                            <span className={cx('logout')}>Log out</span>
-                        </div>
-                    </div> */}
                     <div className={cx('btn-login')}>
-                        <Button small>Login</Button>
+                        <Button small to={config.routes.signIn}>
+                            Login
+                        </Button>
                     </div>
                     <div className={cx('btn-signup')}>
                         <Button small>Sign up</Button>

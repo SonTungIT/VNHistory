@@ -1,16 +1,16 @@
 import classNames from 'classnames/bind';
 import Header from '../components/Header/Header';
-import styles from './CommonLayout.module.scss';
-import SidebarCommon from '../components/SidebarCommon/SidebarCommon';
+import styles from './EditorLayout.scss';
+import SidebarEditor from '../components/SidebarEditor/SidebarEditor';
 
 const cx = classNames.bind(styles);
 
-function CommonLayout({ children }) {
+function EditorLayout({ children }) {
     return (
         <div className={cx('wapper')}>
             <Header />
             <div className={cx('container')}>
-                <SidebarCommon />
+                <SidebarEditor />
                 <div className={cx('content')}>{children}</div>
             </div>
             {/* <Footer /> */}
@@ -18,4 +18,4 @@ function CommonLayout({ children }) {
     );
 }
 
-export default CommonLayout;
+export default EditorLayout;
