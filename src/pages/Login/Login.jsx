@@ -1,11 +1,11 @@
 import classNames from 'classnames/bind';
-import styles from './Home.scss';
+import styles from './Login.scss';
 import config from '~/config';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 
 const cx = classNames.bind(styles);
 
-function Home() {
+function Login() {
     const data = [
         { No: 1, Tên: 'Tùng', Email: 'tu*****on@gmail.com', Score: 85 },
         { No: 2, Tên: 'Công', Email: 'nguy****ng@gmail.com', Score: 92 },
@@ -37,7 +37,7 @@ function Home() {
                         </div>
                     </div>
                     <div className={cx('body')}>
-                        <table className={cx('table-home')}>
+                        <table className={cx('table')}>
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -64,4 +64,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default Login;

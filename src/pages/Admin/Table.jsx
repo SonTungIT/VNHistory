@@ -30,26 +30,26 @@ const MENU_ITEMS = [
 
 function Table(props) {
     return (
-        <table>
+        <table className="table-user">
             <thead>
                 <tr>
-                    <th>Tên</th>
-                    <th>Email</th>
-                    <th>Ngày sinh</th>
-                    <th>Tổng điểm</th>
-                    <th>Tổng câu hỏi</th>
-                    <th>Role</th>
-                    <th></th>
+                    <th className="th-user">Tên</th>
+                    <th className="th-user">Email</th>
+                    <th className="th-user">Ngày sinh</th>
+                    <th className="th-user">Tổng điểm</th>
+                    <th className="th-user">Tổng câu hỏi</th>
+                    <th className="th-user">Role</th>
+                    <th className="th-user"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Tung</td>
-                    <td>tung@gmail.com</td>
-                    <td>1/12/2001</td>
-                    <td>100</td>
-                    <td>20</td>
-                    <td>Member</td>
+                    <td className="td-user">Tung</td>
+                    <td className="td-user">tung@gmail.com</td>
+                    <td className="td-user">1/12/2001</td>
+                    <td className="td-user">100</td>
+                    <td className="td-user">20</td>
+                    <td className="td-user">Member</td>
                     <td>
                         <Menu items={MENU_ITEMS}>
                             <button className="btn-function">
