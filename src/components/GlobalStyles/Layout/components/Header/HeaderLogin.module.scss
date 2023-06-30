@@ -36,6 +36,12 @@
         width: fit-content;
         height: 45px;
 
+        .btn-login {
+            color: #fff;
+            background-color: var(--common);
+            border-radius: 20px;
+        }
+
         .icon-items {
             @include flex(center, space-between, unset);
 

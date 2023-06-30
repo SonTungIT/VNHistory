@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
-import styles from './Header.module.scss';
+import styles from './HeaderLogin.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import config from '~/config';
 import Button from '../Button';
@@ -21,9 +21,9 @@ function Header() {
                             Login
                         </Button>
                     </div>
-                    <div className={cx('btn-signup')}>
+                    {/* <div className={cx('btn-signup')}>
                         <Button small>Sign up</Button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </header>

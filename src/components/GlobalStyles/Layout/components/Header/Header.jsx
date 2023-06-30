@@ -1,12 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
-import { Link, useNavigate } from 'react-router-dom';
 import config from '~/config';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function Header() {
+    const userName = localStorage.getItem('userName');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    const handleLogout = async (event) => {
+        event.preventDefault();
+
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+            const requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                redirect: 'follow',
+            };
+
+            const response = await fetch('https://vietnam-history.azurewebsites.net/api/Auth/logout', requestOptions);
+            const result = await response.text();
+
+            if (result === 'Logout successfully.') {
+                // Xóa thông tin người dùng khỏi localStorage
+                localStorage.clear();
+                // Chuyển hướng đến trang đăng nhập
+                navigate('/signIn');
+            }
+        } catch (error) {
+            console.log('error', error);
+            setError('Logout failed');
+        }
+    };
+
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -23,8 +54,10 @@ function Header() {
                             alt="avatar"
                         />
                         <div className={cx('name')}>
-                            <span className={cx('user-name')}>Tung</span>
-                            <span className={cx('logout')}>Log out</span>
+                            <span className={cx('user-name')}>{userName}</span>
+                            <button className={cx('logout')} onClick={handleLogout}>
+                                Log out
+                            </button>
                         </div>
                     </div>
                 </div>

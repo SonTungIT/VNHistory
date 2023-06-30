@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Table.scss';
 import Menu from '~/components/Popper/Menu';
 import {
@@ -29,6 +29,48 @@ const MENU_ITEMS = [
 ];
 
 function Table(props) {
+    const [userData, setUserData] = useState([]);
+
+    useEffect(() => {
+        fetchUserData();
+    }, []);
+
+    const fetchUserData = () => {
+        fetch('https://vietnam-history.azurewebsites.net/api/User', {
+            method: 'GET',
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setUserData(data.data);
+            })
+            .catch((error) => {
+                console.log('Error fetching user data:', error);
+            });
+    };
+
+    const handleDelete = (userId) => {
+        var myHeaders = new Headers();
+        myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+
+        var requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            redirect: 'follow',
+        };
+
+        fetch(`https://vietnam-history.azurewebsites.net/api/User/deleteUser?${userId}`, requestOptions)
+            .then((response) => response.text())
+            .then((result) => {
+                console.log(result);
+                // If the deletion was successful, update the userData state
+                setUserData(userData.filter((user) => user.userId !== userId));
+            })
+            .catch((error) => console.log('error', error));
+    };
+
     return (
         <table className="table-user">
             <thead>
@@ -43,21 +85,29 @@ function Table(props) {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td className="td-user">Tung</td>
-                    <td className="td-user">tung@gmail.com</td>
-                    <td className="td-user">1/12/2001</td>
-                    <td className="td-user">100</td>
-                    <td className="td-user">20</td>
-                    <td className="td-user">Member</td>
-                    <td className="td-user">
-                        <Menu items={MENU_ITEMS}>
-                            <button className="btn-function">
-                                <HorizontalIcon />
-                            </button>
-                        </Menu>
-                    </td>
-                </tr>
+                {userData.length > 0 ? (
+                    userData.map((user) => (
+                        <tr key={user.userId}>
+                            <td className="td-user">{user.name}</td>
+                            <td className="td-user">{user.email}</td>
+                            <td className="td-user">{user.birthday}</td>
+                            <td className="td-user">{user.totalScore}</td>
+                            <td className="td-user">{user.totalQuestion}</td>
+                            <td className="td-user">{user.role}</td>
+                            <td className="td-user">
+                                <Menu items={MENU_ITEMS}>
+                                    <button className="btn-function">
+                                        <HorizontalIcon />
+                                    </button>
+                                </Menu>
+                            </td>
+                        </tr>
+                    ))
+                ) : (
+                    <tr>
+                        <td colSpan="7">Loading...</td>
+                    </tr>
+                )}
             </tbody>
         </table>
     );
