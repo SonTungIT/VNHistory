@@ -38,6 +38,10 @@ function Header() {
         }
     };
 
+    const handleInfoClick = () => {
+        navigate('/detail');
+    };
+
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -48,11 +52,13 @@ function Header() {
                 <div className={cx('content')}>
                     <div className={cx('icon-items')}></div>
                     <div className={cx('btn-user-avatar')}>
-                        <img
-                            className={cx('user-avatar')}
-                            src="https://i.pinimg.com/236x/e1/6c/70/e16c704fc0b655e553dd7a1a8a00475d.jpg"
-                            alt="avatar"
-                        />
+                        <button className={cx('btn-avatar')} onClick={handleInfoClick}>
+                            <img
+                                className={cx('user-avatar')}
+                                src="https://i.pinimg.com/236x/e1/6c/70/e16c704fc0b655e553dd7a1a8a00475d.jpg"
+                                alt="avatar"
+                            />
+                        </button>
                         <div className={cx('name')}>
                             <span className={cx('user-name')}>{userName}</span>
                             <button className={cx('logout')} onClick={handleLogout}>

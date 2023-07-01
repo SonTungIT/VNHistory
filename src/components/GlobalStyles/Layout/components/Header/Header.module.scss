@@ -58,6 +58,11 @@
             padding: 0px;
             position: relative;
             margin-right: 50px;
+
+            .btn-avatar {
+                background-color: transparent;
+                border: none;
+            }
         }
         .logout {
             font-size: 14px;

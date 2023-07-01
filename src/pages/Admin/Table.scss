@@ -26,4 +26,9 @@
     background: none;
     border: none;
     cursor: pointer;
+
+    :hover {
+        background-color: #ccdbec;
+        border-radius: 10px;
+    }
 }

@@ -51,6 +51,7 @@ function SignIn() {
                             console.log('result', result);
                             localStorage.setItem('role', result.role);
                             localStorage.setItem('userName', result.name);
+                            localStorage.setItem('infoUser', JSON.stringify(result));
                             console.log('localStorage ', localStorage.getItem('role'));
                             if (localStorage.getItem('role') === 'Admin') {
                                 navigate('/UserManage');

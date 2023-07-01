@@ -4,6 +4,7 @@ import Menu from '~/components/Popper/Menu';
 import {
     CancelIcon,
     DeleteIcon,
+    EditIcon,
     HorizontalIcon,
     VisibilityIcon,
     VisibilityOffIcon,
@@ -61,7 +62,7 @@ function Table(props) {
             redirect: 'follow',
         };
 
-        fetch(`https://vietnam-history.azurewebsites.net/api/User/deleteUser?${userId}`, requestOptions)
+        fetch(`https://vietnam-history.azurewebsites.net/api/User/deleteUser?id=${userId}`, requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);
@@ -90,16 +91,14 @@ function Table(props) {
                         <tr key={user.userId}>
                             <td className="td-user">{user.name}</td>
                             <td className="td-user">{user.email}</td>
-                            <td className="td-user">{user.birthday}</td>
+                            <td className="td-user">{new Date(user.birthday).toLocaleDateString()}</td>
                             <td className="td-user">{user.totalScore}</td>
                             <td className="td-user">{user.totalQuestion}</td>
                             <td className="td-user">{user.role}</td>
                             <td className="td-user">
-                                <Menu items={MENU_ITEMS}>
-                                    <button className="btn-function">
-                                        <HorizontalIcon />
-                                    </button>
-                                </Menu>
+                                <button className="btn-function" onClick={() => handleDelete(user.userId)}>
+                                    <DeleteIcon />
+                                </button>
                             </td>
                         </tr>
                     ))
