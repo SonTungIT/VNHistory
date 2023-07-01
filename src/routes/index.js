@@ -14,6 +14,9 @@ import EditorLayout from '~/components/GlobalStyles/Layout/EditorLayout';
 import TheloaiManage from '~/pages/Editor/TheloaiManage/TheloaiManage';
 import CauhoiManage from '~/pages/Editor/CauhoiManage/CauhoiManage';
 import SukienManage from '~/pages/Editor/SukienManage/SukienManage';
+import Post from '~/pages/Post/Post';
+import Quiz10 from '~/pages/Post/Quiz10/Quiz10';
+import Quiz20 from '~/pages/Post/Quiz20/Quiz20';
 
 const publicRoutes = [
     { path: config.routes.Home, component: Home, layout: DefaultLayout },
@@ -30,8 +33,14 @@ const publicRoutes = [
     { path: config.routes.CauhoiManage, component: CauhoiManage, layout: EditorLayout },
     { path: config.routes.SukienManage, component: SukienManage, layout: EditorLayout },
 
+    //User
     { path: config.routes.Detail, component: Detail, layout: DefaultLayout },
     { path: config.routes.Achievements, component: Achievements, layout: DefaultLayout },
+    { path: config.routes.Post, component: Post, layout: DefaultLayout },
+
+    //quiz
+    { path: config.routes.Quiz10, component: Quiz10, layout: DefaultLayout },
+    { path: config.routes.Quiz20, component: Quiz20, layout: DefaultLayout },
 ];
 
 export { publicRoutes };

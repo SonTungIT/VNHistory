@@ -10,6 +10,7 @@ const routes = {
     Home: '/home',
     Detail: '/detail',
     Achievements: '/achievements',
+    Post: '/post',
 
     //Admin
     UserManage: '/UserManage',
@@ -19,6 +20,10 @@ const routes = {
     TheloaiManage: '/TheloaiManage',
     CauhoiManage: '/CauhoiManage',
     SukienManage: '/SukienManage',
+
+    //quiz
+    Quiz10: '/Quiz10',
+    Quiz20: '/Quiz20',
 };
 
 export default routes;

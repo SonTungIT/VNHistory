@@ -1,0 +1,107 @@
+.wapper-quiz10 {
+    width: 100%;
+    height: 100vh;
+    background-image: url('https://i.pinimg.com/736x/9d/c8/51/9dc8516895c763db4cc6594ee15f84d8.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+
+    .inner-quiz10 {
+        height: 100%;
+        width: 1350px;
+
+        .Quiz10 {
+            margin-left: 300px;
+            background-color: #ffffff;
+            width: 800px;
+            min-height: 500px;
+            height: min-content;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 10px 10px 42px 0px rgba(0, 0, 0, 0.75);
+            display: flex;
+            justify-content: space-evenly;
+          }
+          
+          .score-section {
+            display: flex;
+            font-size: 30px;
+            color: var(--common);
+            align-items: center;
+          }
+          
+          /* QUESTION/TIMER/LEFT SECTION */
+          .question-section {
+            width: 100%;
+            position: relative;
+          }
+          
+          .question-count {
+            color: var(--common);
+            font-size: 30px;
+            margin-bottom: 20px;
+          }
+          
+          .question-count span {
+            font-size: 50px;
+          }
+          
+          .question-text {
+            color: var(--common);
+            font-size: 30px;
+            margin-bottom: 12px;
+          }
+          
+          .timer-text {
+            background: rgb(230, 153, 12);
+            padding: 15px;
+            margin-top: 20px;
+            margin-right: 20px;
+            border: 5px solid rgb(255, 189, 67);
+            border-radius: 15px;
+            text-align: center;
+          }
+          
+          /* ANSWERS/RIGHT SECTION */
+          .answer-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+          
+          button {
+            width: 100%;
+            height: 100px;
+            font-size: 30px;
+            color: var(--common);
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 5px;
+            justify-content: flex-start;
+            align-items: center;
+            border: 5px solid var(--common);
+            cursor: pointer;
+          }
+          
+          .correct {
+            background-color: #2f922f;
+          }
+          
+          .incorrect {
+            background-color: #ff3333;
+          }
+          
+          button:hover {
+            background-color: var(--common);
+            color: #ffffff;
+          }
+          
+          button:focus {
+            outline: none;
+          }
+          
+          button svg {
+            margin-right: 5px;
+          }
+    }
+}
