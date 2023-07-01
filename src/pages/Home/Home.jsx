@@ -17,16 +17,18 @@ function Home() {
             <div className={cx('inner')}>
                 <div className={cx('content')}>
                     <div className={cx('title')}>Lịch sử đất nước</div>
-                    <div className={cx('poster')}>
-                        <img
-                            src="https://giasuviet.com.vn/wp-content/uploads/2015/09/phuong-phap-hoc-mon-lich-su-lop-12-hieu-qua-va-nho-lau.jpg"
-                            alt="img"
-                        />
-                        <div className={cx('details')}>
-                            <span>Lịch sử đất nước Việt Nam thời kỳ Đại Cồ Việt</span>
-                            <p>20-12-2022</p>
+                    <a href='/post'>
+                        <div className={cx('poster')}>
+                            <img
+                                src="https://giasuviet.com.vn/wp-content/uploads/2015/09/phuong-phap-hoc-mon-lich-su-lop-12-hieu-qua-va-nho-lau.jpg"
+                                alt="img"
+                            />
+                            <div className={cx('details')}>
+                                <span>Lịch sử đất nước Việt Nam thời kỳ Đại Cồ Việt</span>
+                                <p>20-12-2022</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div className={cx('rank')}>
                     <div className={cx('header')}>

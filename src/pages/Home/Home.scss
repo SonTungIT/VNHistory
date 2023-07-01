@@ -30,6 +30,7 @@
                 @include flex(start, center, column);
                 background-color: var(--common);
                 border-radius: 10px;
+                cursor: pointer;
 
                 img {
                     width: 100%;
