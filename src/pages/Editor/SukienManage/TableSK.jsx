@@ -6,6 +6,7 @@ import EditModal from './ImportModal/EditModal';
 function TableSK(props) {
     const [events, setEvents] = useState([]);
     const [editModal, setEditModal] = useState(false);
+    const [selectedEvent, setSelectedEvent] = useState(null);
 
     useEffect(() => {
         // Fetch data from the API
@@ -64,6 +65,11 @@ function TableSK(props) {
             .catch((error) => console.log('error', error));
     };
 
+    const handleEdit = (event) => {
+        setSelectedEvent(event);
+        setEditModal(true);
+    };
+
     return (
         <>
             <table className="table-user">
@@ -84,12 +90,7 @@ function TableSK(props) {
                             <td className="td-user">{formatDate(event.endDate)}</td>
                             <td className="td-user">{event.description}</td>
                             <td className="td-user">
-                                <button
-                                    className="btn-function"
-                                    onClick={() => {
-                                        setEditModal(true);
-                                    }}
-                                >
+                                <button className="btn-function" onClick={() => handleEdit(event)}>
                                     <EditIcon />
                                 </button>
                                 <button className="btn-function" onClick={() => handleDelete(event.eventId)}>
@@ -100,7 +101,7 @@ function TableSK(props) {
                     ))}
                 </tbody>
             </table>
-            {editModal && <EditModal closeModal={setEditModal} />}
+            {editModal && <EditModal closeModal={() => setEditModal(false)} event={selectedEvent} />}
         </>
     );
 }
