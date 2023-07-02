@@ -1,65 +1,107 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../Admin/Table.scss';
-import Menu from '~/components/Popper/Menu';
-import {
-    CancelIcon,
-    DeleteIcon,
-    HorizontalIcon,
-    VisibilityIcon,
-    VisibilityOffIcon,
-} from '~/components/GlobalStyles/Layout/components/Icons';
-
-const MENU_ITEMS = [
-    {
-        icon: <VisibilityIcon />,
-        title: 'Active User',
-    },
-    {
-        icon: <VisibilityOffIcon />,
-        title: 'Inactive User',
-    },
-    {
-        icon: <CancelIcon />,
-        title: 'Block User',
-    },
-    {
-        icon: <DeleteIcon />,
-        title: 'Delete User',
-    },
-];
+import { DeleteIcon, EditIcon } from '~/components/GlobalStyles/Layout/components/Icons';
+import EditModal from './ImportModal/EditModal';
 
 function TableSK(props) {
+    const [events, setEvents] = useState([]);
+    const [editModal, setEditModal] = useState(false);
+
+    useEffect(() => {
+        // Fetch data from the API
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
+        var myHeaders = new Headers();
+        myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow',
+        };
+
+        fetch('https://vietnam-history.azurewebsites.net/api/events', requestOptions)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error(response.status);
+            })
+            .then((result) => {
+                // Update the events state with the retrieved data
+                setEvents(result.data);
+            })
+            .catch((error) => console.log('error', error));
+    };
+
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const date = new Date(dateString);
+        return date.toLocaleDateString('vi-VN', options);
+    };
+
+    const handleDelete = (eventId) => {
+        var myHeaders = new Headers();
+        myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+
+        var requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            redirect: 'follow',
+        };
+
+        fetch(`https://vietnam-history.azurewebsites.net/api/events/${eventId}`, requestOptions)
+            .then((response) => {
+                if (response.ok) {
+                    // Remove the deleted event from the events state
+                    setEvents(events.filter((event) => event.eventId !== eventId));
+                } else {
+                    throw new Error(response.status);
+                }
+            })
+            .catch((error) => console.log('error', error));
+    };
+
     return (
-        <table className="table-user">
-            <thead>
-                <tr>
-                    <th className="th-user">Tên</th>
-                    <th className="th-user">Email</th>
-                    <th className="th-user">Ngày sinh</th>
-                    <th className="th-user">Tổng điểm</th>
-                    <th className="th-user">Tổng câu hỏi</th>
-                    <th className="th-user">Role</th>
-                    <th className="th-user"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td className="td-user">Tung</td>
-                    <td className="td-user">tung@gmail.com</td>
-                    <td className="td-user">1/12/2001</td>
-                    <td className="td-user">100</td>
-                    <td className="td-user">20</td>
-                    <td className="td-user">Member</td>
-                    <td className="td-user">
-                        <Menu items={MENU_ITEMS}>
-                            <button className="btn-function">
-                                <HorizontalIcon />
-                            </button>
-                        </Menu>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <>
+            <table className="table-user">
+                <thead>
+                    <tr>
+                        <th className="th-user">Tên sự kiện</th>
+                        <th className="th-user">Ngày bắt đầu</th>
+                        <th className="th-user">Ngày kết thúc</th>
+                        <th className="th-user">Mô tả</th>
+                        <th className="th-user"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {events.map((event) => (
+                        <tr key={event.eventId}>
+                            <td className="td-user">{event.eventName}</td>
+                            <td className="td-user">{formatDate(event.startDate)}</td>
+                            <td className="td-user">{formatDate(event.endDate)}</td>
+                            <td className="td-user">{event.description}</td>
+                            <td className="td-user">
+                                <button
+                                    className="btn-function"
+                                    onClick={() => {
+                                        setEditModal(true);
+                                    }}
+                                >
+                                    <EditIcon />
+                                </button>
+                                <button className="btn-function" onClick={() => handleDelete(event.eventId)}>
+                                    <DeleteIcon />
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            {editModal && <EditModal closeModal={setEditModal} />}
+        </>
     );
 }
 
