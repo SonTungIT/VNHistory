@@ -1,65 +1,99 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../Admin/Table.scss';
-import Menu from '~/components/Popper/Menu';
-import {
-    CancelIcon,
-    DeleteIcon,
-    HorizontalIcon,
-    VisibilityIcon,
-    VisibilityOffIcon,
-} from '~/components/GlobalStyles/Layout/components/Icons';
-
-const MENU_ITEMS = [
-    {
-        icon: <VisibilityIcon />,
-        title: 'Active User',
-    },
-    {
-        icon: <VisibilityOffIcon />,
-        title: 'Inactive User',
-    },
-    {
-        icon: <CancelIcon />,
-        title: 'Block User',
-    },
-    {
-        icon: <DeleteIcon />,
-        title: 'Delete User',
-    },
-];
+import { DeleteIcon, EditIcon } from '~/components/GlobalStyles/Layout/components/Icons';
+import EditCateModal from './CateModal/EditCateModal';
 
 function TableTL(props) {
+    const [categorys, setCategorys] = useState([]);
+    const [editCateModal, setEditCateModal] = useState(false);
+    const [selectedCate, setSelectedCate] = useState(null);
+
+    useEffect(() => {
+        // Fetch data from the API
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
+        var myHeaders = new Headers();
+        myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow',
+        };
+
+        fetch('https://vietnam-history.azurewebsites.net/api/Categories', requestOptions)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error(response.status);
+            })
+            .then((result) => {
+                // Update the events state with the retrieved data
+                setCategorys(result.data);
+            })
+            .catch((error) => console.log('error', error));
+    };
+
+    const handleDelete = (categoryId) => {
+        var myHeaders = new Headers();
+        myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+
+        var requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            redirect: 'follow',
+        };
+
+        fetch(
+            `https://vietnam-history.azurewebsites.net/api/Categories/deleteCategory?id=${categoryId}`,
+            requestOptions,
+        )
+            .then((response) => {
+                if (response.ok) {
+                    // Remove the deleted event from the events state
+                    setCategorys(categorys.filter((category) => category.categoryId !== categoryId));
+                } else {
+                    throw new Error(response.status);
+                }
+            })
+            .catch((error) => console.log('error', error));
+    };
+
+    const handleEdit = (category) => {
+        setSelectedCate(category);
+        setEditCateModal(true);
+    };
+
     return (
-        <table className="table-user">
-            <thead>
-                <tr>
-                    <th className="th-user">Tên</th>
-                    <th className="th-user">Email</th>
-                    <th className="th-user">Ngày sinh</th>
-                    <th className="th-user">Tổng điểm</th>
-                    <th className="th-user">Tổng câu hỏi</th>
-                    <th className="th-user">Role</th>
-                    <th className="th-user"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td className="td-user">Tung</td>
-                    <td className="td-user">tung@gmail.com</td>
-                    <td className="td-user">1/12/2001</td>
-                    <td className="td-user">100</td>
-                    <td className="td-user">20</td>
-                    <td className="td-user">Member</td>
-                    <td className="td-user">
-                        <Menu items={MENU_ITEMS}>
-                            <button className="btn-function">
-                                <HorizontalIcon />
-                            </button>
-                        </Menu>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <>
+            <table className="table-user">
+                <thead>
+                    <tr>
+                        <th className="th-user">Tên Thể Loại</th>
+                        <th className="th-user"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {categorys.map((category) => (
+                        <tr>
+                            <td className="td-user">{category.categoryName}</td>
+                            <td className="td-user">
+                                <button className="btn-function" onClick={() => handleEdit(category)}>
+                                    <EditIcon />
+                                </button>
+                                <button className="btn-function" onClick={() => handleDelete(category.categoryId)}>
+                                    <DeleteIcon />
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            {editCateModal && <EditCateModal closeModal={() => setEditCateModal(false)} category={selectedCate} />}
+        </>
     );
 }
 
