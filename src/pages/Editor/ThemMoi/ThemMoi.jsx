@@ -7,6 +7,7 @@ import { LeftArrowIcon } from '~/components/GlobalStyles/Layout/components/Icons
 import config from '~/config';
 import { DatePicker, Space, message } from 'antd';
 import PostMeta from '../BaidangManage/PostMeta/PostMeta';
+import PostCmt from '../BaidangManage/PostCmt/PostCmt';
 
 const cx = classNames.bind(styles);
 
@@ -229,6 +230,9 @@ function ThemMoi() {
                 </div>
                 <div className={cx('container-tm')}>
                     <PostMeta />
+                </div>
+                <div className={cx('container-tm')}>
+                    <PostCmt />
                 </div>
 
                 <div className={cx('footer')}></div>

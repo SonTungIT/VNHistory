@@ -21,6 +21,10 @@ export const SidebarDataEditor = [
                 title: 'Quản lý PostMeta',
                 path: config.routes.postmeta,
             },
+            {
+                title: 'Quản lý PostCmt',
+                path: config.routes.postcmt,
+            },
         ],
     },
     {

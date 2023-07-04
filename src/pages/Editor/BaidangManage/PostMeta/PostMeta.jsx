@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './PostMeta.scss';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
-import { DatePicker, Space, message } from 'antd';
+import { message } from 'antd';
 
 function PostMeta() {
     const [postId, setPostId] = useState('');

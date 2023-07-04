@@ -19,6 +19,7 @@ import Quiz10 from '~/pages/Post/Quiz10/Quiz10';
 import Quiz20 from '~/pages/Post/Quiz20/Quiz20';
 import ThemMoi from '~/pages/Editor/ThemMoi/ThemMoi';
 import PostMetaManage from '~/pages/Editor/PostMetaManage/PostMetaManage';
+import PostComments from '~/pages/Editor/PostComments/PostComments';
 
 const publicRoutes = [
     { path: config.routes.Home, component: Home, layout: DefaultLayout },
@@ -49,6 +50,7 @@ const publicRoutes = [
 
     //postmeta
     { path: config.routes.postmeta, component: PostMetaManage, layout: EditorLayout },
+    { path: config.routes.postcmt, component: PostComments, layout: EditorLayout },
 ];
 
 export { publicRoutes };
