@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../Admin/Table.scss';
-import { DeleteIcon, EditIcon } from '~/components/GlobalStyles/Layout/components/Icons';
+import { AddIcon, DeleteIcon, EditIcon } from '~/components/GlobalStyles/Layout/components/Icons';
 import EditBDModal from './BDModal/EditBDModal';
 
 function TableBD(props) {
@@ -84,7 +84,6 @@ function TableBD(props) {
             <table className="table-user">
                 <thead>
                     <tr>
-                        <th className="th-user">postId</th>
                         <th className="th-user">authorId</th>
                         <th className="th-user">parentId</th>
                         <th className="th-user">metaTitle</th>
@@ -95,6 +94,7 @@ function TableBD(props) {
                         <th className="th-user">updatedAt</th>
                         <th className="th-user">publishedAt</th>
                         <th className="th-user">content</th>
+                        <th className="th-user">PostMeta</th>
                         <th className="th-user"></th>
                     </tr>
                 </thead>
@@ -110,7 +110,6 @@ function TableBD(props) {
                         return (
                             <React.Fragment key={post.postId}>
                                 <tr>
-                                    <td className="td-user">{post.postId}</td>
                                     <td className="td-user">{post.authorId}</td>
                                     <td className="td-user">{post.parentId !== null ? post.parentId : 'null'}</td>
                                     <td className="td-user" onClick={() => handleRowClick(post.postId)}>
@@ -127,6 +126,11 @@ function TableBD(props) {
                                     <td className="td-user">{formatDate(post.updatedAt)}</td>
                                     <td className="td-user">{formatDate(post.publishedAt)}</td>
                                     <td className="td-user">{post.content}</td>
+                                    <td className="td-user">
+                                        <button className="btn-function">
+                                            <AddIcon />
+                                        </button>
+                                    </td>
                                     <td className="td-user">
                                         <button className="btn-function" onClick={() => handleEdit(post)}>
                                             <EditIcon />

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './BDModal.scss';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 import { DatePicker, Space } from 'antd';
+import LayoutAdmin from '~/pages/Admin/LayoutAdmin';
 
 function EditBDModal({ closeModal, post }) {
     const [authorId, setAuthorId] = useState(post.authorId);
@@ -64,111 +65,113 @@ function EditBDModal({ closeModal, post }) {
 
     return (
         <>
-            {updateSuccess ? null : (
-                <div className="modalBackground">
-                    <div className="modalContainer">
-                        <div className="title">
-                            <h1>Cập Nhật Sự Kiện</h1>
-                        </div>
-                        <div className="form-input">
-                            <div className="body">
-                                <div>Cài Đặt</div>
-                                <label className="label-input">
-                                    <div className="input-detail">
-                                        <p>authorId: </p>
-                                        <input
-                                            type="text"
-                                            value={authorId}
-                                            onChange={(e) => setAuthorId(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="input-detail">
-                                        <p>parentId: </p>
-                                        <input
-                                            type="text"
-                                            value={parentId}
-                                            onChange={(e) => setParentId(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="input-detail">
-                                        <p>metaTitle: </p>
-                                        <input
-                                            type="text"
-                                            value={metaTitle}
-                                            onChange={(e) => setMetaTitle(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="input-detail">
-                                        <p>slug: </p>
-                                        <input type="text" value={slug} onChange={(e) => setSlug(e.target.value)} />
-                                    </div>
-                                    <div className="input-detail">
-                                        <p>summary: </p>
-                                        <input
-                                            type="text"
-                                            value={summary}
-                                            onChange={(e) => setSummary(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="input-detail">
-                                        <p>published: </p>
-                                        <input
-                                            type="text"
-                                            value={published}
-                                            onChange={(e) => setPublished(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="input-detail">
-                                        <p>createdAt: </p>
-                                        <Space direction="vertical">
-                                            <DatePicker
-                                                className="inp-form"
-                                                value={startDate}
-                                                onChange={handleStartDateChange}
-                                            />
-                                        </Space>
-                                    </div>
-                                    <div className="input-detail">
-                                        <p>updatedAt: </p>
-                                        <Space direction="vertical">
-                                            <DatePicker
-                                                className="inp-form"
-                                                value={updateDate}
-                                                onChange={handleUpdateDateChange}
-                                            />
-                                        </Space>
-                                    </div>
-                                    <div className="input-detail">
-                                        <p>publishedAt: </p>
-                                        <Space direction="vertical">
-                                            <DatePicker
-                                                className="inp-form"
-                                                value={publishedDate}
-                                                onChange={handlePublishedDateChange}
-                                            />
-                                        </Space>
-                                    </div>
-                                    <div className="input-detail">
-                                        <p>content: </p>
-                                        <input
-                                            type="text"
-                                            value={content}
-                                            onChange={(e) => setContent(e.target.value)}
-                                        />
-                                    </div>
-                                </label>
+            <LayoutAdmin>
+                {updateSuccess ? null : (
+                    <div className="modalBackground">
+                        <div className="modalContainer">
+                            <div className="title">
+                                <h1>Cập Nhật Sự Kiện</h1>
                             </div>
-                            <div className="ant-divider" role="separator"></div>
-                            <div className="footer">
-                                <Button rounded onClick={handleUpdate}>
-                                    Update
-                                </Button>
-                                <Button onClick={closeModal}>Close</Button>
+                            <div className="form-input">
+                                <div className="body">
+                                    <div>Cài Đặt</div>
+                                    <label className="label-input">
+                                        <div className="input-detail">
+                                            <p>authorId: </p>
+                                            <input
+                                                type="text"
+                                                value={authorId}
+                                                onChange={(e) => setAuthorId(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="input-detail">
+                                            <p>parentId: </p>
+                                            <input
+                                                type="text"
+                                                value={parentId}
+                                                onChange={(e) => setParentId(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="input-detail">
+                                            <p>metaTitle: </p>
+                                            <input
+                                                type="text"
+                                                value={metaTitle}
+                                                onChange={(e) => setMetaTitle(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="input-detail">
+                                            <p>slug: </p>
+                                            <input type="text" value={slug} onChange={(e) => setSlug(e.target.value)} />
+                                        </div>
+                                        <div className="input-detail">
+                                            <p>summary: </p>
+                                            <input
+                                                type="text"
+                                                value={summary}
+                                                onChange={(e) => setSummary(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="input-detail">
+                                            <p>published: </p>
+                                            <input
+                                                type="text"
+                                                value={published}
+                                                onChange={(e) => setPublished(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="input-detail">
+                                            <p>createdAt: </p>
+                                            <Space direction="vertical">
+                                                <DatePicker
+                                                    className="inp-form"
+                                                    value={startDate}
+                                                    onChange={handleStartDateChange}
+                                                />
+                                            </Space>
+                                        </div>
+                                        <div className="input-detail">
+                                            <p>updatedAt: </p>
+                                            <Space direction="vertical">
+                                                <DatePicker
+                                                    className="inp-form"
+                                                    value={updateDate}
+                                                    onChange={handleUpdateDateChange}
+                                                />
+                                            </Space>
+                                        </div>
+                                        <div className="input-detail">
+                                            <p>publishedAt: </p>
+                                            <Space direction="vertical">
+                                                <DatePicker
+                                                    className="inp-form"
+                                                    value={publishedDate}
+                                                    onChange={handlePublishedDateChange}
+                                                />
+                                            </Space>
+                                        </div>
+                                        <div className="input-detail">
+                                            <p>content: </p>
+                                            <input
+                                                type="text"
+                                                value={content}
+                                                onChange={(e) => setContent(e.target.value)}
+                                            />
+                                        </div>
+                                    </label>
+                                </div>
+                                <div className="ant-divider" role="separator"></div>
+                                <div className="footer">
+                                    <Button rounded onClick={handleUpdate}>
+                                        Update
+                                    </Button>
+                                    <Button onClick={closeModal}>Close</Button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )}
+            </LayoutAdmin>
         </>
     );
 }

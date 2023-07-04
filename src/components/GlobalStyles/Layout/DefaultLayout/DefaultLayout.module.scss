@@ -2,7 +2,7 @@
 
 .wapper {
     @include flex(center, unset, column);
-
+    background-color: #f6f6fb;
     .container {
         width: 100%;
         display: flex;

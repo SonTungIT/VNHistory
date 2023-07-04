@@ -8,6 +8,7 @@ import Button from '~/components/GlobalStyles/Layout/components/Button';
 import { AddIcon } from '~/components/GlobalStyles/Layout/components/Icons';
 import BDModal from './BDModal/BDModal';
 import TableBD from './TableBD';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -19,13 +20,7 @@ function BaidangManage() {
             <LayoutAdmin>
                 <div className={cx('header')}>
                     <div>Bài Đăng</div>
-                    <Button
-                        primary
-                        leftIcon={<AddIcon />}
-                        onClick={() => {
-                            setOpenModal(true);
-                        }}
-                    >
+                    <Button primary leftIcon={<AddIcon />} to={config.routes.ThemMoi}>
                         THÊM MỚI
                     </Button>
                 </div>

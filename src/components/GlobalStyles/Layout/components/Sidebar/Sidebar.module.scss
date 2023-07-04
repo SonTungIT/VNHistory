@@ -2,7 +2,7 @@
 
 .sidebar {
     @include flex(start, center, unset);
-    height: 100vh;
+    height: auto;
     width: 3vw;
     background-color: var(--primary);
 

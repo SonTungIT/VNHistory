@@ -24,6 +24,9 @@ const routes = {
     //quiz
     Quiz10: '/Quiz10',
     Quiz20: '/Quiz20',
+
+    //themmoi
+    ThemMoi: '/ThemMoi',
 };
 
 export default routes;

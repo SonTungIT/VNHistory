@@ -17,6 +17,7 @@ import SukienManage from '~/pages/Editor/SukienManage/SukienManage';
 import Post from '~/pages/Post/Post';
 import Quiz10 from '~/pages/Post/Quiz10/Quiz10';
 import Quiz20 from '~/pages/Post/Quiz20/Quiz20';
+import ThemMoi from '~/pages/Editor/ThemMoi/ThemMoi';
 
 const publicRoutes = [
     { path: config.routes.Home, component: Home, layout: DefaultLayout },
@@ -41,6 +42,9 @@ const publicRoutes = [
     //quiz
     { path: config.routes.Quiz10, component: Quiz10, layout: DefaultLayout },
     { path: config.routes.Quiz20, component: Quiz20, layout: DefaultLayout },
+
+    //Them Moi
+    { path: config.routes.ThemMoi, component: ThemMoi, layout: DefaultLayout },
 ];
 
 export { publicRoutes };
