@@ -15,6 +15,13 @@ export const SidebarDataEditor = [
         icon: <AccountUserIcon />,
         iconClosed: <ArrowDownIcon />,
         iconOpened: <ArrowLeftIcon />,
+
+        subNav: [
+            {
+                title: 'Quản lý PostMeta',
+                path: config.routes.postmeta,
+            },
+        ],
     },
     {
         title: 'QUẢN LÝ THỂ LOẠI',

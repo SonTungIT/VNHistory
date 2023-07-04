@@ -68,15 +68,14 @@ function EditBDModal({ closeModal, post }) {
             <LayoutAdmin>
                 {updateSuccess ? null : (
                     <div className="modalBackground">
-                        <div className="modalContainer">
+                        <div className="modalContainer-bd">
                             <div className="title">
-                                <h1>Cập Nhật Sự Kiện</h1>
+                                <h1>Cập Nhật Bài Đăng</h1>
                             </div>
-                            <div className="form-input">
+                            <div className="form-input-bd">
                                 <div className="body">
-                                    <div>Cài Đặt</div>
                                     <label className="label-input">
-                                        <div className="input-detail">
+                                        <div className="input-detail-bd">
                                             <p>authorId: </p>
                                             <input
                                                 type="text"
@@ -84,7 +83,7 @@ function EditBDModal({ closeModal, post }) {
                                                 onChange={(e) => setAuthorId(e.target.value)}
                                             />
                                         </div>
-                                        <div className="input-detail">
+                                        <div className="input-detail-bd">
                                             <p>parentId: </p>
                                             <input
                                                 type="text"
@@ -92,7 +91,7 @@ function EditBDModal({ closeModal, post }) {
                                                 onChange={(e) => setParentId(e.target.value)}
                                             />
                                         </div>
-                                        <div className="input-detail">
+                                        <div className="input-detail-bd">
                                             <p>metaTitle: </p>
                                             <input
                                                 type="text"
@@ -100,11 +99,11 @@ function EditBDModal({ closeModal, post }) {
                                                 onChange={(e) => setMetaTitle(e.target.value)}
                                             />
                                         </div>
-                                        <div className="input-detail">
+                                        <div className="input-detail-bd">
                                             <p>slug: </p>
                                             <input type="text" value={slug} onChange={(e) => setSlug(e.target.value)} />
                                         </div>
-                                        <div className="input-detail">
+                                        <div className="input-detail-bd">
                                             <p>summary: </p>
                                             <input
                                                 type="text"
@@ -112,7 +111,7 @@ function EditBDModal({ closeModal, post }) {
                                                 onChange={(e) => setSummary(e.target.value)}
                                             />
                                         </div>
-                                        <div className="input-detail">
+                                        <div className="input-detail-bd">
                                             <p>published: </p>
                                             <input
                                                 type="text"
@@ -120,37 +119,39 @@ function EditBDModal({ closeModal, post }) {
                                                 onChange={(e) => setPublished(e.target.value)}
                                             />
                                         </div>
-                                        <div className="input-detail">
-                                            <p>createdAt: </p>
-                                            <Space direction="vertical">
-                                                <DatePicker
-                                                    className="inp-form"
-                                                    value={startDate}
-                                                    onChange={handleStartDateChange}
-                                                />
-                                            </Space>
+                                        <div className="selectDate">
+                                            <div className="input-detail-bd">
+                                                <p>createdAt: </p>
+                                                <Space direction="vertical">
+                                                    <DatePicker
+                                                        className="inp-form"
+                                                        value={startDate}
+                                                        onChange={handleStartDateChange}
+                                                    />
+                                                </Space>
+                                            </div>
+                                            <div className="input-detail-bd">
+                                                <p>updatedAt: </p>
+                                                <Space direction="vertical">
+                                                    <DatePicker
+                                                        className="inp-form"
+                                                        value={updateDate}
+                                                        onChange={handleUpdateDateChange}
+                                                    />
+                                                </Space>
+                                            </div>
+                                            <div className="input-detail-bd">
+                                                <p>publishedAt: </p>
+                                                <Space direction="vertical">
+                                                    <DatePicker
+                                                        className="inp-form"
+                                                        value={publishedDate}
+                                                        onChange={handlePublishedDateChange}
+                                                    />
+                                                </Space>
+                                            </div>
                                         </div>
-                                        <div className="input-detail">
-                                            <p>updatedAt: </p>
-                                            <Space direction="vertical">
-                                                <DatePicker
-                                                    className="inp-form"
-                                                    value={updateDate}
-                                                    onChange={handleUpdateDateChange}
-                                                />
-                                            </Space>
-                                        </div>
-                                        <div className="input-detail">
-                                            <p>publishedAt: </p>
-                                            <Space direction="vertical">
-                                                <DatePicker
-                                                    className="inp-form"
-                                                    value={publishedDate}
-                                                    onChange={handlePublishedDateChange}
-                                                />
-                                            </Space>
-                                        </div>
-                                        <div className="input-detail">
+                                        <div className="input-detail-bd">
                                             <p>content: </p>
                                             <input
                                                 type="text"
@@ -162,10 +163,10 @@ function EditBDModal({ closeModal, post }) {
                                 </div>
                                 <div className="ant-divider" role="separator"></div>
                                 <div className="footer">
+                                    <Button onClick={closeModal}>Close</Button>
                                     <Button rounded onClick={handleUpdate}>
                                         Update
                                     </Button>
-                                    <Button onClick={closeModal}>Close</Button>
                                 </div>
                             </div>
                         </div>

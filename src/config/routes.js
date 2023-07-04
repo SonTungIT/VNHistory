@@ -27,6 +27,9 @@ const routes = {
 
     //themmoi
     ThemMoi: '/ThemMoi',
+
+    //postmeta
+    postmeta: '/BaidangMange/postmeta',
 };
 
 export default routes;

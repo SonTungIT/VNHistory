@@ -6,6 +6,7 @@ import Button from '~/components/GlobalStyles/Layout/components/Button';
 import { LeftArrowIcon } from '~/components/GlobalStyles/Layout/components/Icons';
 import config from '~/config';
 import { DatePicker, Space, message } from 'antd';
+import PostMeta from '../BaidangManage/PostMeta/PostMeta';
 
 const cx = classNames.bind(styles);
 
@@ -215,7 +216,6 @@ function ThemMoi() {
                                 </div>
                             </label>
                         </div>
-                        <div className="ant-divider" role="separator"></div>
                         <div className="footer">
                             <Button onClick={handleCancel}>Hủy bỏ</Button>
                             {contextHolder}
@@ -226,6 +226,9 @@ function ThemMoi() {
                             </Space>
                         </div>
                     </form>
+                </div>
+                <div className={cx('container-tm')}>
+                    <PostMeta />
                 </div>
 
                 <div className={cx('footer')}></div>
