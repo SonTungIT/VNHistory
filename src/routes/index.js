@@ -20,6 +20,8 @@ import Quiz20 from '~/pages/Post/Quiz20/Quiz20';
 import ThemMoi from '~/pages/Editor/ThemMoi/ThemMoi';
 import PostMetaManage from '~/pages/Editor/PostMetaManage/PostMetaManage';
 import PostComments from '~/pages/Editor/PostComments/PostComments';
+import CreateQuestion from '~/pages/Editor/CauhoiManage/CreateQuestion';
+import CreateAnswer from '~/pages/Editor/CauhoiManage/CreateAnswer';
 
 const publicRoutes = [
     { path: config.routes.Home, component: Home, layout: DefaultLayout },
@@ -35,6 +37,8 @@ const publicRoutes = [
     { path: config.routes.TheloaiManage, component: TheloaiManage, layout: EditorLayout },
     { path: config.routes.CauhoiManage, component: CauhoiManage, layout: EditorLayout },
     { path: config.routes.SukienManage, component: SukienManage, layout: EditorLayout },
+    { path: config.routes.CreateQuestion, component: CreateQuestion, layout: EditorLayout },
+    { path: config.routes.CreateAnswer, component: CreateAnswer, layout: EditorLayout },
 
     //User
     { path: config.routes.Detail, component: Detail, layout: DefaultLayout },

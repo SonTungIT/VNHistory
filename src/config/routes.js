@@ -20,6 +20,8 @@ const routes = {
     TheloaiManage: '/TheloaiManage',
     CauhoiManage: '/CauhoiManage',
     SukienManage: '/SukienManage',
+    CreateQuestion: '/CreateQuestion',
+    CreateAnswer: '/CreateAnswer',
 
     //quiz
     Quiz10: '/Quiz10',

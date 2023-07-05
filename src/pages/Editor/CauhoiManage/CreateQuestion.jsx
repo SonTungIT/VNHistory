@@ -1,5 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import classNames from 'classnames/bind';
+import styles from './CreateQuestion.scss';
+const cx = classNames.bind(styles);
 
 function CreateQuestion({ setCreatedQuestionData }) {
   const [eventId, setEventId] = useState(0);
@@ -39,21 +42,23 @@ function CreateQuestion({ setCreatedQuestionData }) {
   };
 
   return (
-    <div>
-      <h2>Tạo câu hỏi</h2>
-      <div>
-        <label>Event ID:</label>
-        <input type="number" value={eventId} onChange={e => setEventId(parseInt(e.target.value))} />
+    <div className={cx('CreateQuestion')}>
+      <div className={cx('Question')}>
+        <h2 className={cx('title')}>Tạo câu hỏi</h2>
+        <div className={cx('EventID')}>
+          <label>Event ID:</label>
+          <input type="number" value={eventId} onChange={e => setEventId(parseInt(e.target.value))} />
+        </div>
+        <div className={cx('QuestionText')}>
+          <label>Text câu hỏi:</label>
+          <input type="text" value={questionText} onChange={e => setQuestionText(e.target.value)} />
+        </div>
+        <div className={cx('DifficultyLevel')}>
+          <label>Độ khó:</label>
+          <input type="text" value={difficultyLevel} onChange={e => setDifficultyLevel(e.target.value)} />
+        </div>
+        <button onClick={handleCreateQuestion}>Tạo câu hỏi</button>
       </div>
-      <div>
-        <label>Text câu hỏi:</label>
-        <input type="text" value={questionText} onChange={e => setQuestionText(e.target.value)} />
-      </div>
-      <div>
-        <label>Độ khó:</label>
-        <input type="text" value={difficultyLevel} onChange={e => setDifficultyLevel(e.target.value)} />
-      </div>
-      <button onClick={handleCreateQuestion}>Tạo câu hỏi</button>
     </div>
   );
 }

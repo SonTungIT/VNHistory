@@ -12,18 +12,6 @@ import axios from 'axios';
 
 const MENU_ITEMS = [
     {
-        icon: <VisibilityIcon />,
-        title: 'Active User',
-    },
-    {
-        icon: <VisibilityOffIcon />,
-        title: 'Inactive User',
-    },
-    {
-        icon: <CancelIcon />,
-        title: 'Block User',
-    },
-    {
         icon: <DeleteIcon />,
         title: 'Delete User',
     },

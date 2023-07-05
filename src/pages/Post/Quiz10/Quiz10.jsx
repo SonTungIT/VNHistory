@@ -1,147 +1,99 @@
 import classNames from 'classnames/bind';
 import styles from './Quiz10.scss';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
 function Quiz10() {
-    const questions = [
-		{
-			questionText: 'What is the capital of France?',
-			answerOptions: [
-				{ answerText: 'New York', isCorrect: false },
-				{ answerText: 'London', isCorrect: false },
-				{ answerText: 'Paris', isCorrect: true },
-				{ answerText: 'Dublin', isCorrect: false },
-			],
-		},
-		{
-			questionText: 'Who is CEO of Tesla?',
-			answerOptions: [
-				{ answerText: 'Jeff Bezos', isCorrect: false },
-				{ answerText: 'Elon Musk', isCorrect: true },
-				{ answerText: 'Bill Gates', isCorrect: false },
-				{ answerText: 'Tony Stark', isCorrect: false },
-			],
-		},
-		{
-			questionText: 'The iPhone was created by which company?',
-			answerOptions: [
-				{ answerText: 'Apple', isCorrect: true },
-				{ answerText: 'Intel', isCorrect: false },
-				{ answerText: 'Amazon', isCorrect: false },
-				{ answerText: 'Microsoft', isCorrect: false },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-	];
+  useEffect(() => {
+    const getQuizQuestions = async () => {
+      try {
+		const loginResponse = await axios.post('https://vietnam-history.azurewebsites.net/api/Auth/login', {
+			email: 'cong123@gmail.com',
+			password: '123456'
+		});
+		const accessToken = loginResponse.data.accessToken;
 
-	const [currentQuestion, setCurrentQuestion] = useState(0);
-	const [showScore, setShowScore] = useState(false);
-	const [score, setScore] = useState(0);
+		const config = {
+			headers: {
+			Authorization: `Bearer ${accessToken}`,
+			},
+		};
 
-	const handleAnswerOptionClick = (isCorrect) => {
-		if (isCorrect) {
-			setScore(score + 1);
-		}
+		const quizId = new URLSearchParams(window.location.search).get('quizId');
+	  
+        const response = await axios.get(`https://vietnam-history.azurewebsites.net/api/Quizees/getQuiz?quizId=${quizId}`, config);
 
-		const nextQuestion = currentQuestion + 1;
-		if (nextQuestion < questions.length) {
-			setCurrentQuestion(nextQuestion);
-		} else {
-			setShowScore(true);
-		}
-	};
-    return (
-		<div className={cx('wapper-quiz10')}>
-			<div className={cx('inner-quiz10')}>
-				<div className={cx('Quiz10')}>
-					{showScore ? (
-						<div className='score-section'>
-							You scored {score} out of {questions.length}
-						</div>
-					) : (
-						<>
-							<div className='question-section'>
-								<div className='question-count'>
-									<span>Question {currentQuestion + 1}</span>/{questions.length}
-								</div>
-								<div className='question-text'>{questions[currentQuestion].questionText}</div>
-							</div>
-							<div className='answer-section'>
-								{questions[currentQuestion].answerOptions.map((answerOption) => (
-									<button onClick={() => handleAnswerOptionClick(answerOption.isCorrect)}>{answerOption.answerText}</button>
-								))}
-							</div>
-						</>
-					)}
-				</div>
-			</div>
-		</div>
-    );
+        
+        console.log('Quiz created:', response.data);
+        console.log('Quiz created:', response.data.questionQuizzes);
+        console.log(response.data.questionQuizzes[0].question.questionText);
+
+        // Extract the array of questions from the API response
+        const retrievedQuestions = response.data.questionQuizzes.forEach((questionQuiz) => {
+          console.log('Question:', questionQuiz.question.questionText);
+          questionQuiz.question.answers.forEach((answer) => {
+            console.log('Answer Id:', answer.answerId);
+            console.log('Answer Text:', answer.answerText);
+          });
+        });
+        setQuestions(retrievedQuestions);
+      } catch (error) {
+        console.error('Error retrieving quiz questions:', error);
+      }
+    };
+
+    getQuizQuestions();
+  }, []);
+
+  const [questions, setQuestions] = useState();
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [showScore, setShowScore] = useState(false);
+  const [score, setScore] = useState(0);
+
+  
+  const handleAnswerOptionClick = () => {
+
+    
+    const nextQuestion = currentQuestion + 1;
+    if (nextQuestion < 10) {
+      setCurrentQuestion(nextQuestion);
+    } else {
+      setShowScore(true);
+    }
+  };
+
+  return (
+    <div className={cx('wapper-quiz10')}>
+      <div className={cx('inner-quiz10')}>
+        <div className={cx('Quiz10')}>
+          {showScore ? (
+            <div className='score-section'>
+              You scored {score} out of 10
+            </div>
+          ) : (
+            <>
+              <div className='question-section'>
+                <div className='question-count'>
+                  <span>Question {currentQuestion + 1}</span>/10
+                </div>
+                <div className='question-text'>{questions[currentQuestion]?.question.questionText}</div>
+              </div>
+              <div className='answer-section'>
+                {questions[currentQuestion]?.answerOptions.map((answerOption, index) => (
+                  <button key={index} onClick={() => handleAnswerOptionClick(answerOption.isCorrect)}>
+                    {answerOption.answerText}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Quiz10;

@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Post.scss';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import React, { useState } from 'react';
 
@@ -10,6 +11,7 @@ function Post() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedNumberQuestion, setSelectedNumberQuestion] = useState('');
   const [selectedTime, setSelectedTime] = useState(0);
+  const [quizId, setQuizId] = useState('');
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -18,18 +20,38 @@ function Post() {
   const handleQuizSelection = async (numberQuestion, time) => {
     setSelectedNumberQuestion(numberQuestion);
     setSelectedTime(time);
-    
-    try {
-      // Make the API request to create a quiz
-      const response = await axios.post('https://vietnam-history.azurewebsites.net/api/Quizees/createQuiz', {
-        eventId: "1",
-        userId: "4",
-        numberQuestion: numberQuestion,
-        time: time,
-      });
 
-      console.log('Quiz created:', response.data);
-      // Perform any necessary actions with the created quiz data
+    try {
+      const loginResponse = await axios.post('https://vietnam-history.azurewebsites.net/api/Auth/login', {
+        email: 'cong123@gmail.com',
+        password: '123456'
+      });
+      const accessToken = loginResponse.data.accessToken;
+
+      // Sử dụng mã thông báo truy cập để gửi yêu cầu API với phân quyền Editor
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
+      const answerData = {
+        eventId: "1",
+        numberQuestion: numberQuestion,
+        time: time
+      };
+      // Make the API request to create a quiz
+      const response = await axios.post(`https://vietnam-history.azurewebsites.net/api/Quizees/createQuiz?eventId=${answerData.eventId}`, answerData, config);
+
+      
+
+      const createdQuizId = response.data.data.quizId; // Get the quizId from the response data
+
+    console.log('Quiz created:', response);
+    console.log('Quiz ID:', createdQuizId);
+
+      // Chuyển hướng đến trang Quiz10 và truyền quizId vào URL
+      window.location.href = `/Quiz10?quizId=${encodeURIComponent(createdQuizId)}`;
     } catch (error) {
       console.error('Error creating quiz:', error);
     }
@@ -39,7 +61,7 @@ function Post() {
     <div className={cx('wapper')}>
       <div className={cx('inner')}>
         <div className={cx('content')}>
-        <div className={cx('title')}>
+          <div className={cx('title')}>
             <div className={cx('title-post')}>Lịch sử đất nước Việt Nam thời kỳ Đại Cồ Việt</div>
             <p className={cx('title-date')}>20-12-2022</p>
           </div>
@@ -60,12 +82,14 @@ function Post() {
                   <div className={cx('establish-quiz')}>Thiết lập bài kiểm tra</div>
                   <div className={cx('number-quiz')}>Câu hỏi (tối đa) - Thời gian</div>
                   <div className={cx('btn-quiz')}>
-                    <button className={cx('btn-quiz10')} onClick={() => handleQuizSelection('10', 135)}>
-                      10 câu - 135 giây
-                    </button>
-                    <button className={cx('btn-quiz20')} onClick={() => handleQuizSelection('20', 270)}>
-                      20 câu - 270 giây
-                    </button>
+                    <Link to={`/Quiz10?quizId=${(quizId)}`}>
+                      <button className={cx('btn-quiz10')} onClick={() => handleQuizSelection('10', 135)}>
+                        10 câu - 135 giây
+                      </button>
+                    </Link>
+                      <button className={cx('btn-quiz20')} onClick={() => handleQuizSelection('20', 270)}>
+                        20 câu - 270 giây
+                      </button>
                   </div>
                 </div>
               </ul>

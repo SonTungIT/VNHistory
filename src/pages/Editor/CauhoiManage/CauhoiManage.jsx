@@ -6,6 +6,9 @@ import TableCH from './TableCH';
 import CreateQuestion from './CreateQuestion';
 import CreateAnswer from './CreateAnswer';
 import React, { useState } from 'react';
+import Button from '~/components/GlobalStyles/Layout/components/Button';
+import { AddIcon } from '~/components/GlobalStyles/Layout/components/Icons';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -16,10 +19,16 @@ function CauhoiManage() {
         <LayoutAdmin>
             <div className={cx('header')}>
                 <div>Câu hỏi</div>
+                <Button primary leftIcon={<AddIcon />} to={config.routes.CreateQuestion} setCreatedQuestionData={setCreatedQuestionData}>
+                        THÊM MỚI QUESTION
+                </Button>
+                <Button primary leftIcon={<AddIcon />} to={config.routes.CreateAnswer} setCreatedAnswerData={setCreatedAnswerData}>
+                        THÊM MỚI ANSWER
+                </Button>
             </div>
             <div className={cx('question')}>
-                <CreateQuestion setCreatedQuestionData={setCreatedQuestionData} />
-                <CreateAnswer setCreatedAnswerData={setCreatedAnswerData} />
+                {/* <CreateQuestion setCreatedQuestionData={setCreatedQuestionData} />
+                <CreateAnswer setCreatedAnswerData={setCreatedAnswerData} /> */}
             </div>
             <div className={cx('container')}>
                 
