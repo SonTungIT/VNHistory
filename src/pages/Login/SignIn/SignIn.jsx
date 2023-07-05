@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import Button from '~/components/GlobalStyles/Layout/components/Button';
 import config from '~/config';
 import logoImage from '~/images/logo.png';
 
@@ -75,9 +76,9 @@ function SignIn() {
     return (
         <div className="Container">
             <div className="Background-Top">
-                <span className="Logo">
+                <Button to={config.routes.Home} className="Logo">
                     <img src={logoImage} alt="Logo" className="logo-img" />
-                </span>
+                </Button>
                 <span className="Title">VietNam's History</span>
             </div>
             <div className="wrap-form">
