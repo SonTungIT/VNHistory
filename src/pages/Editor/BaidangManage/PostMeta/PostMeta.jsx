@@ -69,8 +69,8 @@ function PostMeta() {
 
     return (
         <>
-            <div className="title">
-                <h1>Thêm Mới PostMeta</h1>
+            <div className="title-tm">
+                <h2>Thêm Mới PostMeta</h2>
             </div>
             <form className="form-input" onSubmit={handleSubmit}>
                 <div className="body-tm">

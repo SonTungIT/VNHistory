@@ -76,7 +76,7 @@ function SignIn() {
     return (
         <div className="Container">
             <div className="Background-Top">
-                <Button to={config.routes.Home} className="Logo">
+                <Button to={config.routes.Login} className="Logo">
                     <img src={logoImage} alt="Logo" className="logo-img" />
                 </Button>
                 <span className="Title">VietNam's History</span>

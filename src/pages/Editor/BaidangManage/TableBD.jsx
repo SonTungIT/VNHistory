@@ -63,6 +63,7 @@ function TableBD(props) {
     const handleEdit = (post) => {
         setSelectedPost(post);
         setEditBDModal(true);
+        console.log(post);
     };
 
     const formatDate = (dateString) => {

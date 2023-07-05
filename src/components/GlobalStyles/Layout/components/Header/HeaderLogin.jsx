@@ -14,6 +14,10 @@ function Header() {
                 <div className={cx('logo')}>
                     <img className={cx('logo-details')} src={require('../../../../../images/logo.png')} alt="logo" />
                     <div className={cx('right-logo')}>VNHistory</div>
+                    <div className={cx('page')}>
+                        <Button className={cx('page-child')}>Trang chủ</Button>
+                        <Button className={cx('page-child')}>Bài đăng</Button>
+                    </div>
                 </div>
                 <div className={cx('content')}>
                     <div className={cx('btn-login')}>

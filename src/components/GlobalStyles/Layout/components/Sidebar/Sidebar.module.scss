@@ -1,13 +1,30 @@
 @use '../../../../../styles/' as *;
 
 .sidebar {
-    @include flex(start, center, unset);
+    @include flex(center, start, column);
+    gap: 20px;
     height: auto;
-    width: 3vw;
-    background-color: var(--primary);
+    width: 10vw;
+    // background-color: var(--primary);
 
     .btn-category {
         background-color: transparent;
         border: 0px;
+    }
+
+    .sidebar-container {
+        @include flex(start, start, column);
+        margin-top: 50px;
+        gap: 20px;
+        height: 100%;
+
+        .cate-name {
+            color: var(--font);
+            font-weight: 500;
+            padding: 8px 0;
+            font-size: 14px;
+            border-bottom: 1px solid #999999ef;
+            width: 100%;
+        }
     }
 }

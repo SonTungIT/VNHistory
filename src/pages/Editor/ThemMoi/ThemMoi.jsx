@@ -98,10 +98,10 @@ function ThemMoi() {
                     <Button leftIcon={<LeftArrowIcon />} to={config.routes.BaidangMange}>
                         Quản lý bài đăng
                     </Button>
-                    <h1 className="title"> Thêm mới bài đăng</h1>
+                    <h1 className="title-tm"> Thêm mới bài đăng</h1>
                 </div>
                 <div className={cx('container-tm')}>
-                    <div className="title">
+                    <div className="title-tm">
                         <h2>Thông tin cơ bản</h2>
                     </div>
                     <form className="form-input" onSubmit={handleSubmit}>

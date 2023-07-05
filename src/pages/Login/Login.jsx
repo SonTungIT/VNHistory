@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Login.scss';
 import config from '~/config';
@@ -12,22 +13,71 @@ function Login() {
         { No: 3, Tên: 'Trung', Email: 'trun****yen@gmail.com', Score: 78 },
         { No: 4, Tên: 'Văn', Email: 'van****yen@gmail.com', Score: 89 },
     ];
+
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        // Fetch data from the API
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
+        var myHeaders = new Headers();
+        myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow',
+        };
+
+        fetch('https://vietnam-history.azurewebsites.net/api/posts', requestOptions)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error(response.status);
+            })
+            .then((result) => {
+                // Update the events state with the retrieved data
+                setPosts(result.data);
+            })
+            .catch((error) => console.log('error', error));
+    };
+
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const date = new Date(dateString);
+        return date.toLocaleDateString('vi-VN', options);
+    };
+
+    const handleButtonClick = (postId) => {
+        window.location.href = `/post?postId=${postId}`;
+    };
+
     return (
         <div className={cx('wapper')}>
             <div className={cx('inner')}>
-                <div className={cx('content')}>
-                    <div className={cx('title')}>Lịch sử đất nước</div>
-                    <div className={cx('poster')}>
-                        <img
-                            src="https://giasuviet.com.vn/wp-content/uploads/2015/09/phuong-phap-hoc-mon-lich-su-lop-12-hieu-qua-va-nho-lau.jpg"
-                            alt="img"
-                        />
-                        <div className={cx('details')}>
-                            <span>Lịch sử đất nước Việt Nam thời kỳ Đại Cồ Việt</span>
-                            <p>20-12-2022</p>
+                {posts.length > 0 && (
+                    <Button
+                        to={config.routes.Post}
+                        className={cx('content')}
+                        key={posts[0].postId}
+                        onClick={() => handleButtonClick(posts[0].postId)}
+                    >
+                        <div className={cx('title')}>{posts[0].metaTitle}</div>
+                        <div className={cx('poster')}>
+                            <img
+                                src="https://giasuviet.com.vn/wp-content/uploads/2015/09/phuong-phap-hoc-mon-lich-su-lop-12-hieu-qua-va-nho-lau.jpg"
+                                alt="img"
+                            />
+                            <div className={cx('details')}>
+                                <span>{posts[0].summary}</span>
+                                <p>{formatDate(posts[0].createdAt)}</p>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </Button>
+                )}
                 <div className={cx('rank')}>
                     <div className={cx('header')}>
                         <span className={cx('title')}>BXH</span>
@@ -60,63 +110,20 @@ function Login() {
                     </div>
                 </div>
             </div>
-            <a href='/post'>
-                <div className={cx('list-event')}>
-                    <img
-                        src="https://nguoikesu.com/images/wiki/nha-nguyen/f3ddf4ba5ac21a0f1ab37de7ccf99789.jpg"
-                        alt="img"
-                    />
-                    <div className={cx('details-event')}>
-                        <span>Bảng đối chiếu các triều đại Việt Nam và các triều đại Trung Quốc</span>
-                        <p>Dưới đây chúng tôi giới thiệu Bảng đối chiếu các triều đại Việt Nam với năm dương lịch
-                             và các triều đại Trung Quốc là nước láng giềng có quan hệ với lịch sử Việt Nam để bạn đọc tham khảo.</p>
+            {posts.slice(1).map((post) => (
+                <Button to={config.routes.Post} key={post.postId} onClick={() => handleButtonClick(posts[1].postId)}>
+                    <div className={cx('list-event')}>
+                        <img
+                            src="https://nguoikesu.com/images/wiki/nha-nguyen/f3ddf4ba5ac21a0f1ab37de7ccf99789.jpg"
+                            alt="img"
+                        />
+                        <div className={cx('details-event')}>
+                            <span>{post.metaTitle}</span>
+                            <p>{post.summary}</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <a href='/post'>
-                <div className={cx('list-event')}>
-                    <img
-                        src="https://nguoikesu.com/images/wiki/van-mieu-quoc-tu-giam/c4d16aa217651fc2563093147c224855.jpg"
-                        alt="img"
-                    />
-                    <div className={cx('details-event')}>
-                        <span>Danh sách Trạng nguyên Việt Nam</span>
-                        <p>Trạng nguyên (chữ Hán: 狀元) là danh hiệu thuộc học vị Tiến sĩ của người đỗ cao nhất trong các khoa 
-                            đình thời phong kiến ở Việt Nam của các triều nhà Lý, Trần, Lê, và Mạc, kể từ khi có danh hiệu Tam khôi 
-                            dành cho 3 vị trí đầu tiên. Người đỗ Trạng nguyên nói riêng và đỗ tiến sĩ nói chung phải vượt qua 3 kỳ thi: 
-                            thi hương, thi hội và thi đình.</p>
-                    </div>
-                </div>
-            </a>
-            <a href='/post'>
-                <div className={cx('list-event')}>
-                    <img
-                        src="https://nguoikesu.com/images/wiki/lanh-tho-viet-nam-qua-tung-thoi-ky/07c2ddea0a792eb482ac3a4b5ab760f2.jpg"
-                        alt="img"
-                    />
-                    <div className={cx('details-event')}>
-                        <span>Lãnh thổ Việt Nam qua từng thời kỳ</span>
-                        <p>Lãnh thổ Việt Nam qua từng thời kỳ là sự biến đổi không gian sinh tồn của người Việt, 
-                            thể hiện bởi các triều đại chính thống được công nhận. Nó mang tính chất phức tạp, 
-                            lúc bị mất lãnh thổ về các nhà nước khác, lúc xâm chiếm chinh phục được lãnh thổ mới.</p>
-                    </div>
-                </div>
-            </a>
-            <a href='/post'>
-                <div className={cx('list-event')}>
-                    <img
-                        src="https://nguoikesu.com/images/wiki/chu-viet-tieng-viet/7a11260bfe022f168fe3999dba77cadc.jpg"
-                        alt="img"
-                    />
-                    <div className={cx('details-event')}>
-                        <span>Lịch sử Chữ viết tiếng Việt</span>
-                        <p>Tiếng Việt là ngôn ngữ của người Việt và là ngôn ngữ chính thức của Việt Nam. 
-                            Trong lịch sử Việt Nam đã có ba loại văn tự được dùng để ghi chép tiếng Việt là chữ Hán, 
-                            chữ Nôm và chữ quốc ngữ. Chữ Hán và chữ Nôm là văn tự ngữ tố, mỗi chữ Hán và chữ Nôm biểu thị
-                             một hoặc một số âm tiết. Chữ quốc ngữ đã bắt đầu được sử dụng chính thức tại Việt Nam vào đầu thế kỷ XX.</p>
-                    </div>
-                </div>
-            </a>
+                </Button>
+            ))}
         </div>
     );
 }
