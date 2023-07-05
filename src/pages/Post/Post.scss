@@ -4,6 +4,7 @@
     // @include flex(center, center, unset);
     width: 100%;
     height: auto;
+    min-height: 666px;
     // background-image: url('https://i.pinimg.com/736x/9d/c8/51/9dc8516895c763db4cc6594ee15f84d8.jpg');
     background-size: 100%;
     background-repeat: no-repeat;
@@ -73,8 +74,7 @@
 
             .dropdown {
                 position: relative;
-                display: inline-block;
-                margin-left: 1250px;
+                text-align: end;
             }
 
             .dropdown-menu {
