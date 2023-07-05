@@ -28,17 +28,13 @@ function Sidebar() {
 
     return (
         <div className={cx('sidebar')}>
-            <Popover
-                className={cx('btn-category')}
-                placement="rightTop"
-                title={text}
-                content={content}
-                arrow={mergedArrow}
-            >
-                <Button>
-                    <MenuCollapseIcon />
-                </Button>
-            </Popover>
+            <div className={cx('sidebar-container')}>
+                <h4>Thể Loại</h4>
+                <div className={cx('cate-name')}>Công nghệ mới</div>
+                <div className={cx('cate-name')}>Công nghệ mới</div>
+                <div className={cx('cate-name')}>Công nghệ mới</div>
+                <div className={cx('cate-name')}>Công nghệ mới</div>
+            </div>
         </div>
     );
 }

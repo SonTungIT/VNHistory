@@ -69,7 +69,7 @@ function EditBDModal({ closeModal, post }) {
                 {updateSuccess ? null : (
                     <div className="modalBackground">
                         <div className="modalContainer-bd">
-                            <div className="title">
+                            <div className="title-tm">
                                 <h1>Cập Nhật Bài Đăng</h1>
                             </div>
                             <div className="form-input-bd">

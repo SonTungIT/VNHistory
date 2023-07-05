@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import config from '~/config';
 import { useNavigate } from 'react-router-dom';
+import Button from '../Button';
 
 const cx = classNames.bind(styles);
 
@@ -46,7 +47,13 @@ function Header() {
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 <div className={cx('logo')}>
-                    <img className={cx('logo-details')} src={require('../../../../../images/logo.png')} alt="logo" />
+                    <Button to={config.routes.Home}>
+                        <img
+                            className={cx('logo-details')}
+                            src={require('../../../../../images/logo.png')}
+                            alt="logo"
+                        />
+                    </Button>
                     <div className={cx('right-logo')}>VNHistory</div>
                 </div>
                 <div className={cx('content')}>
