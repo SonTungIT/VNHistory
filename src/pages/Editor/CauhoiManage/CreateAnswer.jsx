@@ -11,17 +11,11 @@ function CreateAnswer({ setCreatedAnswerData }) {
 
   const handleCreateAnswer = async () => {
     try {
-      // Đăng nhập vào tài khoản Editor và lấy mã thông báo truy cập
-      const loginResponse = await axios.post('https://vietnam-history.azurewebsites.net/api/Auth/login', {
-        email: 'cong@gmail.com',
-        password: '123456'
-      });
-      const accessToken = loginResponse.data.accessToken;
 
       // Sử dụng mã thông báo truy cập để gửi yêu cầu API với phân quyền Editor
       const config = {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
         },
       };
 
@@ -32,8 +26,10 @@ function CreateAnswer({ setCreatedAnswerData }) {
       };
 
       const response = await axios.post('https://vietnam-history.azurewebsites.net/api/Anwsers/createAnswer', answerData, config);
-      console.log('Câu trả lời đã được tạo:', response.data);
-      setCreatedAnswerData(prevData => [...prevData, response.data]);
+      if (localStorage.getItem('role') === 'Editor') {
+        console.log('Câu trả lời đã được tạo:', response.data);
+        setCreatedAnswerData(prevData => [...prevData, response.data]);
+      }
       // Update the created answer data
     } catch (error) {
       console.error('Lỗi khi tạo câu trả lời:', error);

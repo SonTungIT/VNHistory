@@ -22,16 +22,10 @@ function Post() {
     setSelectedTime(time);
 
     try {
-      const loginResponse = await axios.post('https://vietnam-history.azurewebsites.net/api/Auth/login', {
-        email: 'cong123@gmail.com',
-        password: '123456'
-      });
-      const accessToken = loginResponse.data.accessToken;
-
       // Sử dụng mã thông báo truy cập để gửi yêu cầu API với phân quyền Editor
       const config = {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
         },
       };
 

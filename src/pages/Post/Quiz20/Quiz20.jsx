@@ -1,237 +1,157 @@
 import classNames from 'classnames/bind';
 import styles from './Quiz20.scss';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
 function Quiz20() {
-    const questions = [
-		{
-			questionText: 'What is the capital of France?',
-			answerOptions: [
-				{ answerText: 'New York', isCorrect: false },
-				{ answerText: 'London', isCorrect: false },
-				{ answerText: 'Paris', isCorrect: true },
-				{ answerText: 'Dublin', isCorrect: false },
-			],
-		},
-		{
-			questionText: 'Who is CEO of Tesla?',
-			answerOptions: [
-				{ answerText: 'Jeff Bezos', isCorrect: false },
-				{ answerText: 'Elon Musk', isCorrect: true },
-				{ answerText: 'Bill Gates', isCorrect: false },
-				{ answerText: 'Tony Stark', isCorrect: false },
-			],
-		},
-		{
-			questionText: 'The iPhone was created by which company?',
-			answerOptions: [
-				{ answerText: 'Apple', isCorrect: true },
-				{ answerText: 'Intel', isCorrect: false },
-				{ answerText: 'Amazon', isCorrect: false },
-				{ answerText: 'Microsoft', isCorrect: false },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-        {
-			questionText: 'What is the capital of France?',
-			answerOptions: [
-				{ answerText: 'New York', isCorrect: false },
-				{ answerText: 'London', isCorrect: false },
-				{ answerText: 'Paris', isCorrect: true },
-				{ answerText: 'Dublin', isCorrect: false },
-			],
-		},
-		{
-			questionText: 'Who is CEO of Tesla?',
-			answerOptions: [
-				{ answerText: 'Jeff Bezos', isCorrect: false },
-				{ answerText: 'Elon Musk', isCorrect: true },
-				{ answerText: 'Bill Gates', isCorrect: false },
-				{ answerText: 'Tony Stark', isCorrect: false },
-			],
-		},
-		{
-			questionText: 'The iPhone was created by which company?',
-			answerOptions: [
-				{ answerText: 'Apple', isCorrect: true },
-				{ answerText: 'Intel', isCorrect: false },
-				{ answerText: 'Amazon', isCorrect: false },
-				{ answerText: 'Microsoft', isCorrect: false },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-		{
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '1', isCorrect: false },
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
-			],
-		},
-	];
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [showScore, setShowScore] = useState(false);
+  const [score, setScore] = useState(0);
+  const [userAnswers, setUserAnswers] = useState([]);
+  const [userScore, setUserScore] = useState(0);
 
-	const [currentQuestion, setCurrentQuestion] = useState(0);
-	const [showScore, setShowScore] = useState(false);
-	const [score, setScore] = useState(0);
+  useEffect(() => {
+    const getQuizQuestions = async () => {
+      try {
+        const config = {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+          },
+        };
 
-	const handleAnswerOptionClick = (isCorrect) => {
-		if (isCorrect) {
-			setScore(score + 1);
-		}
+        const quizId = new URLSearchParams(window.location.search).get('quizId');
 
-		const nextQuestion = currentQuestion + 1;
-		if (nextQuestion < questions.length) {
-			setCurrentQuestion(nextQuestion);
-		} else {
-			setShowScore(true);
-		}
-	};
-    return (
-		<div className={cx('wapper-quiz10')}>
-			<div className={cx('inner-quiz10')}>
-				<div className={cx('Quiz10')}>
-					{showScore ? (
-						<div className='score-section'>
-							You scored {score} out of {questions.length}
-						</div>
-					) : (
-						<>
-							<div className='question-section'>
-								<div className='question-count'>
-									<span>Question {currentQuestion + 1}</span>/{questions.length}
-								</div>
-								<div className='question-text'>{questions[currentQuestion].questionText}</div>
-							</div>
-							<div className='answer-section'>
-								{questions[currentQuestion].answerOptions.map((answerOption) => (
-									<button onClick={() => handleAnswerOptionClick(answerOption.isCorrect)}>{answerOption.answerText}</button>
-								))}
-							</div>
-						</>
-					)}
-				</div>
-			</div>
-		</div>
-    );
+        const response = await axios.get(`https://vietnam-history.azurewebsites.net/api/Quizees/getQuiz?quizId=${quizId}`, config);
+
+        const retrievedQuestions = response.data.questionQuizzes.map((questionQuiz) => {
+          const questionText = questionQuiz.question.questionText;
+          const questionId = questionQuiz.question.questionId;
+          const answerOptions = questionQuiz.question.answers.map((answer) => {
+            const answerText = answer.answerText;
+            const answerId = answer.answerId;
+            const isCorrect = answer.isCorrect;
+
+            return { answerText, answerId, isCorrect };
+          });
+
+          return {
+            questionId,
+            questionText,
+            answerOptions,
+          };
+        });
+
+        setQuestions(retrievedQuestions);
+      } catch (error) {
+        console.error('Error retrieving quiz questions:', error);
+      }
+    };
+
+    getQuizQuestions();
+  }, []);
+
+  const handleAnswerOptionClick = (isCorrect, answerId) => {
+    if (isCorrect) {
+      setScore(score + 1);
+    }
+
+    setUserAnswers((prevAnswers) => [
+      ...prevAnswers,
+      {
+        questionId: questions[currentQuestion].questionId,
+        answerId: answerId,
+      },
+    ]);
+
+    const nextQuestion = currentQuestion + 1;
+    if (nextQuestion < questions.length) {
+      setCurrentQuestion(nextQuestion);
+    } else {
+      setShowScore(true);
+    }
+  };
+
+  const handleGetResultQuiz = async () => {
+    try {
+      const loginResponse = await axios.post('https://vietnam-history.azurewebsites.net/api/Auth/login', {
+        email: 'cong123@gmail.com',
+        password: '123456',
+      });
+      const accessToken = loginResponse.data.accessToken;
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
+      const quizId = new URLSearchParams(window.location.search).get('quizId');
+
+      const payload = {
+        quizId: quizId,
+        quizzes: userAnswers,
+      };
+
+      const response = await axios.post(
+        'https://vietnam-history.azurewebsites.net/api/Quizees/getResultQuiz',
+        payload,
+        config
+      );
+
+      console.log(response.data); // In ra console để kiểm tra dữ liệu trả về từ server
+
+      const quizScore = response.data.data.score;
+
+      setUserScore(quizScore);
+      // Hiển thị dữ liệu kết quả quiz trên giao diện hoặc thực hiện các thao tác khác với dữ liệu trả về từ server
+    } catch (error) {
+      console.error('Error getting quiz result:', error);
+    }
+  };
+
+  return (
+    <div className={cx('wapper-quiz10')}>
+      <div className={cx('inner-quiz10')}>
+        <div className={cx('Quiz10')}>
+          {questions.length > 0 ? (
+            showScore ? (
+              <div className='score-section'>
+                <button onClick={handleGetResultQuiz}>Get Quiz Result</button>
+                <p>Your scored {userScore}</p>
+              </div>
+            ) : (
+              <>
+                <div className='question-section'>
+                  <div className='question-count'>
+                    <span>Question {currentQuestion + 1}</span>/{questions.length}
+                  </div>
+                  <div className='question-text'>{questions[currentQuestion].questionText}</div>
+                </div>
+                <div className='answer-section'>
+                  {questions[currentQuestion].answerOptions.map((answerOption, index) => (
+                    <button
+                      key={index}
+                      onClick={() =>
+                        handleAnswerOptionClick(answerOption.isCorrect, answerOption.answerId)
+                      }
+                    >
+                      {answerOption.answerText}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )
+          ) : (
+            <div>Loading...</div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Quiz20;

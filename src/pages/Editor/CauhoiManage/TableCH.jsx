@@ -24,17 +24,10 @@ function TableCH() {
     useEffect(() => {
         const login = async () => {
             try {
-                // Đăng nhập vào tài khoản Editor và lấy mã thông báo truy cập
-                const response = await axios.post('https://vietnam-history.azurewebsites.net/api/Auth/login', {
-                    email: 'cong@gmail.com',
-                    password: '123456',
-                });
-                const accessToken = response.data.accessToken;
-
                 // Sử dụng mã thông báo truy cập để gửi các yêu cầu API khác
                 const config = {
                     headers: {
-                        Authorization: `Bearer ${accessToken}`,
+                        Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
                     },
                 };
 

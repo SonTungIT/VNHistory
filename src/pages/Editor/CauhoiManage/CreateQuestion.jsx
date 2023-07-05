@@ -11,17 +11,10 @@ function CreateQuestion({ setCreatedQuestionData }) {
 
   const handleCreateQuestion = async () => {
     try {
-      // Đăng nhập vào tài khoản Editor và lấy mã thông báo truy cập
-      const loginResponse = await axios.post('https://vietnam-history.azurewebsites.net/api/Auth/login', {
-        email: 'cong@gmail.com',
-        password: '123456'
-      });
-      const accessToken = loginResponse.data.accessToken;
-
       // Sử dụng mã thông báo truy cập để gửi yêu cầu API với phân quyền Editor
       const config = {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
         },
       };
 
@@ -32,8 +25,10 @@ function CreateQuestion({ setCreatedQuestionData }) {
       };
 
       const response = await axios.post('https://vietnam-history.azurewebsites.net/api/Question/createQuestion', questionData, config);
-      console.log('Câu hỏi đã được tạo:', response.data);
-      setCreatedQuestionData(prevData => [...prevData, response.data]);
+      if (localStorage.getItem('role') === 'Editor') {
+        console.log('Câu hỏi đã được tạo:', response.data);
+        setCreatedQuestionData(prevData => [...prevData, response.data]);
+      }
       // Update the created question data
     } catch (error) {
       console.error('Lỗi khi tạo câu hỏi:', error);
