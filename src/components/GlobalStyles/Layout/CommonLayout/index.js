@@ -1,14 +1,14 @@
 import classNames from 'classnames/bind';
-import Header from '../components/Header/Header';
 import styles from './CommonLayout.module.scss';
 import SidebarCommon from '../components/SidebarCommon/SidebarCommon';
+import HeaderLogin from '../components/Header/HeaderLogin';
 
 const cx = classNames.bind(styles);
 
 function CommonLayout({ children }) {
     return (
         <div className={cx('wapper')}>
-            <Header />
+            <HeaderLogin />
             <div className={cx('container')}>
                 <SidebarCommon />
                 <div className={cx('content')}>{children}</div>

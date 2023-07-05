@@ -1,14 +1,14 @@
 import classNames from 'classnames/bind';
-import Header from '../components/Header/Header';
 import styles from './EditorLayout.scss';
 import SidebarEditor from '../components/SidebarEditor/SidebarEditor';
+import HeaderLogin from '../components/Header/HeaderLogin';
 
 const cx = classNames.bind(styles);
 
 function EditorLayout({ children }) {
     return (
         <div className={cx('wapper')}>
-            <Header />
+            <HeaderLogin />
             <div className={cx('container')}>
                 <SidebarEditor />
                 <div className={cx('content')}>{children}</div>
