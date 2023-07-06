@@ -16,25 +16,70 @@ function PostDetail() {
         return date.toLocaleDateString('vi-VN', options);
     };
 
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch('https://vietnam-history.azurewebsites.net/api/posts', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                setPosts(result.data);
+            } else {
+                throw new Error(response.status);
+            }
+        } catch (error) {
+            console.log('error', error);
+        }
+    };
+
+    const handleButtonClick = (postId) => {
+        window.location.href = `/post?postId=${postId}`;
+    };
+
     return (
-        <div className={cx('wapper')}>
+        <div className={cx('wrapper')}>
             <span className={cx('title')}>Kết quả tìm kiếm</span>
 
-            {Array.isArray(parsedResults?.data) &&
-                parsedResults.data.map((item, index) => (
-                    <div className={cx('list-event')}>
-                        <img
-                            src="https://nguoikesu.com/images/wiki/nha-nguyen/f3ddf4ba5ac21a0f1ab37de7ccf99789.jpg"
-                            alt="img"
-                        />
+            {Array.isArray(parsedResults?.data) && parsedResults.data.length > 0 ? (
+                parsedResults.data.map((item, index) => {
+                    const post = posts.find((post) => post.postId === item.postId);
 
-                        <div className={cx('details-event')} key={index}>
-                            <span>{item.metaTitle}</span>
-                            <p>{item.summary}</p>
-                            <p>{formatDate(item.createdAt)}</p>
-                        </div>
-                    </div>
-                ))}
+                    if (post) {
+                        return (
+                            <div className={cx('list-event')} key={index}>
+                                <img
+                                    src="https://nguoikesu.com/images/wiki/nha-nguyen/f3ddf4ba5ac21a0f1ab37de7ccf99789.jpg"
+                                    alt="img"
+                                />
+                                <div className={cx('details-event')}>
+                                    <span>{post.metaTitle}</span>
+                                    <p>{post.summary}</p>
+                                    <p>{formatDate(post.createdAt)}</p>
+                                    <button
+                                        className={cx('btn-viewpost')}
+                                        onClick={() => handleButtonClick(post.postId)}
+                                    >
+                                        Xem bài đăng
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                    }
+
+                    return null;
+                })
+            ) : (
+                <p>No search results found.</p>
+            )}
         </div>
     );
 }
