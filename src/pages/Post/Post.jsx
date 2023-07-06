@@ -16,7 +16,6 @@ function Post() {
     const postId = searchParams.get('postId');
     const [postData, setPostData] = useState(null);
     const [metaContent, setMetaContent] = useState([]);
-    const [selectedContents, setSelectedContents] = useState('');
 
     useEffect(() => {
         const fetchPostData = async () => {
@@ -122,8 +121,11 @@ function Post() {
                                 <div className={cx('postmeta-child')}>
                                     {Array.isArray(metaContent?.data) &&
                                         metaContent.data.map((item) => (
-                                            <p key={item.id} onClick={() => setSelectedContents(item.contents)}>
-                                                {item.id}. {item.keys}
+                                            <p key={item.id}>
+                                                <p className={cx('postmeta-keys')}>
+                                                    {item.id}. {item.keys}
+                                                </p>
+                                                <p>{item.contents}</p>
                                             </p>
                                         ))}
                                 </div>
@@ -160,7 +162,6 @@ function Post() {
                                     </ul>
                                 )}
                             </div>
-                            {selectedContents && <p>{selectedContents}</p>}
                         </>
                     ) : (
                         <div>Loading post data...</div>
