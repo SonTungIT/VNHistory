@@ -231,9 +231,9 @@ function ThemMoi() {
                 <div className={cx('container-tm')}>
                     <PostMeta />
                 </div>
-                <div className={cx('container-tm')}>
+                {/* <div className={cx('container-tm')}>
                     <PostCmt />
-                </div>
+                </div> */}
 
                 <div className={cx('footer')}></div>
             </LayoutAdmin>

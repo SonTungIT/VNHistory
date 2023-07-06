@@ -87,16 +87,16 @@ function TableBD(props) {
             <table className="table-user">
                 <thead>
                     <tr>
-                        <th className="th-user">authorId</th>
+                        <th className="th-user">Người đăng</th>
                         <th className="th-user">parentId</th>
-                        <th className="th-user">metaTitle</th>
+                        <th className="th-user">Tiêu đề</th>
                         <th className="th-user">slug</th>
-                        <th className="th-user">summary</th>
-                        <th className="th-user">published</th>
-                        <th className="th-user">createdAt</th>
-                        <th className="th-user">updatedAt</th>
+                        <th className="th-user">Tóm tắt</th>
+                        <th className="th-user">Chế độ</th>
+                        <th className="th-user">Ngày tạo</th>
+                        <th className="th-user">Ngày cập nhật</th>
                         <th className="th-user">publishedAt</th>
-                        <th className="th-user">content</th>
+                        <th className="th-user">Nội dung</th>
                         <th className="th-user">PostMeta</th>
                         <th className="th-user"></th>
                     </tr>
@@ -113,7 +113,7 @@ function TableBD(props) {
                         return (
                             <React.Fragment key={post.postId}>
                                 <tr>
-                                    <td className="td-user">{post.authorId}</td>
+                                    <td className="td-user">{post.authorName}</td>
                                     <td className="td-user">{post.parentId !== null ? post.parentId : 'null'}</td>
                                     <td className="td-user" onClick={() => handleRowClick(post.postId)}>
                                         {isExpanded ? post.metaTitle : truncatedMetaTitle}

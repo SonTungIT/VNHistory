@@ -56,7 +56,9 @@ function HeaderLogin() {
                     </Button>
                     <div className={cx('right-logo')}>VNHistory</div>
                     <div className={cx('page')}>
-                        <Button className={cx('page-child')}>Trang chủ</Button>
+                        <Button to={config.routes.Login} className={cx('page-child')}>
+                            Trang chủ
+                        </Button>
                         <Button className={cx('page-child')}>Bài đăng</Button>
                     </div>
                 </div>
