@@ -191,3 +191,32 @@
         }
     }
 }
+
+.postmeta {
+    background-color: #f9f9f9;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    height: auto;
+    border: 2px solid #9c5025;
+    .postmeta-title {
+        font-size: 30px;
+        color: var(--font);
+        font-weight: 700;
+        width: fit-content;
+    }
+}
+
+.postmeta-child {
+    margin-top: 10px;
+    p {
+        font-size: 18px;
+        margin-bottom: 5px;
+        cursor: pointer;
+    }
+
+    .postmeta-keys {
+        font-size: 20px;
+        font-weight: 500;
+    }
+}

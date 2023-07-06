@@ -4,8 +4,8 @@ import Tippy from '@tippyjs/react/headless';
 import styles from './Menu.module.scss';
 import { useState } from 'react';
 import MenuItem from './MenuItem';
-import Header from '~/components/GlobalStyles/Layout/components/Header/Header';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
+import HeaderLogin from '~/components/GlobalStyles/Layout/components/Header/HeaderLogin';
 
 const cx = classNames.bind(styles);
 
@@ -42,7 +42,7 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
     const renderResult = (attrs) => (
         <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
             <PopperWrapper className={cx('menu-popper')}>
-                {history.length > 1 && <Header title={current.title} onBack={handleBack} />}
+                {history.length > 1 && <HeaderLogin title={current.title} onBack={handleBack} />}
                 <div className={cx('menu-body')}>{renderItems()}</div>
             </PopperWrapper>
         </div>

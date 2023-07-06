@@ -9,6 +9,8 @@ function TableBD(props) {
     const [ediBDModal, setEditBDModal] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
 
+    const infoUser = JSON.parse(localStorage.getItem('infoUser'));
+
     useEffect(() => {
         // Fetch data from the API
         fetchData();

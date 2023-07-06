@@ -15,6 +15,7 @@ function Post() {
     const searchParams = new URLSearchParams(window.location.search);
     const postId = searchParams.get('postId');
     const [postData, setPostData] = useState(null);
+    const [metaContent, setMetaContent] = useState([]);
 
     useEffect(() => {
         const fetchPostData = async () => {
@@ -28,6 +29,22 @@ function Post() {
         };
 
         fetchPostData();
+    }, [postId]);
+
+    useEffect(() => {
+        const fetchPostMeta = async () => {
+            try {
+                const response = await fetch(
+                    `https://vietnam-history.azurewebsites.net/api/postmetas/post/${postId}/meta`,
+                );
+                const result = await response.json();
+                setMetaContent(result);
+            } catch (error) {
+                console.error('Error fetching post meta:', error);
+            }
+        };
+
+        fetchPostMeta();
     }, [postId]);
 
     const handleDropdownToggle = () => {
@@ -76,6 +93,12 @@ function Post() {
         }
     };
 
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const date = new Date(dateString);
+        return date.toLocaleDateString('vi-VN', options);
+    };
+
     return (
         <div className={cx('wapper')}>
             <div className={cx('inner')}>
@@ -84,7 +107,7 @@ function Post() {
                         <>
                             <div className={cx('title')}>
                                 <div className={cx('title-post')}>{postData.data.metaTitle}</div>
-                                <p className={cx('title-date')}>{postData.data.createdAt}</p>
+                                <p className={cx('title-date')}>{formatDate(postData.data.createdAt)}</p>
                             </div>
                             <div className={cx('poster')}>
                                 <img
@@ -93,6 +116,20 @@ function Post() {
                                 />
                             </div>
                             <div className={cx('detail-post')}>{postData.data.summary}</div>
+                            <div className={cx('postmeta')}>
+                                <div className={cx('postmeta-title')}>Nội dung bài viết: </div>
+                                <div className={cx('postmeta-child')}>
+                                    {Array.isArray(metaContent?.data) &&
+                                        metaContent.data.map((item) => (
+                                            <p key={item.id}>
+                                                <p className={cx('postmeta-keys')}>
+                                                    {item.id}. {item.keys}
+                                                </p>
+                                                <p>{item.contents}</p>
+                                            </p>
+                                        ))}
+                                </div>
+                            </div>
                             <div className={cx('dropdown')}>
                                 <button className={cx('btn')} type="button" onClick={handleDropdownToggle}>
                                     Quiz
