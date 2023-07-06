@@ -97,6 +97,7 @@ function TableBD(props) {
                         <th className="th-user">Ngày cập nhật</th>
                         <th className="th-user">publishedAt</th>
                         <th className="th-user">Nội dung</th>
+                        <th className="th-user">Thể loại</th>
                         <th className="th-user">PostMeta</th>
                         <th className="th-user"></th>
                     </tr>
@@ -129,6 +130,7 @@ function TableBD(props) {
                                     <td className="td-user">{formatDate(post.updatedAt)}</td>
                                     <td className="td-user">{formatDate(post.publishedAt)}</td>
                                     <td className="td-user">{post.content}</td>
+                                    <td className="td-user">{post.categoryNames}</td>
                                     <td className="td-user">
                                         <button className="btn-function">
                                             <AddIcon />

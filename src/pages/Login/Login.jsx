@@ -15,6 +15,7 @@ function Login() {
     ];
 
     const [posts, setPosts] = useState([]);
+    const [selectedPostId, setSelectedPostId] = useState(null);
 
     useEffect(() => {
         // Fetch data from the API
@@ -52,6 +53,7 @@ function Login() {
     };
 
     const handleButtonClick = (postId) => {
+        setSelectedPostId(postId);
         window.location.href = `/post?postId=${postId}`;
     };
 
@@ -111,7 +113,7 @@ function Login() {
                 </div>
             </div>
             {posts.slice(1).map((post) => (
-                <Button to={config.routes.Post} key={post.postId} onClick={() => handleButtonClick(posts[1].postId)}>
+                <Button to={config.routes.Post} key={post.postId} onClick={() => handleButtonClick(post.postId)}>
                     <div className={cx('list-event')}>
                         <img
                             src="https://nguoikesu.com/images/wiki/nha-nguyen/f3ddf4ba5ac21a0f1ab37de7ccf99789.jpg"

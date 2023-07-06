@@ -10,6 +10,12 @@ function PostDetail() {
     const searchResults = new URLSearchParams(location.search).get('searchResults');
     const parsedResults = JSON.parse(searchResults);
 
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const date = new Date(dateString);
+        return date.toLocaleDateString('vi-VN', options);
+    };
+
     return (
         <div className={cx('wapper')}>
             <span className={cx('title')}>Kết quả tìm kiếm</span>
@@ -25,7 +31,7 @@ function PostDetail() {
                         <div className={cx('details-event')} key={index}>
                             <span>{item.metaTitle}</span>
                             <p>{item.summary}</p>
-                            <p>{item.createdAt}</p>
+                            <p>{formatDate(item.createdAt)}</p>
                         </div>
                     </div>
                 ))}
