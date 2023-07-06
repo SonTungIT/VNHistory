@@ -1,17 +1,33 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './CreateQuestion.scss';
 const cx = classNames.bind(styles);
 
 function CreateQuestion({ setCreatedQuestionData }) {
+  const [events, setEvents] = useState([]);
   const [eventId, setEventId] = useState(0);
   const [questionText, setQuestionText] = useState('');
   const [difficultyLevel, setDifficultyLevel] = useState('');
 
+  useEffect(() => {
+    // Fetch events data
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get('https://vietnam-history.azurewebsites.net/api/events');
+        setEvents(response.data.data);
+      } catch (error) {
+        console.error('Error fetching events:', error);
+        // Handle the error
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
   const handleCreateQuestion = async () => {
     try {
-      // Sử dụng mã thông báo truy cập để gửi yêu cầu API với phân quyền Editor
+      // Use the access token to send API request with Editor permission
       const config = {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
@@ -21,17 +37,22 @@ function CreateQuestion({ setCreatedQuestionData }) {
       const questionData = {
         eventId: eventId,
         questionText: questionText,
-        difficultyLevel: difficultyLevel
+        difficultyLevel: difficultyLevel,
       };
 
-      const response = await axios.post('https://vietnam-history.azurewebsites.net/api/Question/createQuestion', questionData, config);
+      const response = await axios.post(
+        'https://vietnam-history.azurewebsites.net/api/Question/createQuestion',
+        questionData,
+        config
+      );
+
       if (localStorage.getItem('role') === 'Editor') {
-        console.log('Câu hỏi đã được tạo:', response.data);
+        console.log('Created question:', response.data);
         setCreatedQuestionData(prevData => [...prevData, response.data]);
       }
       // Update the created question data
     } catch (error) {
-      console.error('Lỗi khi tạo câu hỏi:', error);
+      console.error('Error creating question:', error);
       // Handle the error
     }
   };
@@ -39,20 +60,27 @@ function CreateQuestion({ setCreatedQuestionData }) {
   return (
     <div className={cx('CreateQuestion')}>
       <div className={cx('Question')}>
-        <h2 className={cx('title')}>Tạo câu hỏi</h2>
+        <h2 className={cx('title')}>Create Question</h2>
         <div className={cx('EventID')}>
-          <label>Event ID:</label>
-          <input type="number" value={eventId} onChange={e => setEventId(parseInt(e.target.value))} />
+          <label>Event:</label>
+          <select value={eventId} onChange={e => setEventId(parseInt(e.target.value))}>
+            <option value={0}>Select an event</option>
+            {events.map(event => (
+              <option key={event.eventId} value={event.eventId}>
+                {event.eventName}
+              </option>
+            ))}
+          </select>
         </div>
         <div className={cx('QuestionText')}>
-          <label>Text câu hỏi:</label>
+          <label>Question Text:</label>
           <input type="text" value={questionText} onChange={e => setQuestionText(e.target.value)} />
         </div>
         <div className={cx('DifficultyLevel')}>
-          <label>Độ khó:</label>
+          <label>Difficulty Level:</label>
           <input type="text" value={difficultyLevel} onChange={e => setDifficultyLevel(e.target.value)} />
         </div>
-        <button onClick={handleCreateQuestion}>Tạo câu hỏi</button>
+        <button onClick={handleCreateQuestion}>Create Question</button>
       </div>
     </div>
   );
