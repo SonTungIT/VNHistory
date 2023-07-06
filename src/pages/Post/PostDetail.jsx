@@ -63,7 +63,10 @@ function PostDetail() {
                                 <div className={cx('details-event')}>
                                     <span>{post.metaTitle}</span>
                                     <p>{post.summary}</p>
-                                    <p>{formatDate(post.createdAt)}</p>
+                                    <div className={cx('createAt')}>
+                                        <p>{formatDate(post.createdAt)}</p>
+                                        <p>{post.categoryNames}</p>
+                                    </div>
                                     <button
                                         className={cx('btn-viewpost')}
                                         onClick={() => handleButtonClick(post.postId)}

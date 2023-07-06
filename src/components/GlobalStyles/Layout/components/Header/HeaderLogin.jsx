@@ -82,7 +82,7 @@ function HeaderLogin() {
                         <Button to={config.routes.Login} className={cx('page-child')}>
                             Trang chủ
                         </Button>
-                        <Button className={cx('page-child')}>Bài đăng</Button>
+                        {/* <Button className={cx('page-child')}>Bài đăng</Button> */}
                     </div>
                 </div>
                 <div className={cx('search')}>

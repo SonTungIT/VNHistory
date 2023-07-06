@@ -117,21 +117,30 @@ function Post() {
                             </div>
                             <div className={cx('detail-post')}>{postData.data.summary}</div>
                             <div className={cx('postmeta')}>
-                                <div className={cx('postmeta-title')}>Nội dung bài viết: </div>
+                                <div className={cx('postmeta-title')}>Mục Lục: </div>
                                 <div className={cx('postmeta-child')}>
                                     {Array.isArray(metaContent?.data) &&
-                                        metaContent.data.map((item) => (
+                                        metaContent.data.map((item, index) => (
                                             <p key={item.id}>
                                                 <p className={cx('postmeta-keys')}>
-                                                    {item.id}. {item.keys}
+                                                    {index + 1}. {item.keys}
                                                 </p>
                                             </p>
                                         ))}
                                 </div>
                             </div>
                             {Array.isArray(metaContent?.data) &&
-                                metaContent.data.map((item) => (
-                                    <div className={cx('postmeta-contents')}>{item.contents}</div>
+                                metaContent.data.map((item, index) => (
+                                    <div className={cx('postmeta-contents')}>
+                                        <p key={item.id}>
+                                            <p className={cx('postmeta-keys-contents')}>
+                                                <h4>
+                                                    {index + 1}. {item.keys}
+                                                </h4>
+                                                <p className={cx('postmeta-keys-title')}>{item.contents}</p>
+                                            </p>
+                                        </p>
+                                    </div>
                                 ))}
                             <div className={cx('dropdown')}>
                                 <button className={cx('btn')} type="button" onClick={handleDropdownToggle}>
