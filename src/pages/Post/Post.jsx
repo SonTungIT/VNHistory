@@ -125,11 +125,14 @@ function Post() {
                                                 <p className={cx('postmeta-keys')}>
                                                     {item.id}. {item.keys}
                                                 </p>
-                                                <p>{item.contents}</p>
                                             </p>
                                         ))}
                                 </div>
                             </div>
+                            {Array.isArray(metaContent?.data) &&
+                                metaContent.data.map((item) => (
+                                    <div className={cx('postmeta-contents')}>{item.contents}</div>
+                                ))}
                             <div className={cx('dropdown')}>
                                 <button className={cx('btn')} type="button" onClick={handleDropdownToggle}>
                                     Quiz

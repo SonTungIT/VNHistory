@@ -33,6 +33,10 @@ const routes = {
     //postmeta
     postmeta: '/BaidangMange/postmeta',
     postcmt: '/BaidangMange/postcmt',
+
+    //PostDetail
+
+    postdetail: '/postdetail',
 };
 
 export default routes;
