@@ -4,7 +4,7 @@
     @include flex(center, start, column);
     gap: 20px;
     height: auto;
-    width: 10vw;
+    width: 12vw;
     // background-color: var(--primary);
 
     .btn-category {
@@ -25,6 +25,7 @@
             font-size: 14px;
             border-bottom: 1px solid #999999ef;
             width: 100%;
+            text-align: center;
         }
     }
 }

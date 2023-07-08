@@ -12,7 +12,6 @@ import PostCmt from '../BaidangManage/PostCmt/PostCmt';
 const cx = classNames.bind(styles);
 
 function ThemMoi() {
-    const [authorId, setAuthorId] = useState('');
     const [parentId, setParentId] = useState('');
     const [metaTitle, setMetaTitle] = useState('');
     const [slug, setSlug] = useState('');
@@ -22,6 +21,7 @@ function ThemMoi() {
     const [updatedAt, setUpdatedAt] = useState(null);
     const [publishedAt, setPublishedAt] = useState(null);
     const [content, setContent] = useState('');
+    const [category, setCategory] = useState([]);
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = () => {
@@ -46,7 +46,6 @@ function ThemMoi() {
         myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
 
         const payload = {
-            authorId: Number(authorId),
             parentId: parentId ? Number(parentId) : null,
             metaTitle,
             slug,
@@ -56,6 +55,7 @@ function ThemMoi() {
             updatedAt: updatedAt ? updatedAt.toISOString() : null,
             publishedAt: publishedAt ? publishedAt.toISOString() : null,
             content,
+            category,
         };
 
         var requestOptions = {
@@ -79,7 +79,6 @@ function ThemMoi() {
     };
 
     const handleCancel = () => {
-        setAuthorId('');
         setParentId('');
         setMetaTitle('');
         setSlug('');
@@ -89,6 +88,7 @@ function ThemMoi() {
         setUpdatedAt(null);
         setPublishedAt(null);
         setContent('');
+        setCategory('');
     };
 
     return (
@@ -107,16 +107,6 @@ function ThemMoi() {
                     <form className="form-input" onSubmit={handleSubmit}>
                         <div className="body-tm">
                             <label className="label-input">
-                                {/* authorId */}
-                                <div className="input-detail-tm">
-                                    <p>authorId: </p>
-                                    <input
-                                        type="text"
-                                        placeholder="authorId"
-                                        value={authorId}
-                                        onChange={(e) => setAuthorId(e.target.value)}
-                                    />
-                                </div>
                                 {/* parentId */}
                                 <div className="input-detail-tm">
                                     <p>parentId: </p>
@@ -215,6 +205,16 @@ function ThemMoi() {
                                         onChange={(e) => setContent(e.target.value)}
                                     />
                                 </div>
+                                {/* category */}
+                                <div className="input-detail-tm">
+                                    <p>category: </p>
+                                    <input
+                                        type="text"
+                                        placeholder="category"
+                                        value={category}
+                                        onChange={(e) => setCategory(e.target.value)}
+                                    />
+                                </div>
                             </label>
                         </div>
                         <div className="footer">
@@ -231,9 +231,9 @@ function ThemMoi() {
                 <div className={cx('container-tm')}>
                     <PostMeta />
                 </div>
-                <div className={cx('container-tm')}>
+                {/* <div className={cx('container-tm')}>
                     <PostCmt />
-                </div>
+                </div> */}
 
                 <div className={cx('footer')}></div>
             </LayoutAdmin>
