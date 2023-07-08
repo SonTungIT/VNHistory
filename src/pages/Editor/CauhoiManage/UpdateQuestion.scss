@@ -1,0 +1,54 @@
+.tr-update {
+    top: 0%;
+    right: 0%;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9;
+
+    .td-update {
+        background-color: aliceblue;
+        width: 500px;
+        height: 300px;
+        border-radius: 13px;
+
+        .div-update {
+            font-size: 35px;
+            font-weight: 300px;
+            padding-bottom: 20px;
+            padding-top: 20px;
+        }
+
+        .form-group {
+            font-size: 30px;
+
+            .input-question {
+                width: 400px;
+                height: 30px;
+                border-radius: 13px;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .difficultyLevel {
+                margin-right: 20px;
+            }
+
+            .input-difficultyLevel {
+                width: 80px;
+                height: 30px;
+                border-radius: 13px;
+            }
+        }
+
+        .submit {
+            background-color: burlywood;
+            color: aliceblue;
+            margin-top: 20px;
+        }
+    }
+}

@@ -22,6 +22,7 @@ import PostMetaManage from '~/pages/Editor/PostMetaManage/PostMetaManage';
 import PostComments from '~/pages/Editor/PostComments/PostComments';
 import CreateQuestion from '~/pages/Editor/CauhoiManage/CreateQuestion';
 import CreateAnswer from '~/pages/Editor/CauhoiManage/CreateAnswer';
+import UpdateQuestion from '~/pages/Editor/CauhoiManage/UpdateQuestion';
 
 const publicRoutes = [
     { path: config.routes.Home, component: Home, layout: DefaultLayout },
@@ -39,6 +40,7 @@ const publicRoutes = [
     { path: config.routes.SukienManage, component: SukienManage, layout: EditorLayout },
     { path: config.routes.CreateQuestion, component: CreateQuestion, layout: EditorLayout },
     { path: config.routes.CreateAnswer, component: CreateAnswer, layout: EditorLayout },
+    { path: config.routes.UpdateQuestion, component: UpdateQuestion, layout: EditorLayout },
 
     //User
     { path: config.routes.Detail, component: Detail, layout: DefaultLayout },

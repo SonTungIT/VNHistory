@@ -22,6 +22,7 @@ const routes = {
     SukienManage: '/SukienManage',
     CreateQuestion: '/CreateQuestion',
     CreateAnswer: '/CreateAnswer',
+    UpdateQuestion: '/UpdateQuestion',
 
     //quiz
     Quiz10: '/Quiz10',
