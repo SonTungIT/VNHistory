@@ -7,12 +7,6 @@ import Button from '~/components/GlobalStyles/Layout/components/Button';
 const cx = classNames.bind(styles);
 
 function Login() {
-    const data = [
-        { No: 1, Tên: 'Tùng', Email: 'tu*****on@gmail.com', Score: 85 },
-        { No: 2, Tên: 'Công', Email: 'nguy****ng@gmail.com', Score: 92 },
-        { No: 3, Tên: 'Trung', Email: 'trun****yen@gmail.com', Score: 78 },
-        { No: 4, Tên: 'Văn', Email: 'van****yen@gmail.com', Score: 89 },
-    ];
 
     const [posts, setPosts] = useState([]);
     const [selectedPostId, setSelectedPostId] = useState(null);
@@ -57,6 +51,28 @@ function Login() {
         window.location.href = `/post?postId=${postId}`;
     };
 
+    const [topTenUsers, setTopTenUsers] = useState([]);
+    const [selectedData, setSelectedData] = useState('getTopTenUser');
+
+    useEffect(() => {
+        fetchRank();
+    }, [selectedData]);
+
+    const fetchRank = () => {
+        let url = selectedData === 'getTopTenUser' ? 'https://vietnam-history.azurewebsites.net/api/User/getTopTenUser' : 'https://vietnam-history.azurewebsites.net/api/User/getTopTenUsersByMonth';
+
+        fetch(url)
+            .then((response) => response.json())
+            .then((result) => {
+                setTopTenUsers(result.data);
+            })
+            .catch((error) => console.log('Error fetching data:', error));
+    };
+
+    const handleButtonClickRank = (data) => {
+        setSelectedData(data);
+    };
+
     return (
         <div className={cx('wapper')}>
             <div className={cx('inner')}>
@@ -84,27 +100,31 @@ function Login() {
                     <div className={cx('header')}>
                         <span className={cx('title')}>BXH</span>
                         <div className={cx('button')}>
-                            <Button small> Tháng </Button>
-                            <Button small> Tổng </Button>
+                            <Button small onClick={() => handleButtonClickRank('getTopTenUsersByMonth')}>
+                                Tháng
+                            </Button>
+                            <Button small onClick={() => handleButtonClickRank('getTopTenUser')}>
+                                Tổng
+                            </Button>
                         </div>
                     </div>
                     <div className={cx('body')}>
-                        <table className={cx('table')}>
+                        <table className={cx('table-home')}>
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Tên</th>
+                                    <th>Name</th>
                                     <th>Email</th>
                                     <th>Score</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((item) => (
-                                    <tr className={cx('table-tr')} key={item.No}>
-                                        <td>{item.No}</td>
-                                        <td>{item.Tên}</td>
-                                        <td>{item.Email}</td>
-                                        <td>{item.Score}</td>
+                                {topTenUsers.map((user, index) => (
+                                    <tr className={cx('table-tr')} key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{user.name}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.score}</td>
                                     </tr>
                                 ))}
                             </tbody>

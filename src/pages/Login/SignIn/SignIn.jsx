@@ -57,7 +57,7 @@ function SignIn() {
                             if (localStorage.getItem('role') === 'Admin') {
                                 navigate('/UserManage');
                             } else if (localStorage.getItem('role') === 'Member') {
-                                navigate('/home');
+                                navigate('/');
                             } else {
                                 navigate('/BaidangMange');
                             }

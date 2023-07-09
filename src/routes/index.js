@@ -24,6 +24,7 @@ import CreateQuestion from '~/pages/Editor/CauhoiManage/CreateQuestion';
 import CreateAnswer from '~/pages/Editor/CauhoiManage/CreateAnswer';
 import UpdateQuestion from '~/pages/Editor/CauhoiManage/UpdateQuestion';
 import PostDetail from '~/pages/Post/PostDetail';
+import UpdateAnswer from '~/pages/Editor/CauhoiManage/UpdateAnswer'
 
 const publicRoutes = [
     { path: config.routes.Home, component: Home, layout: DefaultLayout },
@@ -42,6 +43,7 @@ const publicRoutes = [
     { path: config.routes.CreateQuestion, component: CreateQuestion, layout: EditorLayout },
     { path: config.routes.CreateAnswer, component: CreateAnswer, layout: EditorLayout },
     { path: config.routes.UpdateQuestion, component: UpdateQuestion, layout: EditorLayout },
+    { path: config.routes.UpdateAnswer, component: UpdateAnswer, layout: EditorLayout },
 
     //User
     { path: config.routes.Detail, component: Detail, layout: DefaultLayout },

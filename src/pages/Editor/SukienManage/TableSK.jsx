@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../../Admin/Table.scss';
-import { DeleteIcon, EditIcon } from '~/components/GlobalStyles/Layout/components/Icons';
+import { DeleteIcon, EditIcon, VisibilityIcon } from '~/components/GlobalStyles/Layout/components/Icons';
 import EditModal from './ImportModal/EditModal';
+import { Link } from 'react-router-dom';
 
 function TableSK(props) {
     const [events, setEvents] = useState([]);
@@ -69,6 +70,10 @@ function TableSK(props) {
         setSelectedEvent(event);
         setEditModal(true);
     };
+    const handleViewQuestion = (event) => {
+        setSelectedEvent(event);
+        console.log(event);
+    };
 
     return (
         <>
@@ -95,6 +100,11 @@ function TableSK(props) {
                                 </button>
                                 <button className="btn-function" onClick={() => handleDelete(event.eventId)}>
                                     <DeleteIcon />
+                                </button>
+                                <button className="btn-function">
+                                    <Link to={`/CauhoiManage?eventId=${event.eventId}`}>
+                                        <VisibilityIcon />
+                                    </Link>
                                 </button>
                             </td>
                         </tr>

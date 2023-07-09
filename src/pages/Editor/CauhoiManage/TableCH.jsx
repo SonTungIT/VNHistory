@@ -2,22 +2,30 @@ import React, { useEffect, useState } from 'react';
 import '../../Admin/Table.scss';
 import Menu from '~/components/Popper/Menu';
 import {
-  CancelIcon,
   DeleteIcon,
   HorizontalIcon,
   VisibilityIcon,
-  VisibilityOffIcon,
+  EditIcon,
 } from '~/components/GlobalStyles/Layout/components/Icons';
 import axios from 'axios';
 import UpdateQuestion from './UpdateQuestion';
 import config from '~/config';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import '../../Admin/Table.scss';
 
 function TableCH() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const eventId = queryParams.get('eventId');
+  console.log(location.search);
+
   const [questionData, setQuestionData] = useState([]);
   const [answerData, setAnswerData] = useState([]);
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
   const [updatedQuestionData, setUpdatedQuestionData] = useState({});
+  
 
   useEffect(() => {
     const login = async () => {
@@ -30,7 +38,7 @@ function TableCH() {
 
         // Fetch question data
         const response = await axios.get(
-          'https://vietnam-history.azurewebsites.net/api/Question/getAllQuestions',
+          `https://vietnam-history.azurewebsites.net/api/Question/getQuestionsByEventId/${eventId}`,
           config
         );
         setQuestionData(response.data.data);
@@ -81,10 +89,9 @@ function TableCH() {
 
   const handleQuestionUpdate = async (updatedQuestionData) => {
     try {
-      const accessToken = localStorage.getItem('accessToken');
       const config = {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
         },
       };
 
@@ -96,7 +103,7 @@ function TableCH() {
 
       // Fetch updated question data
       const response = await axios.get(
-        'https://vietnam-history.azurewebsites.net/api/Question/getAllQuestions',
+        `https://vietnam-history.azurewebsites.net/api/Question/getQuestionsByEventId/${eventId}`,
         config
       );
       setQuestionData(response.data.data);
@@ -114,8 +121,8 @@ function TableCH() {
         <tr>
           <th className="th-user">Text câu hỏi</th>
           <th className="th-user">Độ khó</th>
-          <th className="th-user">Câu trả lời</th>
-          <th className="th-user">Hành động</th>
+          <th className="th-user"></th>
+          <th className="th-user">View Answer</th>
         </tr>
       </thead>
       <tbody>
@@ -131,25 +138,34 @@ function TableCH() {
                 <td className="td-user">{question.questionText}</td>
                 <td className="td-user">{question.difficultyLevel}</td>
                 <td className="td-user">
-                  {answer
+                  {/* {answer
                     ? answer.answerItems.map((answer) => answer.answerText).join(', ')
-                    : ''}
-                </td>
-                <td className="td-user">
+                    : ''} */}
+                  
+
                   {isUpdating ? (
                     <UpdateQuestion
                       question={updatedQuestionData}
                       handleQuestionUpdate={handleQuestionUpdate}
                     />
                   ) : (
-                    <Button
+                    <button
                       className="btn-function"
                       onClick={() => handleUpdateQuestion(question.questionId)}
                     //   to={config.routes.UpdateQuestion}
                     >
-                      Update Question
-                    </Button>
+                      <EditIcon/>
+                    </button>
                   )}
+
+                  <DeleteIcon />
+                </td>
+                <td className="td-user">
+                  <button className="btn-function">
+                      <Link to={`/UpdateAnswer?questionId=${question.questionId}`}>
+                        <VisibilityIcon/>
+                      </Link>
+                    </button>
                 </td>
               </tr>
               {isUpdating && (

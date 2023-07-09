@@ -51,26 +51,38 @@ function Post() {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
+    const [events, setEvents] = useState([]);
+    const [eventId, setEventId] = useState(0);
+
+    useEffect(() => {
+        // Fetch events data
+        const fetchEvents = async () => {
+          try {
+            const response = await axios.get('https://vietnam-history.azurewebsites.net/api/events');
+            setEvents(response.data.data);
+          } catch (error) {
+            console.error('Error fetching events:', error);
+            // Handle the error
+          }
+        };
+    
+        fetchEvents();
+      }, []);
+
     const handleQuizSelection = async (numberQuestion, time) => {
         setSelectedNumberQuestion(numberQuestion);
         setSelectedTime(time);
 
         try {
-            const loginResponse = await axios.post('https://vietnam-history.azurewebsites.net/api/Auth/login', {
-                email: 'cong123@gmail.com',
-                password: '123456',
-            });
-            const accessToken = loginResponse.data.accessToken;
-
             // Sử dụng mã thông báo truy cập để gửi yêu cầu API với phân quyền Editor
             const config = {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
                 },
             };
 
             const answerData = {
-                eventId: '1',
+                eventId: eventId,
                 numberQuestion: numberQuestion,
                 time: time,
             };
@@ -149,9 +161,16 @@ function Post() {
                                 {isDropdownOpen && (
                                     <ul className={cx('dropdown-menu')}>
                                         <div className={cx('quiz')}>
-                                            <div className={cx('title-quiz')}>
-                                                Lịch sử đất nước Việt Nam thời kỳ Đại Cồ Việt
-                                            </div>
+                                        <div className={cx('title-quiz')}>
+                                            <select value={eventId} onChange={e => setEventId(parseInt(e.target.value))}>
+                                                <option value={0}>Select an event</option>
+                                                {events.map(event => (
+                                                <option key={event.eventId} value={event.eventId}>
+                                                    {event.eventName}
+                                                </option>
+                                                ))}
+                                            </select>
+                                        </div>
                                             <div className={cx('establish-quiz')}>Thiết lập bài kiểm tra</div>
                                             <div className={cx('number-quiz')}>Câu hỏi (tối đa) - Thời gian</div>
                                             <div className={cx('btn-quiz')}>
@@ -163,12 +182,14 @@ function Post() {
                                                         10 câu - 135 giây
                                                     </button>
                                                 </Link>
-                                                <button
-                                                    className={cx('btn-quiz20')}
-                                                    onClick={() => handleQuizSelection('20', 270)}
-                                                >
-                                                    20 câu - 270 giây
-                                                </button>
+                                                <Link to={`/Quiz20?quizId=${quizId}`}>
+                                                    <button
+                                                        className={cx('btn-quiz20')}
+                                                        onClick={() => handleQuizSelection('20', 270)}
+                                                    >
+                                                        20 câu - 270 giây
+                                                    </button>
+                                                </Link>
                                             </div>
                                         </div>
                                     </ul>

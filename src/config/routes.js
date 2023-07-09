@@ -23,6 +23,7 @@ const routes = {
     CreateQuestion: '/CreateQuestion',
     CreateAnswer: '/CreateAnswer',
     UpdateQuestion: '/UpdateQuestion',
+    UpdateAnswer: '/UpdateAnswer',
 
     //quiz
     Quiz10: '/Quiz10',

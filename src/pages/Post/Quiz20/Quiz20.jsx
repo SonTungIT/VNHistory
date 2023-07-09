@@ -77,15 +77,9 @@ function Quiz20() {
 
   const handleGetResultQuiz = async () => {
     try {
-      const loginResponse = await axios.post('https://vietnam-history.azurewebsites.net/api/Auth/login', {
-        email: 'cong123@gmail.com',
-        password: '123456',
-      });
-      const accessToken = loginResponse.data.accessToken;
-
       const config = {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
         },
       };
 
@@ -114,14 +108,14 @@ function Quiz20() {
   };
 
   return (
-    <div className={cx('wapper-quiz10')}>
-      <div className={cx('inner-quiz10')}>
-        <div className={cx('Quiz10')}>
+    <div className={cx('wapper-quiz20')}>
+      <div className={cx('inner-quiz20')}>
+        <div className={cx('Quiz20')}>
           {questions.length > 0 ? (
             showScore ? (
               <div className='score-section'>
                 <button onClick={handleGetResultQuiz}>Get Quiz Result</button>
-                <p>Your scored {userScore}</p>
+                <p className='p-section'>Your scored {userScore}</p>
               </div>
             ) : (
               <>
