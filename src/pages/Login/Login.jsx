@@ -123,7 +123,7 @@ function Login() {
                                     <tr className={cx('table-tr')} key={index}>
                                         <td>{index + 1}</td>
                                         <td>{user.name}</td>
-                                        <td>{user.email}</td>
+                                        <td>{user.email.replace(/(?<=.{3}).(?=[^@]*?@)/g, '*')}</td>
                                         <td>{user.score}</td>
                                     </tr>
                                 ))}

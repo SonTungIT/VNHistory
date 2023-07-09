@@ -22,9 +22,9 @@ function CauhoiManage() {
                 <Button primary leftIcon={<AddIcon />} to={config.routes.CreateQuestion} setCreatedQuestionData={setCreatedQuestionData}>
                         THÊM MỚI QUESTION
                 </Button>
-                <Button primary leftIcon={<AddIcon />} to={config.routes.CreateAnswer} setCreatedAnswerData={setCreatedAnswerData}>
+                {/* <Button primary leftIcon={<AddIcon />} to={config.routes.CreateAnswer} setCreatedAnswerData={setCreatedAnswerData}>
                         THÊM MỚI ANSWER
-                </Button>
+                </Button> */}
             </div>
             <div className={cx('question')}>
                 {/* <CreateQuestion setCreatedQuestionData={setCreatedQuestionData} />

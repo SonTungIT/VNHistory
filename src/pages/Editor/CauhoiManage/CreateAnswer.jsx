@@ -2,10 +2,14 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './CreateAnswer.scss';
+import { useLocation } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function CreateAnswer({ setCreatedAnswerData }) {
-  const [questionId, setQuestionId] = useState(0);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const questionId = queryParams.get('questionId');
+
   const [answerText, setAnswerText] = useState('');
   const [isCorrect, setIsCorrect] = useState(false);
   const [questions, setQuestions] = useState([]);
@@ -18,27 +22,19 @@ function CreateAnswer({ setCreatedAnswerData }) {
 
   const fetchQuestions = async () => {
     try {
-      const response = await axios.get('https://vietnam-history.azurewebsites.net/api/Question/getAllQuestions', config);
+      const response = await axios.get(`https://vietnam-history.azurewebsites.net/api/Question/getQuestionsById/${questionId}`, config);
       setQuestions(response.data.data);
     } catch (error) {
       console.error('Lỗi khi lấy danh sách câu hỏi:', error);
-      // Handle the error
     }
   };
 
   useEffect(() => {
     fetchQuestions();
-  }, []);
+  }, [questionId]);
 
   const handleCreateAnswer = async () => {
     try {
-      // Sử dụng mã thông báo truy cập để gửi yêu cầu API với phân quyền Editor
-      const config = {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
-        },
-      };
-
       const answerData = {
         questionId: questionId,
         answerText: answerText,
@@ -50,12 +46,13 @@ function CreateAnswer({ setCreatedAnswerData }) {
         console.log('Câu trả lời đã được tạo:', response.data);
         setCreatedAnswerData(prevData => [...prevData, response.data]);
       }
-      // Update the created answer data
     } catch (error) {
       console.error('Lỗi khi tạo câu trả lời:', error);
-      // Handle the error
     }
   };
+
+  // Extract the questionId from the first question in the array
+  const displayQuestionId = questions.questionText;
 
   return (
     <div className={cx('CreateAnswer')}>
@@ -63,20 +60,8 @@ function CreateAnswer({ setCreatedAnswerData }) {
         <h2 className={cx('title')}>Tạo câu trả lời</h2>
         <div className={cx('QuestionText')}>
           <label>Question Text:</label>
-          {/* <ul>
-            {questions.map(question => (
-              <li key={question.questionId}>{question.questionText}</li>
-            ))}
-          </ul> */}
-          <select value={questionId} onChange={e => setQuestionId(parseInt(e.target.value))}>
-            <option value={0}>Select an question</option>
-            {questions.map(question => (
-              <option key={question.questionId} value={question.questionId}>
-                {question.questionText}
-              </option>
-            ))}
-          </select>
-        </div>        
+          <label>{displayQuestionId}</label>
+        </div>
         <div className={cx('AnswerText')}>
           <label>Câu trả lời:</label>
           <input type="text" value={answerText} onChange={e => setAnswerText(e.target.value)} />

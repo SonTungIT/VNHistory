@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 import classNames from 'classnames/bind';
 import styles from './UpdateAnswer.scss';
+import { AddIcon } from '~/components/GlobalStyles/Layout/components/Icons';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -12,6 +14,7 @@ function UpdateAnswer() {
   const queryParams = new URLSearchParams(location.search);
   const questionId = queryParams.get('questionId');
   const [answerData, setAnswerData] = useState([]);
+  const [createdAnswerData, setCreatedAnswerData] = useState([]);
 
   useEffect(() => {
     const config = {
@@ -93,6 +96,11 @@ function UpdateAnswer() {
 
   return (
     <div className='bg-answer'>
+      <Button primary leftIcon={<AddIcon />} setCreatedAnswerData={setCreatedAnswerData}>
+        <Link to={`/CreateAnswer?questionId=${questionId}`}>
+          THÊM MỚI ANSWER
+        </Link>
+      </Button>
       <h1>Answer Page</h1>
       <table>
         <thead>

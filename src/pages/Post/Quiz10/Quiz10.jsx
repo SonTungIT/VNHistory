@@ -44,7 +44,6 @@ function Quiz10() {
             answerOptions,
           };
         });
-
         setQuestions(retrievedQuestions);
       } catch (error) {
         console.error('Error retrieving quiz questions:', error);

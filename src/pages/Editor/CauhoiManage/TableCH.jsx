@@ -121,8 +121,8 @@ function TableCH() {
         <tr>
           <th className="th-user">Text câu hỏi</th>
           <th className="th-user">Độ khó</th>
-          <th className="th-user"></th>
           <th className="th-user">View Answer</th>
+          <th className="th-user"></th>
         </tr>
       </thead>
       <tbody>
@@ -137,6 +137,13 @@ function TableCH() {
               <tr>
                 <td className="td-user">{question.questionText}</td>
                 <td className="td-user">{question.difficultyLevel}</td>
+                <td className="td-user">
+                  <button className="btn-function">
+                      <Link to={`/UpdateAnswer?questionId=${question.questionId}`}>
+                        <VisibilityIcon/>
+                      </Link>
+                    </button>
+                </td>
                 <td className="td-user">
                   {/* {answer
                     ? answer.answerItems.map((answer) => answer.answerText).join(', ')
@@ -159,13 +166,6 @@ function TableCH() {
                   )}
 
                   <DeleteIcon />
-                </td>
-                <td className="td-user">
-                  <button className="btn-function">
-                      <Link to={`/UpdateAnswer?questionId=${question.questionId}`}>
-                        <VisibilityIcon/>
-                      </Link>
-                    </button>
                 </td>
               </tr>
               {isUpdating && (
