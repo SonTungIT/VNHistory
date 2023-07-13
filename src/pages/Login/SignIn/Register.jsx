@@ -66,7 +66,7 @@ function Register() {
         };
 
         try {
-            const response = await fetch('https://vietnam-history.azurewebsites.net/api/Auth/register', {
+            const response = await fetch('https://vietnamhistory.azurewebsites.net/api/Auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

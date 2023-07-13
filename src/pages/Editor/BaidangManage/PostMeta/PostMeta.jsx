@@ -43,7 +43,7 @@ function PostMeta() {
             redirect: 'follow',
         };
 
-        fetch('https://vietnam-history.azurewebsites.net/api/postmetas', requestOptions)
+        fetch('https://vietnamhistory.azurewebsites.net/api/postmetas', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 if (result.message === 'PostMeta Created successfully') {

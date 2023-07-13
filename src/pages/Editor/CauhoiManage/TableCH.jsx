@@ -38,7 +38,7 @@ function TableCH() {
 
         // Fetch question data
         const response = await axios.get(
-          `https://vietnam-history.azurewebsites.net/api/Question/getQuestionsByEventId/${eventId}`,
+          `https://vietnamhistory.azurewebsites.net/api/Question/getQuestionsByEventId/${eventId}`,
           config
         );
         setQuestionData(response.data.data);
@@ -62,7 +62,7 @@ function TableCH() {
       for (const question of questionData) {
         try {
           const response = await axios.get(
-            `https://vietnam-history.azurewebsites.net/api/Anwsers/getAllAnswersByQuestionId?id=${question.questionId}`,
+            `https://vietnamhistory.azurewebsites.net/api/Anwsers/getAllAnswersByQuestionId?id=${question.questionId}`,
             config
           );
           const answerItems = response.data.data;
@@ -96,14 +96,14 @@ function TableCH() {
       };
 
       await axios.put(
-        'https://vietnam-history.azurewebsites.net/api/Question/updateQuestion',
+        'https://vietnamhistory.azurewebsites.net/api/Question/updateQuestion',
         updatedQuestionData,
         config
       );
 
       // Fetch updated question data
       const response = await axios.get(
-        `https://vietnam-history.azurewebsites.net/api/Question/getQuestionsByEventId/${eventId}`,
+        `https://vietnamhistory.azurewebsites.net/api/Question/getQuestionsByEventId/${eventId}`,
         config
       );
       setQuestionData(response.data.data);

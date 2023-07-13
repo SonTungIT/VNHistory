@@ -26,7 +26,7 @@ function TableBD(props) {
             redirect: 'follow',
         };
 
-        fetch('https://vietnam-history.azurewebsites.net/api/posts', requestOptions)
+        fetch('https://vietnamhistory.azurewebsites.net/api/posts', requestOptions)
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -50,7 +50,7 @@ function TableBD(props) {
             redirect: 'follow',
         };
 
-        fetch(`https://vietnam-history.azurewebsites.net/api/posts/${postId}`, requestOptions)
+        fetch(`https://vietnamhistory.azurewebsites.net/api/posts/${postId}`, requestOptions)
             .then((response) => {
                 if (response.ok) {
                     // Remove the deleted event from the events state

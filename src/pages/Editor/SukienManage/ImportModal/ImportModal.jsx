@@ -34,7 +34,7 @@ function ImportModal({ closeModal }) {
             redirect: 'follow',
         };
 
-        fetch('https://vietnam-history.azurewebsites.net/api/events', requestOptions)
+        fetch('https://vietnamhistory.azurewebsites.net/api/events', requestOptions)
             .then((response) => {
                 if (response.ok) {
                     return response.json();

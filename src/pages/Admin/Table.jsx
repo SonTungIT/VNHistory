@@ -37,7 +37,7 @@ function Table(props) {
     }, []);
 
     const fetchUserData = () => {
-        fetch('https://vietnam-history.azurewebsites.net/api/User', {
+        fetch('https://vietnamhistory.azurewebsites.net/api/User', {
             method: 'GET',
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
@@ -62,7 +62,7 @@ function Table(props) {
             redirect: 'follow',
         };
 
-        fetch(`https://vietnam-history.azurewebsites.net/api/User/deleteUser?id=${userId}`, requestOptions)
+        fetch(`https://vietnamhistory.azurewebsites.net/api/User/deleteUser?id=${userId}`, requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);

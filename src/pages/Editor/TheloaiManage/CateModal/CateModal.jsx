@@ -27,7 +27,7 @@ function CateModal({ closeModal }) {
             redirect: 'follow',
         };
 
-        fetch('https://vietnam-history.azurewebsites.net/api/Categories/createCategory', requestOptions)
+        fetch('https://vietnamhistory.azurewebsites.net/api/Categories/createCategory', requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);

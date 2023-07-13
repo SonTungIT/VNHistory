@@ -39,7 +39,7 @@ function Detail() {
             redirect: 'follow',
         };
 
-        fetch('https://vietnam-history.azurewebsites.net/api/User/updateInfo', requestOptions)
+        fetch('https://vietnamhistory.azurewebsites.net/api/User/updateInfo', requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);

@@ -20,7 +20,7 @@ function Post() {
     useEffect(() => {
         const fetchPostData = async () => {
             try {
-                const response = await fetch(`https://vietnam-history.azurewebsites.net/api/posts/${postId}`);
+                const response = await fetch(`https://vietnamhistory.azurewebsites.net/api/posts/${postId}`);
                 const result = await response.json();
                 setPostData(result);
             } catch (error) {
@@ -35,7 +35,7 @@ function Post() {
         const fetchPostMeta = async () => {
             try {
                 const response = await fetch(
-                    `https://vietnam-history.azurewebsites.net/api/postmetas/post/${postId}/meta`,
+                    `https://vietnamhistory.azurewebsites.net/api/postmetas/post/${postId}/meta`,
                 );
                 const result = await response.json();
                 setMetaContent(result);
@@ -58,7 +58,7 @@ function Post() {
         // Fetch events data
         const fetchEvents = async () => {
           try {
-            const response = await axios.get('https://vietnam-history.azurewebsites.net/api/events');
+            const response = await axios.get('https://vietnamhistory.azurewebsites.net/api/events');
             setEvents(response.data.data);
           } catch (error) {
             console.error('Error fetching events:', error);
@@ -88,7 +88,7 @@ function Post() {
             };
             // Make the API request to create a quiz
             const response = await axios.post(
-                `https://vietnam-history.azurewebsites.net/api/Quizees/createQuiz?eventId=${answerData.eventId}`,
+                `https://vietnamhistory.azurewebsites.net/api/Quizees/createQuiz?eventId=${answerData.eventId}`,
                 answerData,
                 config,
             );

@@ -22,7 +22,7 @@ function CreateAnswer({ setCreatedAnswerData }) {
 
   const fetchQuestions = async () => {
     try {
-      const response = await axios.get(`https://vietnam-history.azurewebsites.net/api/Question/getQuestionsById/${questionId}`, config);
+      const response = await axios.get(`https://vietnamhistory.azurewebsites.net/api/Question/getQuestionsById/${questionId}`, config);
       setQuestions(response.data.data);
     } catch (error) {
       console.error('Lỗi khi lấy danh sách câu hỏi:', error);
@@ -41,7 +41,7 @@ function CreateAnswer({ setCreatedAnswerData }) {
         isCorrect: isCorrect,
       };
 
-      const response = await axios.post('https://vietnam-history.azurewebsites.net/api/Anwsers/createAnswer', answerData, config);
+      const response = await axios.post('https://vietnamhistory.azurewebsites.net/api/Anwsers/createAnswer', answerData, config);
       if (localStorage.getItem('role') === 'Editor') {
         console.log('Câu trả lời đã được tạo:', response.data);
         setCreatedAnswerData(prevData => [...prevData, response.data]);

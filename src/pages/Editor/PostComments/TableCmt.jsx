@@ -20,7 +20,7 @@ function TableCmt() {
             redirect: 'follow',
         };
 
-        fetch('https://vietnam-history.azurewebsites.net/api/postcomments', requestOptions)
+        fetch('https://vietnamhistory.azurewebsites.net/api/postcomments', requestOptions)
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -44,7 +44,7 @@ function TableCmt() {
             redirect: 'follow',
         };
 
-        fetch(`https://vietnam-history.azurewebsites.net/api/postcomments/${id}`, requestOptions)
+        fetch(`https://vietnamhistory.azurewebsites.net/api/postcomments/${id}`, requestOptions)
             .then((response) => {
                 if (response.ok) {
                     // Remove the deleted postmeta from the postmetas state

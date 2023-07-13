@@ -51,7 +51,7 @@ function PostCmt() {
             redirect: 'follow',
         };
 
-        fetch('https://vietnam-history.azurewebsites.net/api/postcomments', requestOptions)
+        fetch('https://vietnamhistory.azurewebsites.net/api/postcomments', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 if (result.message === 'Post comment created successfully') {

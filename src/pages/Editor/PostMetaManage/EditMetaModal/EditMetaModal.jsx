@@ -42,7 +42,7 @@ function EditMetaModal({ closeModal, postmeta }) {
             redirect: 'follow',
         };
 
-        fetch(`https://vietnam-history.azurewebsites.net/api/postmetas/${postmeta.id}`, requestOptions)
+        fetch(`https://vietnamhistory.azurewebsites.net/api/postmetas/${postmeta.id}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 if (result.message === 'PostMeta updated successfully') {

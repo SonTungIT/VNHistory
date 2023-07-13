@@ -23,7 +23,7 @@ function TableTL(props) {
             redirect: 'follow',
         };
 
-        fetch('https://vietnam-history.azurewebsites.net/api/Categories', requestOptions)
+        fetch('https://vietnamhistory.azurewebsites.net/api/Categories', requestOptions)
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -48,7 +48,7 @@ function TableTL(props) {
         };
 
         fetch(
-            `https://vietnam-history.azurewebsites.net/api/Categories/deleteCategory?id=${categoryId}`,
+            `https://vietnamhistory.azurewebsites.net/api/Categories/deleteCategory?id=${categoryId}`,
             requestOptions,
         )
             .then((response) => {
