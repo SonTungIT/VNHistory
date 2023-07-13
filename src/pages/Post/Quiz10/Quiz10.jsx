@@ -25,7 +25,7 @@ function Quiz10() {
 
         const quizId = new URLSearchParams(window.location.search).get('quizId');
 
-        const response = await axios.get(`https://vietnam-history.azurewebsites.net/api/Quizees/getQuiz?quizId=${quizId}`, config);
+        const response = await axios.get(`https://vietnamhistory.azurewebsites.net/api/Quizees/getQuiz?quizId=${quizId}`, config);
 
         const retrievedQuestions = response.data.questionQuizzes.map((questionQuiz) => {
           const questionText = questionQuiz.question.questionText;
@@ -90,7 +90,7 @@ function Quiz10() {
       };
 
       const response = await axios.post(
-        'https://vietnam-history.azurewebsites.net/api/Quizees/getResultQuiz',
+        'https://vietnamhistory.azurewebsites.net/api/Quizees/getResultQuiz',
         payload,
         config
       );

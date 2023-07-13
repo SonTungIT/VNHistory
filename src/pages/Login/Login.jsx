@@ -26,7 +26,7 @@ function Login() {
             redirect: 'follow',
         };
 
-        fetch('https://vietnam-history.azurewebsites.net/api/posts', requestOptions)
+        fetch('https://vietnamhistory.azurewebsites.net/api/posts', requestOptions)
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -59,7 +59,7 @@ function Login() {
     }, [selectedData]);
 
     const fetchRank = () => {
-        let url = selectedData === 'getTopTenUser' ? 'https://vietnam-history.azurewebsites.net/api/User/getTopTenUser' : 'https://vietnam-history.azurewebsites.net/api/User/getTopTenUsersByMonth';
+        let url = selectedData === 'getTopTenUser' ? 'https://vietnamhistory.azurewebsites.net/api/User/getTopTenUser' : 'https://vietnamhistory.azurewebsites.net/api/User/getTopTenUsersByMonth';
 
         fetch(url)
             .then((response) => response.json())

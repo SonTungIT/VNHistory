@@ -14,7 +14,7 @@ function CreateQuestion({ setCreatedQuestionData }) {
     // Fetch events data
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('https://vietnam-history.azurewebsites.net/api/events');
+        const response = await axios.get('https://vietnamhistory.azurewebsites.net/api/events');
         setEvents(response.data.data);
       } catch (error) {
         console.error('Error fetching events:', error);
@@ -41,7 +41,7 @@ function CreateQuestion({ setCreatedQuestionData }) {
       };
 
       const response = await axios.post(
-        'https://vietnam-history.azurewebsites.net/api/Question/createQuestion',
+        'https://vietnamhistory.azurewebsites.net/api/Question/createQuestion',
         questionData,
         config
       );

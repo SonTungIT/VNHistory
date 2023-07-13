@@ -16,7 +16,7 @@ function EditModal({ closeModal, event }) {
 
     const handleUpdate = () => {
         const accessToken = localStorage.getItem('accessToken');
-        const url = `https://vietnam-history.azurewebsites.net/api/events/${event.eventId}`;
+        const url = `https://vietnamhistory.azurewebsites.net/api/events/${event.eventId}`;
 
         const requestOptions = {
             method: 'PUT',

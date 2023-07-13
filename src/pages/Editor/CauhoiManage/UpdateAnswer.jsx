@@ -26,7 +26,7 @@ function UpdateAnswer() {
     const fetchAnswerData = async () => {
       try {
         const response = await axios.get(
-          `https://vietnam-history.azurewebsites.net/api/Anwsers/getAllAnswersByQuestionId?id=${questionId}`,
+          `https://vietnamhistory.azurewebsites.net/api/Anwsers/getAllAnswersByQuestionId?id=${questionId}`,
           config
         );
 
@@ -50,7 +50,7 @@ function UpdateAnswer() {
       const updatedAnswer = answerData.find((answer) => answer.answerId === answerId);
 
       const response = await axios.put(
-        'https://vietnam-history.azurewebsites.net/api/Anwsers/updateAnswer',
+        'https://vietnamhistory.azurewebsites.net/api/Anwsers/updateAnswer',
         {
           questionId: updatedAnswer.questionId,
           answerId: updatedAnswer.answerId,

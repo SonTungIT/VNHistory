@@ -23,7 +23,7 @@ function EditCateModal({ closeModal, category }) {
             redirect: 'follow',
         };
 
-        fetch('https://vietnam-history.azurewebsites.net/api/Categories/updateCategory', requestOptions)
+        fetch('https://vietnamhistory.azurewebsites.net/api/Categories/updateCategory', requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);

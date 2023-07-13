@@ -24,7 +24,7 @@ function TableSK(props) {
             redirect: 'follow',
         };
 
-        fetch('https://vietnam-history.azurewebsites.net/api/events', requestOptions)
+        fetch('https://vietnamhistory.azurewebsites.net/api/events', requestOptions)
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -54,7 +54,7 @@ function TableSK(props) {
             redirect: 'follow',
         };
 
-        fetch(`https://vietnam-history.azurewebsites.net/api/events/${eventId}`, requestOptions)
+        fetch(`https://vietnamhistory.azurewebsites.net/api/events/${eventId}`, requestOptions)
             .then((response) => {
                 if (response.ok) {
                     // Remove the deleted event from the events state

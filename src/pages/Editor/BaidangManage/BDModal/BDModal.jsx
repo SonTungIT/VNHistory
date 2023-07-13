@@ -42,7 +42,7 @@ function BDModal({ closeModal }) {
             redirect: 'follow',
         };
 
-        fetch('https://vietnam-history.azurewebsites.net/api/posts', requestOptions)
+        fetch('https://vietnamhistory.azurewebsites.net/api/posts', requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 console.log(result);

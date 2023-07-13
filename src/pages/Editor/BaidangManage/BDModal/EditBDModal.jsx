@@ -42,7 +42,7 @@ function EditBDModal({ closeModal, post }) {
             redirect: 'follow',
         };
 
-        fetch(`https://vietnam-history.azurewebsites.net/api/posts/${post.postId}`, requestOptions)
+        fetch(`https://vietnamhistory.azurewebsites.net/api/posts/${post.postId}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 console.log(result); // Handle the response as needed

@@ -24,7 +24,7 @@ function PostDetail() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('https://vietnam-history.azurewebsites.net/api/posts', {
+            const response = await fetch('https://vietnamhistory.azurewebsites.net/api/posts', {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

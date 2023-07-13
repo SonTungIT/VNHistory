@@ -31,7 +31,7 @@ function Home() {
             redirect: 'follow',
         };
 
-        fetch('https://vietnam-history.azurewebsites.net/api/posts', requestOptions)
+        fetch('https://vietnamhistory.azurewebsites.net/api/posts', requestOptions)
             .then((response) => {
                 if (response.ok) {
                     return response.json();

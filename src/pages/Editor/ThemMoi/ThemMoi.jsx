@@ -65,7 +65,7 @@ function ThemMoi() {
             redirect: 'follow',
         };
 
-        fetch('https://vietnam-history.azurewebsites.net/api/posts', requestOptions)
+        fetch('https://vietnamhistory.azurewebsites.net/api/posts', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 if (result.message === 'Post created successfully') {
