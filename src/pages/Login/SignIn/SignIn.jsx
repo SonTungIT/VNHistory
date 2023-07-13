@@ -14,7 +14,7 @@ function SignIn() {
         event.preventDefault();
 
         try {
-            const response = await fetch('https://vietnam-history.azurewebsites.net/api/Auth/login', {
+            const response = await fetch('https://vietnamhistory.azurewebsites.net/api/Auth/Login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ function SignIn() {
                         redirect: 'follow',
                     };
 
-                    fetch('https://vietnam-history.azurewebsites.net/api/Auth/info', requestOptions)
+                    fetch('https://vietnamhistory.azurewebsites.net/api/Auth/Info', requestOptions)
                         .then((response) => {
                             if (response.ok) {
                                 return response.json();
