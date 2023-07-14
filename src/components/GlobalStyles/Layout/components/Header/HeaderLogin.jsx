@@ -27,7 +27,7 @@ function HeaderLogin() {
                 redirect: 'follow',
             };
 
-            const response = await fetch('https://vietnam-history.azurewebsites.net/api/Auth/logout', requestOptions);
+            const response = await fetch('https://vietnamhistory.azurewebsites.net/api/Auth/logout', requestOptions);
             const result = await response.text();
 
             if (result === 'Logout successfully.') {
@@ -48,7 +48,7 @@ function HeaderLogin() {
 
     const handleSearch = (value) => {
         const encodedKeyword = encodeURIComponent(value);
-        const apiUrl = `https://vietnam-history.azurewebsites.net/api/posts/search/metaTitle?keyword=${encodedKeyword}`;
+        const apiUrl = `https://vietnamhistory.azurewebsites.net/api/posts/search/metaTitle?keyword=${encodedKeyword}`;
 
         const myHeaders = new Headers();
         const requestOptions = {
@@ -87,7 +87,7 @@ function HeaderLogin() {
                 </div>
                 <div className={cx('search')}>
                     <Space direction="vertical">
-                        <Search placeholder="Input search text" onSearch={handleSearch} style={{ width: 200 }} />
+                        <Search placeholder="Tìm kiếm" onSearch={handleSearch} style={{ width: 200 }} />
                     </Space>
                 </div>
                 {localStorage.getItem('userName') === null ? (

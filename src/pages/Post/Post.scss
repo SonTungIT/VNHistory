@@ -184,6 +184,7 @@
             .btn {
                 width: 50px;
                 height: 50px;
+                margin-top: 10px;
                 border-radius: 10px;
                 background-color: var(--common);
                 color: #fff;
@@ -218,6 +219,10 @@
     .postmeta-keys {
         font-size: 20px;
         font-weight: 500;
+
+        &:hover {
+            color: rgb(71, 71, 226);
+        }
     }
 }
 
@@ -273,6 +278,12 @@
     margin-top: 10px;
 
     .postmeta-keys-title {
+        margin-top: 10px;
+        font-size: 16px;
+        color: red;
+    }
+
+    .postmeta-keys-childs {
         margin-top: 10px;
         font-size: 16px;
     }

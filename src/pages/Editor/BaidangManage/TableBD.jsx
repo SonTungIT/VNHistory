@@ -11,6 +11,8 @@ function TableBD(props) {
 
     const infoUser = JSON.parse(localStorage.getItem('infoUser'));
 
+    console.log(posts);
+
     useEffect(() => {
         // Fetch data from the API
         fetchData();
@@ -98,7 +100,6 @@ function TableBD(props) {
                         <th className="th-user">publishedAt</th>
                         <th className="th-user">Nội dung</th>
                         <th className="th-user">Thể loại</th>
-                        <th className="th-user">PostMeta</th>
                         <th className="th-user"></th>
                     </tr>
                 </thead>
@@ -131,11 +132,6 @@ function TableBD(props) {
                                     <td className="td-user">{formatDate(post.publishedAt)}</td>
                                     <td className="td-user">{post.content}</td>
                                     <td className="td-user">{post.categoryNames}</td>
-                                    <td className="td-user">
-                                        <button className="btn-function">
-                                            <AddIcon />
-                                        </button>
-                                    </td>
                                     <td className="td-user">
                                         <button className="btn-function" onClick={() => handleEdit(post)}>
                                             <EditIcon />

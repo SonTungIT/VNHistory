@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Post.scss';
 import axios from 'axios';
@@ -16,6 +16,7 @@ function Post() {
     const postId = searchParams.get('postId');
     const [postData, setPostData] = useState(null);
     const [metaContent, setMetaContent] = useState([]);
+    const contentsRef = useRef(null);
 
     useEffect(() => {
         const fetchPostData = async () => {
@@ -57,17 +58,17 @@ function Post() {
     useEffect(() => {
         // Fetch events data
         const fetchEvents = async () => {
-          try {
-            const response = await axios.get('https://vietnamhistory.azurewebsites.net/api/events');
-            setEvents(response.data.data);
-          } catch (error) {
-            console.error('Error fetching events:', error);
-            // Handle the error
-          }
+            try {
+                const response = await axios.get('https://vietnamhistory.azurewebsites.net/api/events');
+                setEvents(response.data.data);
+            } catch (error) {
+                console.error('Error fetching events:', error);
+                // Handle the error
+            }
         };
-    
+
         fetchEvents();
-      }, []);
+    }, []);
 
     const handleQuizSelection = async (numberQuestion, time) => {
         setSelectedNumberQuestion(numberQuestion);
@@ -133,27 +134,30 @@ function Post() {
                                 <div className={cx('postmeta-child')}>
                                     {Array.isArray(metaContent?.data) &&
                                         metaContent.data.map((item, index) => (
-                                            <p key={item.id}>
+                                            <div
+                                                key={item.id}
+                                                onClick={() => {
+                                                    contentsRef.current?.scrollIntoView({ behavior: 'smooth' }); // Scroll to the target element
+                                                }}
+                                            >
                                                 <p className={cx('postmeta-keys')}>
                                                     {index + 1}. {item.keys}
                                                 </p>
-                                            </p>
+                                            </div>
                                         ))}
                                 </div>
                             </div>
-                            {Array.isArray(metaContent?.data) &&
-                                metaContent.data.map((item, index) => (
-                                    <div className={cx('postmeta-contents')}>
-                                        <p key={item.id}>
-                                            <p className={cx('postmeta-keys-contents')}>
-                                                <h4>
-                                                    {index + 1}. {item.keys}
-                                                </h4>
-                                                <p className={cx('postmeta-keys-title')}>{item.contents}</p>
-                                            </p>
-                                        </p>
-                                    </div>
-                                ))}
+                            <div className={cx('postmeta-contents')} ref={contentsRef}>
+                                {Array.isArray(metaContent?.data) &&
+                                    metaContent.data.map((item, index) => (
+                                        <div key={item.id} className={cx('postmeta-keys-contents')}>
+                                            <h4 className={cx('postmeta-keys-title')}>
+                                                {index + 1}. {item.keys}
+                                            </h4>
+                                            <p className={cx('postmeta-keys-childs')}>{item.contents}</p>
+                                        </div>
+                                    ))}
+                            </div>
                             <div className={cx('dropdown')}>
                                 <button className={cx('btn')} type="button" onClick={handleDropdownToggle}>
                                     Quiz
@@ -161,16 +165,19 @@ function Post() {
                                 {isDropdownOpen && (
                                     <ul className={cx('dropdown-menu')}>
                                         <div className={cx('quiz')}>
-                                        <div className={cx('title-quiz')}>
-                                            <select value={eventId} onChange={e => setEventId(parseInt(e.target.value))}>
-                                                <option value={0}>Select an event</option>
-                                                {events.map(event => (
-                                                <option key={event.eventId} value={event.eventId}>
-                                                    {event.eventName}
-                                                </option>
-                                                ))}
-                                            </select>
-                                        </div>
+                                            <div className={cx('title-quiz')}>
+                                                <select
+                                                    value={eventId}
+                                                    onChange={(e) => setEventId(parseInt(e.target.value))}
+                                                >
+                                                    <option value={0}>Select an event</option>
+                                                    {events.map((event) => (
+                                                        <option key={event.eventId} value={event.eventId}>
+                                                            {event.eventName}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
                                             <div className={cx('establish-quiz')}>Thiết lập bài kiểm tra</div>
                                             <div className={cx('number-quiz')}>Câu hỏi (tối đa) - Thời gian</div>
                                             <div className={cx('btn-quiz')}>

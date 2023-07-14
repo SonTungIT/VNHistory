@@ -18,7 +18,7 @@ function Sidebar({ onCategoryClick }) {
 
     const fetchCategories = async () => {
         try {
-            const response = await fetch('https://vietnam-history.azurewebsites.net/api/Categories');
+            const response = await fetch('https://vietnamhistory.azurewebsites.net/api/Categories');
             const data = await response.json();
             setCategories(data.data);
         } catch (error) {
@@ -30,7 +30,7 @@ function Sidebar({ onCategoryClick }) {
         try {
             const encodedCategoryName = encodeURIComponent(categoryName);
             const response = await fetch(
-                `https://vietnam-history.azurewebsites.net/api/posts/search?categoryName=${encodedCategoryName}`,
+                `https://vietnamhistory.azurewebsites.net/api/posts/search?categoryName=${encodedCategoryName}`,
             );
             const data = await response.json();
 

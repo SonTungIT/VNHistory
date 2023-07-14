@@ -46,7 +46,7 @@ function PostDetail() {
     };
 
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wapper')}>
             <span className={cx('title')}>Kết quả tìm kiếm</span>
 
             {Array.isArray(parsedResults?.data) && parsedResults.data.length > 0 ? (
@@ -81,7 +81,7 @@ function PostDetail() {
                     return null;
                 })
             ) : (
-                <p>No search results found.</p>
+                <p>Không tìm thấy kết quả tìm kiếm.</p>
             )}
         </div>
     );
