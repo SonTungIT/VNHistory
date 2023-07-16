@@ -27,18 +27,23 @@ function Sidebar({ onCategoryClick }) {
     };
 
     const handleCategoryClick = async (categoryName) => {
-        try {
-            const encodedCategoryName = encodeURIComponent(categoryName);
-            const response = await fetch(
-                `https://vietnamhistory.azurewebsites.net/api/posts/search?categoryName=${encodedCategoryName}`,
-            );
-            const data = await response.json();
+        const encodedCategoryName = encodeURIComponent(categoryName);
+        const apiUrl = `https://vietnamhistory.azurewebsites.net/api/posts/search?categoryName=${encodedCategoryName}`;
 
-            // Pass the retrieved data to the parent component
-            onCategoryClick(data);
-        } catch (error) {
-            console.log('Error fetching posts:', error);
-        }
+        const myHeaders = new Headers();
+        const requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow',
+        };
+
+        fetch(apiUrl, requestOptions)
+            .then((response) => response.text())
+            .then((result) => {
+                console.log(result);
+                window.location.href = `/PostDetail?searchResults=${result}`;
+            })
+            .catch((error) => console.log('error', error));
     };
 
     return (

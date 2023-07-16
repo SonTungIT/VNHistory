@@ -7,7 +7,6 @@ import Button from '~/components/GlobalStyles/Layout/components/Button';
 const cx = classNames.bind(styles);
 
 function Login() {
-
     const [posts, setPosts] = useState([]);
     const [selectedPostId, setSelectedPostId] = useState(null);
 
@@ -59,7 +58,10 @@ function Login() {
     }, [selectedData]);
 
     const fetchRank = () => {
-        let url = selectedData === 'getTopTenUser' ? 'https://vietnamhistory.azurewebsites.net/api/User/getTopTenUser' : 'https://vietnamhistory.azurewebsites.net/api/User/getTopTenUsersByMonth';
+        let url =
+            selectedData === 'getTopTenUser'
+                ? 'https://vietnamhistory.azurewebsites.net/api/User/getTopTenUser'
+                : 'https://vietnamhistory.azurewebsites.net/api/User/getTopTenUsersByMonth';
 
         fetch(url)
             .then((response) => response.json())
@@ -133,7 +135,7 @@ function Login() {
                 </div>
             </div>
             {posts.slice(1).map((post) => (
-                <Button to={config.routes.Post} key={post.postId} onClick={() => handleButtonClick(post.postId)}>
+                <Button key={post.postId} onClick={() => handleButtonClick(post.postId)}>
                     <div className={cx('list-event')}>
                         <img
                             src="https://nguoikesu.com/images/wiki/nha-nguyen/f3ddf4ba5ac21a0f1ab37de7ccf99789.jpg"
