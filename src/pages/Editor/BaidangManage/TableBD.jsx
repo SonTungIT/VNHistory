@@ -110,6 +110,8 @@ function TableBD(props) {
                         const truncatedSlug = post.slug.length > 5 ? post.slug.slice(0, 5) + '...' : post.slug;
                         const truncatedSummary =
                             post.summary.length > 5 ? post.summary.slice(0, 5) + '...' : post.summary;
+                        const truncatedContent =
+                            post.content.length > 5 ? post.content.slice(0, 5) + '...' : post.content;
                         const isExpanded = expandedRows.includes(post.postId);
 
                         return (
@@ -130,7 +132,9 @@ function TableBD(props) {
                                     <td className="td-user">{formatDate(post.createdAt)}</td>
                                     <td className="td-user">{formatDate(post.updatedAt)}</td>
                                     <td className="td-user">{formatDate(post.publishedAt)}</td>
-                                    <td className="td-user">{post.content}</td>
+                                    <td className="td-user" onClick={() => handleRowClick(post.postId)}>
+                                        {isExpanded ? post.content : truncatedContent}
+                                    </td>
                                     <td className="td-user">{post.categoryNames}</td>
                                     <td className="td-user">
                                         <button className="btn-function" onClick={() => handleEdit(post)}>

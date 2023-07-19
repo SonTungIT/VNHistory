@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 import config from '~/config';
 import logoImage from '~/images/logo.png';
+import { message } from 'antd';
 
 function SignIn() {
     const navigate = useNavigate();
@@ -10,8 +11,16 @@ function SignIn() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    const [messageApi, contextHolder] = message.useMessage();
     const handleLogin = async (event) => {
         event.preventDefault();
+
+        const showError = () => {
+            messageApi.open({
+                type: 'error',
+                content: 'Somethings wrong !',
+            });
+        };
 
         try {
             const response = await fetch('https://vietnamhistory.azurewebsites.net/api/Auth/login', {
@@ -64,11 +73,11 @@ function SignIn() {
                         .catch((error) => console.log('error', error));
                 }
             } else {
-                throw new Error('Login failed');
+                showError();
             }
         } catch (error) {
             console.log('error', error);
-            setError('Login failed');
+            showError();
         }
     };
 

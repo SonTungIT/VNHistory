@@ -19,7 +19,7 @@ function PostMeta() {
     const showError = () => {
         messageApi.open({
             type: 'error',
-            content: 'Thêm mới thất bại',
+            content: 'Somethings wrong !',
         });
     };
 
@@ -48,6 +48,8 @@ function PostMeta() {
             .then((result) => {
                 if (result.message === 'PostMeta Created successfully') {
                     success();
+                } else {
+                    showError(); // Call showError here if the API response is not successful
                 }
             })
             .catch((error) => {

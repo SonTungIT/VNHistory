@@ -34,7 +34,7 @@ function ThemMoi() {
     const showError = () => {
         messageApi.open({
             type: 'error',
-            content: 'Thêm mới thất bại',
+            content: 'Somethings wrong !',
         });
     };
 
@@ -64,12 +64,13 @@ function ThemMoi() {
             body: JSON.stringify(payload),
             redirect: 'follow',
         };
-
         fetch('https://vietnamhistory.azurewebsites.net/api/posts', requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 if (result.message === 'Post created successfully') {
                     success();
+                } else {
+                    showError(); // Call showError here if the API response is not successful
                 }
             })
             .catch((error) => {
@@ -119,7 +120,7 @@ function ThemMoi() {
                                 </div>
                                 {/* metaTitle */}
                                 <div className="input-detail-tm">
-                                    <p>metaTitle: </p>
+                                    <p>Tiêu Đề:</p>
                                     <input
                                         type="text"
                                         placeholder="metaTitle"
@@ -139,7 +140,7 @@ function ThemMoi() {
                                 </div>
                                 {/* summary */}
                                 <div className="input-detail-tm">
-                                    <p>summary: </p>
+                                    <p>Tóm tắt: </p>
                                     <input
                                         type="text"
                                         placeholder="summary"
@@ -149,7 +150,7 @@ function ThemMoi() {
                                 </div>
                                 {/* published */}
                                 <div className="input-detail-tm">
-                                    <p>published: </p>
+                                    <p>Chế độ: </p>
                                     <input
                                         type="text"
                                         placeholder="published"
@@ -197,7 +198,7 @@ function ThemMoi() {
                                 </div>
                                 {/* content */}
                                 <div className="input-detail-tm">
-                                    <p>content: </p>
+                                    <p>Nội dung: </p>
                                     <input
                                         type="text"
                                         placeholder="content"
@@ -207,7 +208,7 @@ function ThemMoi() {
                                 </div>
                                 {/* category */}
                                 <div className="input-detail-tm">
-                                    <p>category: </p>
+                                    <p>Thể loại: </p>
                                     <input
                                         type="text"
                                         placeholder="category"

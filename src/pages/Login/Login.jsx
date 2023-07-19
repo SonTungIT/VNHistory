@@ -80,7 +80,6 @@ function Login() {
             <div className={cx('inner')}>
                 {posts.length > 0 && (
                     <Button
-                        to={config.routes.Post}
                         className={cx('content')}
                         key={posts[0].postId}
                         onClick={() => handleButtonClick(posts[0].postId)}
