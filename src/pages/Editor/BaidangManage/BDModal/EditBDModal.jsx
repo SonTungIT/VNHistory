@@ -122,7 +122,7 @@ function EditBDModal({ closeModal, post }) {
                                         </div>
                                         <div className="selectDate">
                                             <div className="input-detail-bd">
-                                                <p>createdAt: </p>
+                                                <p>Ngày tạo: </p>
                                                 <Space direction="vertical">
                                                     <DatePicker
                                                         className="inp-form"
