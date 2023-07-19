@@ -84,6 +84,7 @@ function PostMeta() {
                                 placeholder="postId"
                                 value={postId}
                                 onChange={(e) => setPostId(e.target.value)}
+                                required
                             />
                         </div>
                         <div className="input-detail-tm">
@@ -93,6 +94,7 @@ function PostMeta() {
                                 placeholder="keys"
                                 value={keys}
                                 onChange={(e) => setKeys(e.target.value)}
+                                required
                             />
                         </div>
                         <div className="input-detail-tm">
@@ -102,6 +104,7 @@ function PostMeta() {
                                 placeholder="contents"
                                 value={contents}
                                 onChange={(e) => setContents(e.target.value)}
+                                required
                             />
                         </div>
                     </label>

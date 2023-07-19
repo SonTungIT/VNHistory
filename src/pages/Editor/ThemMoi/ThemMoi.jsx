@@ -8,6 +8,7 @@ import config from '~/config';
 import { DatePicker, Space, message } from 'antd';
 import PostMeta from '../BaidangManage/PostMeta/PostMeta';
 import PostCmt from '../BaidangManage/PostCmt/PostCmt';
+import moment from 'moment'; // Import moment here
 
 const cx = classNames.bind(styles);
 
@@ -16,8 +17,8 @@ function ThemMoi() {
     const [metaTitle, setMetaTitle] = useState('');
     const [slug, setSlug] = useState('');
     const [summary, setSummary] = useState('');
-    const [published, setPublished] = useState('');
-    const [createdAt, setCreatedAt] = useState(null);
+    const [published, setPublished] = useState('1');
+    const [createdAt, setCreatedAt] = useState(moment());
     const [updatedAt, setUpdatedAt] = useState(null);
     const [publishedAt, setPublishedAt] = useState(null);
     const [content, setContent] = useState('');
@@ -45,15 +46,17 @@ function ThemMoi() {
         myHeaders.append('Content-Type', 'application/json');
         myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
 
+        const currentDateTime = moment().toISOString();
+
         const payload = {
             parentId: parentId ? Number(parentId) : null,
             metaTitle,
             slug,
             summary,
             published: Number(published),
-            createdAt: createdAt ? createdAt.toISOString() : null,
-            updatedAt: updatedAt ? updatedAt.toISOString() : null,
-            publishedAt: publishedAt ? publishedAt.toISOString() : null,
+            createdAt: currentDateTime,
+            updatedAt: currentDateTime,
+            publishedAt: currentDateTime,
             content,
             category,
         };
@@ -107,17 +110,20 @@ function ThemMoi() {
                     </div>
                     <form className="form-input" onSubmit={handleSubmit}>
                         <div className="body-tm">
-                            <label className="label-input">
+                            <label className="label-input" required>
                                 {/* parentId */}
-                                <div className="input-detail-tm">
-                                    <p>parentId: </p>
-                                    <input
-                                        type="text"
-                                        placeholder="parentId"
-                                        value={parentId}
-                                        onChange={(e) => setParentId(e.target.value)}
-                                    />
-                                </div>
+                                {parentId !== null && (
+                                    <div className="input-detail-tm">
+                                        <p>parentId: </p>
+                                        <input
+                                            type="text"
+                                            placeholder="parentId"
+                                            value={parentId}
+                                            onChange={(e) => setParentId(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                )}
                                 {/* metaTitle */}
                                 <div className="input-detail-tm">
                                     <p>Tiêu Đề:</p>
@@ -126,6 +132,7 @@ function ThemMoi() {
                                         placeholder="metaTitle"
                                         value={metaTitle}
                                         onChange={(e) => setMetaTitle(e.target.value)}
+                                        required
                                     />
                                 </div>
                                 {/* slug */}
@@ -136,6 +143,7 @@ function ThemMoi() {
                                         placeholder="slug"
                                         value={slug}
                                         onChange={(e) => setSlug(e.target.value)}
+                                        required
                                     />
                                 </div>
                                 {/* summary */}
@@ -146,56 +154,25 @@ function ThemMoi() {
                                         placeholder="summary"
                                         value={summary}
                                         onChange={(e) => setSummary(e.target.value)}
+                                        required
                                     />
                                 </div>
                                 {/* published */}
                                 <div className="input-detail-tm">
                                     <p>Chế độ: </p>
-                                    <input
-                                        type="text"
-                                        placeholder="published"
+                                    <select
+                                        className="selecte-options"
                                         value={published}
                                         onChange={(e) => setPublished(e.target.value)}
-                                    />
+                                        required
+                                    >
+                                        <option value="1">Công khai</option>
+                                        <option value="0">Riêng tư</option>
+                                    </select>
                                 </div>
                                 {/* createdAt */}
-                                <div className="selectDate">
-                                    <div className="input-detail-tm">
-                                        <p>createdAt: </p>
-                                        <Space direction="vertical">
-                                            <DatePicker
-                                                className="inp-form"
-                                                placeholder="createdAt"
-                                                value={createdAt}
-                                                onChange={(date) => setCreatedAt(date)}
-                                            />
-                                        </Space>
-                                    </div>
-                                    {/* updatedAt */}
-                                    <div className="input-detail-tm">
-                                        <p>updatedAt: </p>
-                                        <Space direction="vertical">
-                                            <DatePicker
-                                                className="inp-form"
-                                                placeholder="updatedAt"
-                                                value={updatedAt}
-                                                onChange={(date) => setUpdatedAt(date)}
-                                            />
-                                        </Space>
-                                    </div>
-                                    {/* publishedAt */}
-                                    <div className="input-detail-tm">
-                                        <p>publishedAt: </p>
-                                        <Space direction="vertical">
-                                            <DatePicker
-                                                className="inp-form"
-                                                placeholder="publishedAt"
-                                                value={publishedAt}
-                                                onChange={(date) => setPublishedAt(date)}
-                                            />
-                                        </Space>
-                                    </div>
-                                </div>
+                                {/* You can add the createdAt input here if it's required */}
+
                                 {/* content */}
                                 <div className="input-detail-tm">
                                     <p>Nội dung: </p>
@@ -204,6 +181,7 @@ function ThemMoi() {
                                         placeholder="content"
                                         value={content}
                                         onChange={(e) => setContent(e.target.value)}
+                                        required
                                     />
                                 </div>
                                 {/* category */}
@@ -214,10 +192,12 @@ function ThemMoi() {
                                         placeholder="category"
                                         value={category}
                                         onChange={(e) => setCategory(e.target.value)}
+                                        required
                                     />
                                 </div>
                             </label>
                         </div>
+
                         <div className="footer">
                             <Button onClick={handleCancel}>Hủy bỏ</Button>
                             {contextHolder}

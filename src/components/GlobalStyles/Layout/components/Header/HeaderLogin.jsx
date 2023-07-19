@@ -4,13 +4,12 @@ import styles from './HeaderLogin.module.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import config from '~/config';
 import Button from '../Button';
-import { Input, Space } from 'antd';
 
-const { Search } = Input;
 const cx = classNames.bind(styles);
 
 function HeaderLogin() {
     const userName = localStorage.getItem('userName');
+    const roleUser = localStorage.getItem('role');
     const [error, setError] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
     const navigate = useNavigate();
@@ -46,26 +45,6 @@ function HeaderLogin() {
         navigate('/detail');
     };
 
-    const handleSearch = (value) => {
-        const encodedKeyword = encodeURIComponent(value);
-        const apiUrl = `https://vietnamhistory.azurewebsites.net/api/posts/search/metaTitle?keyword=${encodedKeyword}`;
-
-        const myHeaders = new Headers();
-        const requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow',
-        };
-
-        fetch(apiUrl, requestOptions)
-            .then((response) => response.text())
-            .then((result) => {
-                console.log(result);
-                window.location.href = `/PostDetail?searchResults=${result}`;
-            })
-            .catch((error) => console.log('error', error));
-    };
-
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -85,11 +64,7 @@ function HeaderLogin() {
                         {/* <Button className={cx('page-child')}>Bài đăng</Button> */}
                     </div>
                 </div>
-                <div className={cx('search')}>
-                    <Space direction="vertical">
-                        <Search placeholder="Tìm kiếm" onSearch={handleSearch} style={{ width: 200 }} />
-                    </Space>
-                </div>
+
                 {localStorage.getItem('userName') === null ? (
                     <div className={cx('content')}>
                         <div className={cx('btn-login')}>
@@ -112,7 +87,11 @@ function HeaderLogin() {
                                     src="https://i.pinimg.com/236x/e1/6c/70/e16c704fc0b655e553dd7a1a8a00475d.jpg"
                                     alt="avatar"
                                 />
-                                <span className={cx('user-name')}>{userName}</span>
+                                <span className={cx('user-name')}>
+                                    {userName}
+                                    <p>{roleUser}</p>
+                                </span>
+
                                 {showDropdown && (
                                     <div className={cx('logout-dropdown')}>
                                         <Button className={cx('logout')} to={config.routes.Detail}>

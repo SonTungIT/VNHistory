@@ -34,13 +34,13 @@ export const SidebarDataEditor = [
         iconClosed: <ArrowDownIcon />,
         iconOpened: <ArrowLeftIcon />,
     },
-    {
-        title: 'QUẢN LÝ CÂU HỎI',
-        path: config.routes.CauhoiManage,
-        icon: <GradeIcon />,
-        iconClosed: <ArrowDownIcon />,
-        iconOpened: <ArrowLeftIcon />,
-    },
+    // {
+    //     title: 'QUẢN LÝ CÂU HỎI',
+    //     path: config.routes.CauhoiManage,
+    //     icon: <GradeIcon />,
+    //     iconClosed: <ArrowDownIcon />,
+    //     iconOpened: <ArrowLeftIcon />,
+    // },
     {
         title: 'QUẢN LÝ SỰ KIỆN',
         path: config.routes.SukienManage,

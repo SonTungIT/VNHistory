@@ -4,9 +4,9 @@ import Button from '~/components/GlobalStyles/Layout/components/Button';
 import { message } from 'antd';
 
 function EditMetaModal({ closeModal, postmeta }) {
-    const [postId, setPostId] = useState('');
-    const [keys, setKeys] = useState('');
-    const [contents, setContents] = useState('');
+    const [postId, setPostId] = useState(postmeta.postId);
+    const [keys, setKeys] = useState(postmeta.keys);
+    const [contents, setContents] = useState(postmeta.contents);
     const [updateSuccess, setUpdateSuccess] = useState(false);
 
     const [messageApi, contextHolder] = message.useMessage();
@@ -47,6 +47,7 @@ function EditMetaModal({ closeModal, postmeta }) {
             .then((result) => {
                 if (result.message === 'PostMeta updated successfully') {
                     success();
+                    window.location.reload();
                 }
             })
             .catch((error) => {
