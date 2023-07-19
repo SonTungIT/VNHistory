@@ -47,7 +47,7 @@ function EditBDModal({ closeModal, post }) {
             .then((result) => {
                 console.log(result); // Handle the response as needed
                 setUpdateSuccess(true); // Set updateSuccess state to true to close the modal or show a success message
-                // window.location.reload();
+                window.location.reload();
             })
             .catch((error) => console.log('error', error));
     };
