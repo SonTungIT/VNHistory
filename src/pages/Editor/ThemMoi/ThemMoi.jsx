@@ -139,7 +139,6 @@ function ThemMoi() {
                                             placeholder="parentId"
                                             value={parentId}
                                             onChange={(e) => setParentId(e.target.value)}
-                                            required
                                         />
                                     </div>
                                 )}
@@ -232,7 +231,6 @@ function ThemMoi() {
                                         placeholder="eventName"
                                         value={eventNames.join(', ')}
                                         onChange={(e) => setEventNames(e.target.value.split(', '))}
-                                        required
                                     />
                                 </div>
                             </label>

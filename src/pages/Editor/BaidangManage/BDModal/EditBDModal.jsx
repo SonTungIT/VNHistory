@@ -3,6 +3,7 @@ import './BDModal.scss';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 import { DatePicker, Space } from 'antd';
 import LayoutAdmin from '~/pages/Admin/LayoutAdmin';
+import moment from 'moment';
 
 function EditBDModal({ closeModal, post }) {
     const [authorId, setAuthorId] = useState(post.authorId);
@@ -11,7 +12,7 @@ function EditBDModal({ closeModal, post }) {
     const [slug, setSlug] = useState(post.slug);
     const [summary, setSummary] = useState(post.summary);
     const [published, setPublished] = useState(post.published);
-    const [startDate, setStartDate] = useState(null);
+    const [startDate, setStartDate] = useState(post.createdAt ? moment(post.createdAt) : null);
     const [updateDate, setUpdateDate] = useState(null);
     const [publishedDate, setPublishedDate] = useState(null);
     const [updateSuccess, setUpdateSuccess] = useState(false);
@@ -22,6 +23,9 @@ function EditBDModal({ closeModal, post }) {
         myHeaders.append('Content-Type', 'application/json');
         myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
 
+        const currentDateTime = new Date();
+        setUpdateDate(currentDateTime);
+
         const updatedPost = {
             // authorId,
             parentId: parentId ? parentId : null,
@@ -30,7 +34,7 @@ function EditBDModal({ closeModal, post }) {
             summary,
             published,
             createdAt: startDate ? startDate.toISOString() : null,
-            updatedAt: updateDate ? updateDate.toISOString() : null,
+            updatedAt: currentDateTime.toISOString(),
             publishedAt: publishedDate ? publishedDate.toISOString() : null,
             content,
         };
@@ -125,7 +129,7 @@ function EditBDModal({ closeModal, post }) {
                                             </select>
                                         </div>
                                         <div className="selectDate">
-                                            <div className="input-detail-bd">
+                                            {/* <div className="input-detail-bd">
                                                 <p>Ngày tạo: </p>
                                                 <Space direction="vertical">
                                                     <DatePicker
@@ -134,8 +138,8 @@ function EditBDModal({ closeModal, post }) {
                                                         onChange={handleStartDateChange}
                                                     />
                                                 </Space>
-                                            </div>
-                                            <div className="input-detail-bd">
+                                            </div> */}
+                                            {/* <div className="input-detail-bd">
                                                 <p>updatedAt: </p>
                                                 <Space direction="vertical">
                                                     <DatePicker
@@ -144,7 +148,7 @@ function EditBDModal({ closeModal, post }) {
                                                         onChange={handleUpdateDateChange}
                                                     />
                                                 </Space>
-                                            </div>
+                                            </div> */}
                                             <div className="input-detail-bd">
                                                 <p>publishedAt: </p>
                                                 <Space direction="vertical">

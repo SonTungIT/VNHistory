@@ -25,6 +25,7 @@ import CreateAnswer from '~/pages/Editor/CauhoiManage/CreateAnswer';
 import UpdateQuestion from '~/pages/Editor/CauhoiManage/UpdateQuestion';
 import PostDetail from '~/pages/Post/PostDetail';
 import UpdateAnswer from '~/pages/Editor/CauhoiManage/UpdateAnswer';
+import BaidangDetails from '~/pages/Editor/BaidangManage/BaidangDetails';
 
 const publicRoutes = [
     { path: config.routes.Home, component: Home, layout: DefaultLayout },
@@ -48,7 +49,7 @@ const publicRoutes = [
     //User
     { path: config.routes.Detail, component: Detail, layout: DefaultLayout },
     { path: config.routes.Achievements, component: Achievements, layout: DefaultLayout },
-    { path: config.routes.Post, component: Post, layout: DefaultLayout },
+    { path: config.routes.Post, component: Post, layout: LoginLayout },
 
     //quiz
     { path: config.routes.Quiz10, component: Quiz10, layout: DefaultLayout },
@@ -61,6 +62,9 @@ const publicRoutes = [
     { path: config.routes.postmeta, component: PostMetaManage, layout: EditorLayout },
     { path: config.routes.postcmt, component: PostComments, layout: EditorLayout },
     { path: config.routes.postdetail, component: PostDetail, layout: LoginLayout },
+
+    //search Bai Danng
+    { path: config.routes.baidangDetails, component: BaidangDetails, layout: EditorLayout },
 ];
 
 export { publicRoutes };

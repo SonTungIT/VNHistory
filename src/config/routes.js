@@ -39,6 +39,10 @@ const routes = {
     //PostDetail
 
     postdetail: '/postdetail',
+
+    //search bai dang
+
+    baidangDetails: '/baidangDetails',
 };
 
 export default routes;

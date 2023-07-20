@@ -101,13 +101,13 @@ function TableBD() {
     // const handleAddImage = (postId) => {
     //     var myHeaders = new Headers();
     //     myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
-    
+
     //     var requestOptions = {
     //         method: 'POST',
     //         headers: myHeaders,
     //         redirect: 'follow',
     //     };
-    
+
     //     fetch(`https://vietnamhistory.azurewebsites.net/api/images/posts/${postId}`, requestOptions)
     //         .then((response) => response.text())
     //         .then((result) => {
@@ -167,7 +167,7 @@ function TableBD() {
                                     <td className="td-user">{formatDate(post.updatedAt)}</td>
                                     <td className="td-user">{formatDate(post.publishedAt)}</td>
                                     <td className="td-user" onClick={() => handleRowClick(post.postId)}>
-                                        {isExpanded ? post.content : truncatedContent}
+                                        {isExpanded ? post.content || '' : truncatedContent || ''}
                                     </td>
                                     <td className="td-user">{post.categoryNames}</td>
                                     <td className="td-user">{post.eventNames}</td>
@@ -204,7 +204,7 @@ function TableBD() {
                 </tbody>
             </table>
             {ediBDModal && <EditBDModal closeModal={() => setEditBDModal(false)} post={selectedPost} />}
-            {addImage && <AddImage closeModal={() => setAddImage(false)} post={selectedPost}  />}
+            {addImage && <AddImage closeModal={() => setAddImage(false)} post={selectedPost} />}
         </>
     );
 }

@@ -60,10 +60,10 @@ function PostDetail() {
         };
 
         fetch(apiUrl, requestOptions)
-            .then((response) => response.text())
+            .then((response) => response.json())
             .then((result) => {
-                console.log(result);
-                window.location.href = `/PostDetail?searchResults=${result}`;
+                const encodedResults = encodeURIComponent(JSON.stringify(result));
+                window.location.href = `/PostDetail?searchResults=${encodedResults}`;
             })
             .catch((error) => console.log('error', error));
     };

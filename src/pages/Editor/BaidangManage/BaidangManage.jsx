@@ -30,10 +30,10 @@ function BaidangManage() {
         };
 
         fetch(apiUrl, requestOptions)
-            .then((response) => response.text())
+            .then((response) => response.json())
             .then((result) => {
-                console.log(result);
-                setSearchResults(result); // Store the search results in state
+                const encodedResults = encodeURIComponent(JSON.stringify(result));
+                window.location.href = `/baidangDetails?searchResults=${encodedResults}`;
             })
             .catch((error) => console.log('error', error));
     };
@@ -53,7 +53,7 @@ function BaidangManage() {
                 </div>
                 <div className={cx('container')}>
                     {/* Pass the posts data and searchResults to TableBD */}
-                    <TableBD searchResults={searchResults} />
+                    <TableBD />
                 </div>
                 <div className={cx('footer')}>
                     <Pagination defaultCurrent={1} total={50} />
