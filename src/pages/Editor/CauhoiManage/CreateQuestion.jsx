@@ -65,8 +65,8 @@ function CreateQuestion({ setCreatedQuestionData }) {
       if (localStorage.getItem('role') === 'Editor') {
         console.log('Created question:', response.data);
         setCreatedQuestionData(prevData => [...prevData, response.data]);
-        success();
       }
+      success();
       // Update the created question data
     } catch (error) {
       console.error('Error creating question:', error);
@@ -94,9 +94,17 @@ function CreateQuestion({ setCreatedQuestionData }) {
           <label>Question Text:</label>
           <input type="text" value={questionText} onChange={e => setQuestionText(e.target.value)} />
         </div>
-        <div className={cx('DifficultyLevel')}>
+        {/* <div className={cx('DifficultyLevel')}>
           <label>Difficulty Level:</label>
           <input type="text" value={difficultyLevel} onChange={e => setDifficultyLevel(e.target.value)} />
+        </div> */}
+        <div className={cx('DifficultyLevel')}>
+          <label>Difficulty Level:</label>
+          <select value={difficultyLevel} onChange={e => setDifficultyLevel(e.target.value)}>
+            <option value="Easy">Easy</option>
+            <option value="Normal">Normal</option>
+            <option value="Hard">Hard</option>
+          </select>
         </div>
         <button onClick={handleCreateQuestion}>Create Question</button>
         {contextHolder}

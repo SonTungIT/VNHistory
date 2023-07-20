@@ -9,6 +9,7 @@ import {
     VisibilityIcon,
     VisibilityOffIcon,
 } from '~/components/GlobalStyles/Layout/components/Icons';
+import UpdateRole from './UpdateRole';
 
 const MENU_ITEMS = [
     {
@@ -72,43 +73,56 @@ function Table(props) {
             .catch((error) => console.log('error', error));
     };
 
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [editRole, setEditRole] = useState(false);
+    const handleEdit = (user) => {
+        setSelectedUser(user);
+        setEditRole(true);
+    };
+
     return (
-        <table className="table-user">
-            <thead>
-                <tr>
-                    <th className="th-user">Tên</th>
-                    <th className="th-user">Email</th>
-                    <th className="th-user">Ngày sinh</th>
-                    <th className="th-user">Tổng điểm</th>
-                    <th className="th-user">Tổng câu hỏi</th>
-                    <th className="th-user">Role</th>
-                    <th className="th-user"></th>
-                </tr>
-            </thead>
-            <tbody>
-                {userData.length > 0 ? (
-                    userData.map((user) => (
-                        <tr key={user.userId}>
-                            <td className="td-user">{user.name}</td>
-                            <td className="td-user">{user.email}</td>
-                            <td className="td-user">{new Date(user.birthday).toLocaleDateString()}</td>
-                            <td className="td-user">{user.totalScore}</td>
-                            <td className="td-user">{user.totalQuestion}</td>
-                            <td className="td-user">{user.role}</td>
-                            <td className="td-user">
-                                <button className="btn-function" onClick={() => handleDelete(user.userId)}>
-                                    <DeleteIcon />
-                                </button>
-                            </td>
-                        </tr>
-                    ))
-                ) : (
+        <>
+            <table className="table-user">
+                <thead>
                     <tr>
-                        <td colSpan="7">Loading...</td>
+                        <th className="th-user">Tên</th>
+                        <th className="th-user">Email</th>
+                        <th className="th-user">Ngày sinh</th>
+                        <th className="th-user">Tổng điểm</th>
+                        <th className="th-user">Tổng câu hỏi</th>
+                        <th className="th-user">Role</th>
+                        <th className="th-user"></th>
                     </tr>
-                )}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {userData.length > 0 ? (
+                        userData.map((user) => (
+                            <tr key={user.userId}>
+                                <td className="td-user">{user.name}</td>
+                                <td className="td-user">{user.email}</td>
+                                <td className="td-user">{new Date(user.birthday).toLocaleDateString()}</td>
+                                <td className="td-user">{user.totalScore}</td>
+                                <td className="td-user">{user.totalQuestion}</td>
+                                <td className="td-user">{user.role}</td>
+                                <td className="td-user">
+                                    <button className="btn-function" onClick={() => handleEdit(user)}>
+                                        <EditIcon />
+                                    </button>
+                                    <button className="btn-function" onClick={() => handleDelete(user.userId)}>
+                                        <DeleteIcon />
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="7">Loading...</td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+            {editRole && <UpdateRole closeModal={() => setEditRole(false)} user={selectedUser} />}
+        </>
     );
 }
 

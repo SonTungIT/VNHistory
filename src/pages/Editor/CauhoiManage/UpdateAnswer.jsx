@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 import classNames from 'classnames/bind';
 import styles from './UpdateAnswer.scss';
-import { AddIcon } from '~/components/GlobalStyles/Layout/components/Icons';
+import { AddIcon, DeleteIcon } from '~/components/GlobalStyles/Layout/components/Icons';
 import config from '~/config';
 import { message } from 'antd';
 
@@ -113,6 +113,26 @@ function UpdateAnswer() {
     setAnswerData(updatedAnswerData);
   };
 
+  const handleDelete = (answerId) => {
+    var myHeaders = new Headers();
+    myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+
+    var requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        redirect: 'follow',
+    };
+
+    fetch(`https://vietnamhistory.azurewebsites.net/api/Anwsers/DeleteAnswer?id=${answerId}`, requestOptions)
+        .then((response) => response.text())
+        .then((result) => {
+            console.log(result);
+            // If the deletion was successful, update the userData state
+            setAnswerData(answerData.filter((user) => user.answerId !== answerId));
+        })
+        .catch((error) => console.log('error', error));
+  };
+
   return (
     <div className='bg-answer'>
       <Button primary leftIcon={<AddIcon />} setCreatedAnswerData={setCreatedAnswerData}>
@@ -128,6 +148,7 @@ function UpdateAnswer() {
             <th>Answer Text</th>
             <th>Answer Correct</th>
             <th>Update</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -157,6 +178,11 @@ function UpdateAnswer() {
                   Update
                 </Button>
                 {contextHolder}
+              </td>
+              <td>
+                <button className="btn-function" onClick={() => handleDelete(answer.answerId)}>
+                  <DeleteIcon />
+                </button>
               </td>
             </tr>
           ))}

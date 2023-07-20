@@ -5,7 +5,7 @@ import styles from './UpdateQuestion.scss';
 import { message } from 'antd';
 const cx = classNames.bind(styles);
 
-function UpdateQuestion({ question, handleQuestionUpdate }) {
+function UpdateQuestion({ question, handleQuestionUpdate, closeQuestion }) {
   const [updatedQuestionText, setUpdatedQuestionText] = useState(question.questionText);
   const [updatedDifficultyLevel, setUpdatedDifficultyLevel] = useState(question.difficultyLevel);
 
@@ -74,6 +74,7 @@ function UpdateQuestion({ question, handleQuestionUpdate }) {
             </select>
           </div>
           <Button className="submit" type="submit">Update</Button>
+          <Button onClick={closeQuestion}>Close</Button>
           {contextHolder}
         </form>
       </td>
