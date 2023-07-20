@@ -3,12 +3,28 @@ import { useNavigate, Link } from 'react-router-dom';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 import config from '~/config';
 import logoImage from '~/images/logo.png';
+import { message } from 'antd';
 
 function SignIn() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+
+    const [messageApi, contextHolder] = message.useMessage();
+    const success = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'Đăng nhập thành công',
+        });
+    };
+
+    const showError = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'Đăng nhập thất bại',
+        });
+    };
 
     const handleLogin = async (event) => {
         event.preventDefault();
@@ -63,8 +79,10 @@ function SignIn() {
                         })
                         .catch((error) => console.log('error', error));
                 }
+                success();
             } else {
-                throw new Error('Login failed');
+                showError();
+                throw new Error('Login fail');
             }
         } catch (error) {
             console.log('error', error);
@@ -127,6 +145,7 @@ function SignIn() {
                             <button type="submit" className="btn-submit">
                                 <span>Login</span>
                             </button>
+                            {contextHolder}
                         </form>
                         <div className="suggestion">
                             {' '}

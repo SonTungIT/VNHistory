@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './CreateQuestion.scss';
+import { message } from 'antd';
 const cx = classNames.bind(styles);
 
 function CreateQuestion({ setCreatedQuestionData }) {
@@ -9,6 +10,21 @@ function CreateQuestion({ setCreatedQuestionData }) {
   const [eventId, setEventId] = useState(0);
   const [questionText, setQuestionText] = useState('');
   const [difficultyLevel, setDifficultyLevel] = useState('');
+
+  const [messageApi, contextHolder] = message.useMessage();
+    const success = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'Thêm mới thành công',
+        });
+    };
+
+    const showError = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'Thêm mới thất bại',
+        });
+    };
 
   useEffect(() => {
     // Fetch events data
@@ -49,10 +65,12 @@ function CreateQuestion({ setCreatedQuestionData }) {
       if (localStorage.getItem('role') === 'Editor') {
         console.log('Created question:', response.data);
         setCreatedQuestionData(prevData => [...prevData, response.data]);
+        success();
       }
       // Update the created question data
     } catch (error) {
       console.error('Error creating question:', error);
+      showError();
       // Handle the error
     }
   };
@@ -81,6 +99,7 @@ function CreateQuestion({ setCreatedQuestionData }) {
           <input type="text" value={difficultyLevel} onChange={e => setDifficultyLevel(e.target.value)} />
         </div>
         <button onClick={handleCreateQuestion}>Create Question</button>
+        {contextHolder}
       </div>
     </div>
   );

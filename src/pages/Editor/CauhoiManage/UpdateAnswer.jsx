@@ -6,6 +6,7 @@ import classNames from 'classnames/bind';
 import styles from './UpdateAnswer.scss';
 import { AddIcon } from '~/components/GlobalStyles/Layout/components/Icons';
 import config from '~/config';
+import { message } from 'antd';
 
 const cx = classNames.bind(styles);
 
@@ -15,6 +16,22 @@ function UpdateAnswer() {
   const questionId = queryParams.get('questionId');
   const [answerData, setAnswerData] = useState([]);
   const [createdAnswerData, setCreatedAnswerData] = useState([]);
+
+  const [messageApi, contextHolder] = message.useMessage();
+    const success = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'Cập nhật thành công',
+        });
+    };
+
+    const showError = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'Cập nhật thất bại',
+        });
+    };
+
 
   useEffect(() => {
     const config = {
@@ -61,8 +78,10 @@ function UpdateAnswer() {
       );
 
       console.log('Update successful:', response.data);
+      success();
     } catch (error) {
       console.error('Update failed:', error);
+      showError();
     }
   };
 
@@ -137,6 +156,7 @@ function UpdateAnswer() {
                 <Button className={cx('submit')} onClick={() => handleUpdateAnswer(answer.answerId)}>
                   Update
                 </Button>
+                {contextHolder}
               </td>
             </tr>
           ))}
