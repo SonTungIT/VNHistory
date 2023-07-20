@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LayoutAdmin from '~/pages/Admin/LayoutAdmin';
 import classNames from 'classnames/bind';
 import styles from './ThemMoi.scss';
@@ -22,7 +22,10 @@ function ThemMoi() {
     const [updatedAt, setUpdatedAt] = useState(null);
     const [publishedAt, setPublishedAt] = useState(null);
     const [content, setContent] = useState('');
-    const [category, setCategory] = useState([]);
+    const [categoryNames, setCategoryNames] = useState([]);
+    const [eventNames, setEventNames] = useState([]);
+
+    const [categories, setCategories] = useState([]);
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = () => {
@@ -58,7 +61,8 @@ function ThemMoi() {
             updatedAt: currentDateTime,
             publishedAt: currentDateTime,
             content,
-            category,
+            categoryNames,
+            eventNames,
         };
 
         var requestOptions = {
@@ -92,7 +96,22 @@ function ThemMoi() {
         setUpdatedAt(null);
         setPublishedAt(null);
         setContent('');
-        setCategory('');
+        setCategoryNames('');
+        setEventNames('');
+    };
+
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+
+    const fetchCategories = async () => {
+        try {
+            const response = await fetch('https://vietnamhistory.azurewebsites.net/api/Categories');
+            const data = await response.json();
+            setCategories(data.data);
+        } catch (error) {
+            console.log('Error fetching categories:', error);
+        }
     };
 
     return (
@@ -114,7 +133,7 @@ function ThemMoi() {
                                 {/* parentId */}
                                 {parentId !== null && (
                                     <div className="input-detail-tm">
-                                        <p>parentId: </p>
+                                        <p>Bài đăng trước: </p>
                                         <input
                                             type="text"
                                             placeholder="parentId"
@@ -187,11 +206,32 @@ function ThemMoi() {
                                 {/* category */}
                                 <div className="input-detail-tm">
                                     <p>Thể loại: </p>
+                                    <select
+                                        className="selecte-options"
+                                        value={categoryNames}
+                                        onChange={(e) =>
+                                            setCategoryNames(
+                                                Array.from(e.target.selectedOptions, (option) => option.value),
+                                            )
+                                        }
+                                        required
+                                    >
+                                        <option value="">Chọn thể loại</option>
+                                        {categories.map((category) => (
+                                            <option key={category.id} value={category.name}>
+                                                {category.categoryName}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                {/* eventNames */}
+                                <div className="input-detail-tm">
+                                    <p>Sự kiện: </p>
                                     <input
                                         type="text"
-                                        placeholder="category"
-                                        value={category}
-                                        onChange={(e) => setCategory(e.target.value)}
+                                        placeholder="eventName"
+                                        value={eventNames.join(', ')}
+                                        onChange={(e) => setEventNames(e.target.value.split(', '))}
                                         required
                                     />
                                 </div>
@@ -209,9 +249,9 @@ function ThemMoi() {
                         </div>
                     </form>
                 </div>
-                <div className={cx('container-tm')}>
+                {/* <div className={cx('container-tm')}>
                     <PostMeta />
-                </div>
+                </div> */}
                 {/* <div className={cx('container-tm')}>
                     <PostCmt />
                 </div> */}

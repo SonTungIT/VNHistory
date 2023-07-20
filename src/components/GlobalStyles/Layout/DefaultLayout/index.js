@@ -10,7 +10,7 @@ function DefaultLayout({ children }) {
         <div className={cx('wapper')}>
             <HeaderLogin />
             <div className={cx('container')}>
-                <Sidebar />
+                {/* <Sidebar /> */}
                 <div className={cx('content')}>{children}</div>
             </div>
             {/* <Footer /> */}

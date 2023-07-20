@@ -2,14 +2,20 @@ import React, { useState, useEffect } from 'react';
 import '../../Admin/Table.scss';
 import { DeleteIcon, EditIcon } from '~/components/GlobalStyles/Layout/components/Icons';
 import EditCateModal from './CateModal/EditCateModal';
+import { useNavigate } from 'react-router-dom';
 
 function TableTL(props) {
     const [categorys, setCategorys] = useState([]);
     const [editCateModal, setEditCateModal] = useState(false);
     const [selectedCate, setSelectedCate] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Fetch data from the API
+        if (!localStorage.getItem('accessToken')) {
+            navigate('/');
+            return;
+        }
         fetchData();
     }, []);
 

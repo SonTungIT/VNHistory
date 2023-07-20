@@ -8,7 +8,7 @@ import { SidebarDataEditor } from '~/assets/data/SidebarDataEditor';
 const cx = classNames.bind(styles);
 
 function SidebarEditor() {
-    const [openNavigation, setOPenNavigation] = useState(false);
+    const [openNavigation, setOPenNavigation] = useState(true);
     const toggleNavigation = () => setOPenNavigation(!openNavigation);
 
     return (

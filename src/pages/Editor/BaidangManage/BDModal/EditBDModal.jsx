@@ -85,7 +85,7 @@ function EditBDModal({ closeModal, post }) {
                                             />
                                         </div> */}
                                         <div className="input-detail-bd">
-                                            <p>parentId: </p>
+                                            <p>Bài đăng trước: </p>
                                             <input
                                                 type="text"
                                                 value={parentId}
@@ -93,7 +93,7 @@ function EditBDModal({ closeModal, post }) {
                                             />
                                         </div>
                                         <div className="input-detail-bd">
-                                            <p>metaTitle: </p>
+                                            <p>Tiêu đề: </p>
                                             <input
                                                 type="text"
                                                 value={metaTitle}
@@ -105,7 +105,7 @@ function EditBDModal({ closeModal, post }) {
                                             <input type="text" value={slug} onChange={(e) => setSlug(e.target.value)} />
                                         </div>
                                         <div className="input-detail-bd">
-                                            <p>summary: </p>
+                                            <p>tóm tắt: </p>
                                             <input
                                                 type="text"
                                                 value={summary}
@@ -113,12 +113,16 @@ function EditBDModal({ closeModal, post }) {
                                             />
                                         </div>
                                         <div className="input-detail-bd">
-                                            <p>published: </p>
-                                            <input
-                                                type="text"
+                                            <p>Chế độ: </p>
+                                            <select
+                                                className="selecte-options"
                                                 value={published}
                                                 onChange={(e) => setPublished(e.target.value)}
-                                            />
+                                                required
+                                            >
+                                                <option value="1">Công khai</option>
+                                                <option value="0">Riêng tư</option>
+                                            </select>
                                         </div>
                                         <div className="selectDate">
                                             <div className="input-detail-bd">

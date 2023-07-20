@@ -2,19 +2,27 @@ import React, { useState, useEffect } from 'react';
 import '../../Admin/Table.scss';
 import { AddIcon, DeleteIcon, EditIcon } from '~/components/GlobalStyles/Layout/components/Icons';
 import EditBDModal from './BDModal/EditBDModal';
+import { useNavigate } from 'react-router-dom';
+import Button from '~/components/GlobalStyles/Layout/components/Button';
+import AddImage from './AddImage/AddImage';
 
-function TableBD(props) {
+function TableBD() {
     const [posts, setPosts] = useState([]);
     const [expandedRows, setExpandedRows] = useState([]);
     const [ediBDModal, setEditBDModal] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
+    const [openModal, setOpenModal] = useState(false);
 
     const infoUser = JSON.parse(localStorage.getItem('infoUser'));
 
-    console.log(posts);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Fetch data from the API
+        if (!localStorage.getItem('accessToken')) {
+            navigate('/');
+            return;
+        }
         fetchData();
     }, []);
 
@@ -89,10 +97,8 @@ function TableBD(props) {
             <table className="table-user">
                 <thead>
                     <tr>
-                        <th className="th-user">Người đăng</th>
-                        <th className="th-user">Bài đăng trước</th>
                         <th className="th-user">Tiêu đề</th>
-                        <th className="th-user">slug</th>
+                        {/* <th className="th-user">slug</th> */}
                         <th className="th-user">Tóm tắt</th>
                         <th className="th-user">Chế độ</th>
                         <th className="th-user">Ngày tạo</th>
@@ -100,6 +106,10 @@ function TableBD(props) {
                         <th className="th-user">publishedAt</th>
                         <th className="th-user">Nội dung</th>
                         <th className="th-user">Thể loại</th>
+                        <th className="th-user">Sự kiện</th>
+                        <th className="th-user">Người đăng</th>
+                        <th className="th-user">Bài đăng trước</th>
+                        <th className="th-user">Ảnh</th>
                         <th className="th-user"></th>
                     </tr>
                 </thead>
@@ -117,14 +127,12 @@ function TableBD(props) {
                         return (
                             <React.Fragment key={post.postId}>
                                 <tr>
-                                    <td className="td-user">{post.authorName}</td>
-                                    <td className="td-user">{post.parentId !== null ? post.parentId : ''}</td>
                                     <td className="td-user" onClick={() => handleRowClick(post.postId)}>
                                         {isExpanded ? post.metaTitle : truncatedMetaTitle}
                                     </td>
-                                    <td className="td-user" onClick={() => handleRowClick(post.postId)}>
+                                    {/* <td className="td-user" onClick={() => handleRowClick(post.postId)}>
                                         {isExpanded ? post.slug : truncatedSlug}
-                                    </td>
+                                    </td> */}
                                     <td className="td-user" onClick={() => handleRowClick(post.postId)}>
                                         {isExpanded ? post.summary : truncatedSummary}
                                     </td>
@@ -136,6 +144,18 @@ function TableBD(props) {
                                         {isExpanded ? post.content : truncatedContent}
                                     </td>
                                     <td className="td-user">{post.categoryNames}</td>
+                                    <td className="td-user">{post.eventNames}</td>
+                                    <td className="td-user">{post.authorName}</td>
+                                    <td className="td-user">{post.parentId !== null ? post.parentId : ''}</td>
+                                    <td className="td-user">
+                                        <Button
+                                            leftIcon={<AddIcon />}
+                                            onClick={() => {
+                                                setOpenModal(true);
+                                            }}
+                                        ></Button>
+                                    </td>
+
                                     <td className="td-user">
                                         <button className="btn-function" onClick={() => handleEdit(post)}>
                                             <EditIcon />
@@ -161,6 +181,7 @@ function TableBD(props) {
                 </tbody>
             </table>
             {ediBDModal && <EditBDModal closeModal={() => setEditBDModal(false)} post={selectedPost} />}
+            {openModal && <AddImage closeModal={setOpenModal} />}
         </>
     );
 }
