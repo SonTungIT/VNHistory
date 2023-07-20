@@ -11,7 +11,7 @@ function TableBD() {
     const [expandedRows, setExpandedRows] = useState([]);
     const [ediBDModal, setEditBDModal] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
-    const [openModal, setOpenModal] = useState(false);
+    const [addImage, setAddImage] = useState(false);
 
     const infoUser = JSON.parse(localStorage.getItem('infoUser'));
 
@@ -78,6 +78,12 @@ function TableBD() {
         console.log(post);
     };
 
+    const handleAddImg = (post) => {
+        setSelectedPost(post);
+        setAddImage(true);
+        console.log(post);
+    };
+
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
         const date = new Date(dateString);
@@ -91,6 +97,26 @@ function TableBD() {
             setExpandedRows([...expandedRows, postId]);
         }
     };
+
+    // const handleAddImage = (postId) => {
+    //     var myHeaders = new Headers();
+    //     myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+    
+    //     var requestOptions = {
+    //         method: 'POST',
+    //         headers: myHeaders,
+    //         redirect: 'follow',
+    //     };
+    
+    //     fetch(`https://vietnamhistory.azurewebsites.net/api/images/posts/${postId}`, requestOptions)
+    //         .then((response) => response.text())
+    //         .then((result) => {
+    //             console.log(result);
+    //             // If the deletion was successful, update the userData state
+    //             setPosts(posts.filter((post) => post.postId !== postId));
+    //         })
+    //         .catch((error) => console.log('error', error));
+    //   };
 
     return (
         <>
@@ -148,12 +174,9 @@ function TableBD() {
                                     <td className="td-user">{post.authorName}</td>
                                     <td className="td-user">{post.parentId !== null ? post.parentId : ''}</td>
                                     <td className="td-user">
-                                        <Button
-                                            leftIcon={<AddIcon />}
-                                            onClick={() => {
-                                                setOpenModal(true);
-                                            }}
-                                        ></Button>
+                                        <button className="btn-function" onClick={() => handleAddImg(post.postId)}>
+                                            <AddIcon />
+                                        </button>
                                     </td>
 
                                     <td className="td-user">
@@ -181,7 +204,7 @@ function TableBD() {
                 </tbody>
             </table>
             {ediBDModal && <EditBDModal closeModal={() => setEditBDModal(false)} post={selectedPost} />}
-            {openModal && <AddImage closeModal={setOpenModal} />}
+            {addImage && <AddImage closeModal={() => setAddImage(false)} post={selectedPost}  />}
         </>
     );
 }
