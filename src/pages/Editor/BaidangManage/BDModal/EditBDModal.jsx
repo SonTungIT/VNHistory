@@ -23,7 +23,7 @@ function EditBDModal({ closeModal, post }) {
         myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
 
         const updatedPost = {
-            authorId,
+            // authorId,
             parentId: parentId ? parentId : null,
             metaTitle,
             slug,
@@ -47,6 +47,7 @@ function EditBDModal({ closeModal, post }) {
             .then((result) => {
                 console.log(result); // Handle the response as needed
                 setUpdateSuccess(true); // Set updateSuccess state to true to close the modal or show a success message
+                window.location.reload();
             })
             .catch((error) => console.log('error', error));
     };
@@ -75,14 +76,14 @@ function EditBDModal({ closeModal, post }) {
                             <div className="form-input-bd">
                                 <div className="body">
                                     <label className="label-input">
-                                        <div className="input-detail-bd">
+                                        {/* <div className="input-detail-bd">
                                             <p>authorId: </p>
                                             <input
                                                 type="text"
                                                 value={authorId}
                                                 onChange={(e) => setAuthorId(e.target.value)}
                                             />
-                                        </div>
+                                        </div> */}
                                         <div className="input-detail-bd">
                                             <p>parentId: </p>
                                             <input
@@ -121,7 +122,7 @@ function EditBDModal({ closeModal, post }) {
                                         </div>
                                         <div className="selectDate">
                                             <div className="input-detail-bd">
-                                                <p>createdAt: </p>
+                                                <p>Ngày tạo: </p>
                                                 <Space direction="vertical">
                                                     <DatePicker
                                                         className="inp-form"

@@ -19,7 +19,7 @@ function PostMeta() {
     const showError = () => {
         messageApi.open({
             type: 'error',
-            content: 'Thêm mới thất bại',
+            content: 'Somethings wrong !',
         });
     };
 
@@ -48,6 +48,8 @@ function PostMeta() {
             .then((result) => {
                 if (result.message === 'PostMeta Created successfully') {
                     success();
+                } else {
+                    showError(); // Call showError here if the API response is not successful
                 }
             })
             .catch((error) => {
@@ -82,6 +84,7 @@ function PostMeta() {
                                 placeholder="postId"
                                 value={postId}
                                 onChange={(e) => setPostId(e.target.value)}
+                                required
                             />
                         </div>
                         <div className="input-detail-tm">
@@ -91,6 +94,7 @@ function PostMeta() {
                                 placeholder="keys"
                                 value={keys}
                                 onChange={(e) => setKeys(e.target.value)}
+                                required
                             />
                         </div>
                         <div className="input-detail-tm">
@@ -100,6 +104,7 @@ function PostMeta() {
                                 placeholder="contents"
                                 value={contents}
                                 onChange={(e) => setContents(e.target.value)}
+                                required
                             />
                         </div>
                     </label>

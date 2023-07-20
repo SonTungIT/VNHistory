@@ -80,7 +80,7 @@
 
                 background-color: transparent;
                 border: none;
-                width: 100px;
+                width: 150px;
             }
         }
 
@@ -109,10 +109,17 @@
 }
 
 .user-name {
+    text-align: start;
     font-size: 18px;
     font-weight: 600;
     color: var(--font);
     margin-left: 10px;
+    width: 150px;
+
+    p {
+        color: var(--font);
+        font-size: 14px;
+    }
 }
 
 .logout {

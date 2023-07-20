@@ -2,10 +2,6 @@ import React, { useState } from 'react';
 import './CateModal.scss';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 
-const onChange = (date, dateString) => {
-    console.log(date, dateString);
-};
-
 function CateModal({ closeModal }) {
     const [categoryName, setCategoryName] = useState('');
 
@@ -33,6 +29,9 @@ function CateModal({ closeModal }) {
                 console.log(result);
                 setCategoryName('');
                 closeModal(false);
+
+                // Reload the TableTL page after successfully adding a new category
+                window.location.reload();
             })
             .catch((error) => console.log('error', error));
     };
@@ -54,6 +53,7 @@ function CateModal({ closeModal }) {
                                     placeholder="Tên thể loại"
                                     value={categoryName}
                                     onChange={(e) => setCategoryName(e.target.value)}
+                                    required
                                 />
                             </div>
                         </label>

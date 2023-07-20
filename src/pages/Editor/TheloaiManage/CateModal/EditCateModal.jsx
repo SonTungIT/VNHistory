@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import './CateModal.scss';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
+import { useNavigate, Link } from 'react-router-dom';
 
-function EditCateModal({ closeModal, category }) {
+function EditCateModal({ closeModal, category, fetchData }) {
     const [cateName, setCateName] = useState(category.categoryName);
     const [updateSuccess, setUpdateSuccess] = useState(false);
+    const navigate = useNavigate();
 
     const handleUpdate = () => {
         var myHeaders = new Headers();
@@ -28,6 +30,8 @@ function EditCateModal({ closeModal, category }) {
             .then((result) => {
                 console.log(result);
                 setUpdateSuccess(true); // Update success flag
+                fetchData(); // Gọi hàm fetchData để cập nhật dữ liệu mới và re-render TableTL
+                closeModal(); // Đóng modal
             })
             .catch((error) => console.log('error', error));
     };

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Post.scss';
 import { useLocation } from 'react-router-dom';
+import { Input, Space } from 'antd';
+
+const { Search } = Input;
 
 const cx = classNames.bind(styles);
 
@@ -45,8 +48,33 @@ function PostDetail() {
         window.location.href = `/post?postId=${postId}`;
     };
 
+    const handleSearch = (value) => {
+        const encodedKeyword = encodeURIComponent(value);
+        const apiUrl = `https://vietnamhistory.azurewebsites.net/api/posts/search/metaTitle?keyword=${encodedKeyword}`;
+
+        const myHeaders = new Headers();
+        const requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow',
+        };
+
+        fetch(apiUrl, requestOptions)
+            .then((response) => response.text())
+            .then((result) => {
+                console.log(result);
+                window.location.href = `/PostDetail?searchResults=${result}`;
+            })
+            .catch((error) => console.log('error', error));
+    };
+
     return (
         <div className={cx('wapper')}>
+            <div className={cx('search')}>
+                <Space direction="vertical">
+                    <Search placeholder="Tìm kiếm" onSearch={handleSearch} style={{ width: 200 }} />
+                </Space>
+            </div>
             <span className={cx('title')}>Kết quả tìm kiếm</span>
 
             {Array.isArray(parsedResults?.data) && parsedResults.data.length > 0 ? (

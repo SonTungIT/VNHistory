@@ -90,7 +90,7 @@ function TableBD(props) {
                 <thead>
                     <tr>
                         <th className="th-user">Người đăng</th>
-                        <th className="th-user">parentId</th>
+                        <th className="th-user">Bài đăng trước</th>
                         <th className="th-user">Tiêu đề</th>
                         <th className="th-user">slug</th>
                         <th className="th-user">Tóm tắt</th>
@@ -110,13 +110,15 @@ function TableBD(props) {
                         const truncatedSlug = post.slug.length > 5 ? post.slug.slice(0, 5) + '...' : post.slug;
                         const truncatedSummary =
                             post.summary.length > 5 ? post.summary.slice(0, 5) + '...' : post.summary;
+                        const truncatedContent =
+                            post.content.length > 5 ? post.content.slice(0, 5) + '...' : post.content;
                         const isExpanded = expandedRows.includes(post.postId);
 
                         return (
                             <React.Fragment key={post.postId}>
                                 <tr>
                                     <td className="td-user">{post.authorName}</td>
-                                    <td className="td-user">{post.parentId !== null ? post.parentId : 'null'}</td>
+                                    <td className="td-user">{post.parentId !== null ? post.parentId : ''}</td>
                                     <td className="td-user" onClick={() => handleRowClick(post.postId)}>
                                         {isExpanded ? post.metaTitle : truncatedMetaTitle}
                                     </td>
@@ -126,11 +128,13 @@ function TableBD(props) {
                                     <td className="td-user" onClick={() => handleRowClick(post.postId)}>
                                         {isExpanded ? post.summary : truncatedSummary}
                                     </td>
-                                    <td className="td-user">{post.published}</td>
+                                    <td className="td-user">{post.published === 1 ? 'Công khai' : 'Riêng tư'}</td>
                                     <td className="td-user">{formatDate(post.createdAt)}</td>
                                     <td className="td-user">{formatDate(post.updatedAt)}</td>
                                     <td className="td-user">{formatDate(post.publishedAt)}</td>
-                                    <td className="td-user">{post.content}</td>
+                                    <td className="td-user" onClick={() => handleRowClick(post.postId)}>
+                                        {isExpanded ? post.content : truncatedContent}
+                                    </td>
                                     <td className="td-user">{post.categoryNames}</td>
                                     <td className="td-user">
                                         <button className="btn-function" onClick={() => handleEdit(post)}>

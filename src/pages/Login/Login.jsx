@@ -3,6 +3,9 @@ import classNames from 'classnames/bind';
 import styles from './Login.scss';
 import config from '~/config';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
+import { Input, Space } from 'antd';
+
+const { Search } = Input;
 
 const cx = classNames.bind(styles);
 
@@ -75,12 +78,36 @@ function Login() {
         setSelectedData(data);
     };
 
+    const handleSearch = (value) => {
+        const encodedKeyword = encodeURIComponent(value);
+        const apiUrl = `https://vietnamhistory.azurewebsites.net/api/posts/search/metaTitle?keyword=${encodedKeyword}`;
+
+        const myHeaders = new Headers();
+        const requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow',
+        };
+
+        fetch(apiUrl, requestOptions)
+            .then((response) => response.text())
+            .then((result) => {
+                console.log(result);
+                window.location.href = `/PostDetail?searchResults=${result}`;
+            })
+            .catch((error) => console.log('error', error));
+    };
+
     return (
         <div className={cx('wapper')}>
+            <div className={cx('search')}>
+                <Space direction="vertical">
+                    <Search placeholder="Tìm kiếm" onSearch={handleSearch} style={{ width: 200 }} />
+                </Space>
+            </div>
             <div className={cx('inner')}>
                 {posts.length > 0 && (
                     <Button
-                        to={config.routes.Post}
                         className={cx('content')}
                         key={posts[0].postId}
                         onClick={() => handleButtonClick(posts[0].postId)}

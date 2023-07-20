@@ -25,9 +25,15 @@ function SignIn() {
             content: 'Đăng nhập thất bại',
         });
     };
-
     const handleLogin = async (event) => {
         event.preventDefault();
+
+        const showError = () => {
+            messageApi.open({
+                type: 'error',
+                content: 'Somethings wrong !',
+            });
+        };
 
         try {
             const response = await fetch('https://vietnamhistory.azurewebsites.net/api/Auth/login', {
@@ -81,12 +87,11 @@ function SignIn() {
                 }
                 success();
             } else {
-                showError();
-                throw new Error('Login fail');
+                throw new Error('Login failed');
             }
         } catch (error) {
             console.log('error', error);
-            setError('Login failed');
+            showError();
         }
     };
 

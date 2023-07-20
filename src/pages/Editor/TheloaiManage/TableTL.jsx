@@ -47,10 +47,7 @@ function TableTL(props) {
             redirect: 'follow',
         };
 
-        fetch(
-            `https://vietnamhistory.azurewebsites.net/api/Categories/deleteCategory?id=${categoryId}`,
-            requestOptions,
-        )
+        fetch(`https://vietnamhistory.azurewebsites.net/api/Categories/deleteCategory?id=${categoryId}`, requestOptions)
             .then((response) => {
                 if (response.ok) {
                     // Remove the deleted event from the events state
@@ -92,7 +89,13 @@ function TableTL(props) {
                     ))}
                 </tbody>
             </table>
-            {editCateModal && <EditCateModal closeModal={() => setEditCateModal(false)} category={selectedCate} />}
+            {editCateModal && (
+                <EditCateModal
+                    closeModal={() => setEditCateModal(false)}
+                    category={selectedCate}
+                    fetchData={fetchData} // Truyền hàm fetchData vào EditCateModal
+                />
+            )}
         </>
     );
 }
