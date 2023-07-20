@@ -115,6 +115,26 @@ function TableCH() {
     }
   };
 
+  const handleDelete = (questionId) => {
+    var myHeaders = new Headers();
+    myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+
+    var requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        redirect: 'follow',
+    };
+
+    fetch(`https://vietnamhistory.azurewebsites.net/api/Question/DeleteQuestion?id=${questionId}`, requestOptions)
+        .then((response) => response.text())
+        .then((result) => {
+            console.log(result);
+            // If the deletion was successful, update the userData state
+            setQuestionData(questionData.filter((question) => question.questionId !== questionId));
+        })
+        .catch((error) => console.log('error', error));
+  };
+
   return (
     <table className="table-user">
       <thead>
@@ -165,7 +185,9 @@ function TableCH() {
                     </button>
                   )}
 
-                  <DeleteIcon />
+                    <button className="btn-function" onClick={() => handleDelete(question.questionId)}>
+                      <DeleteIcon />
+                    </button>
                 </td>
               </tr>
               {isUpdating && (

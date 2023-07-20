@@ -4,8 +4,9 @@ import { Link, useLocation } from 'react-router-dom';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 import classNames from 'classnames/bind';
 import styles from './UpdateAnswer.scss';
-import { AddIcon } from '~/components/GlobalStyles/Layout/components/Icons';
+import { AddIcon, DeleteIcon } from '~/components/GlobalStyles/Layout/components/Icons';
 import config from '~/config';
+import { message } from 'antd';
 
 const cx = classNames.bind(styles);
 
@@ -15,6 +16,22 @@ function UpdateAnswer() {
   const questionId = queryParams.get('questionId');
   const [answerData, setAnswerData] = useState([]);
   const [createdAnswerData, setCreatedAnswerData] = useState([]);
+
+  const [messageApi, contextHolder] = message.useMessage();
+    const success = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'Cập nhật thành công',
+        });
+    };
+
+    const showError = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'Cập nhật thất bại',
+        });
+    };
+
 
   useEffect(() => {
     const config = {
@@ -61,8 +78,10 @@ function UpdateAnswer() {
       );
 
       console.log('Update successful:', response.data);
+      success();
     } catch (error) {
       console.error('Update failed:', error);
+      showError();
     }
   };
 
@@ -94,6 +113,26 @@ function UpdateAnswer() {
     setAnswerData(updatedAnswerData);
   };
 
+  const handleDelete = (answerId) => {
+    var myHeaders = new Headers();
+    myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+
+    var requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        redirect: 'follow',
+    };
+
+    fetch(`https://vietnamhistory.azurewebsites.net/api/Anwsers/DeleteAnswer?id=${answerId}`, requestOptions)
+        .then((response) => response.text())
+        .then((result) => {
+            console.log(result);
+            // If the deletion was successful, update the userData state
+            setAnswerData(answerData.filter((user) => user.answerId !== answerId));
+        })
+        .catch((error) => console.log('error', error));
+  };
+
   return (
     <div className='bg-answer'>
       <Button primary leftIcon={<AddIcon />} setCreatedAnswerData={setCreatedAnswerData}>
@@ -109,6 +148,7 @@ function UpdateAnswer() {
             <th>Answer Text</th>
             <th>Answer Correct</th>
             <th>Update</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -137,6 +177,12 @@ function UpdateAnswer() {
                 <Button className={cx('submit')} onClick={() => handleUpdateAnswer(answer.answerId)}>
                   Update
                 </Button>
+                {contextHolder}
+              </td>
+              <td>
+                <button className="btn-function" onClick={() => handleDelete(answer.answerId)}>
+                  <DeleteIcon />
+                </button>
               </td>
             </tr>
           ))}

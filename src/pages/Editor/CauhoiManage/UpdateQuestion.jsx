@@ -2,11 +2,27 @@ import React, { useEffect, useState } from 'react';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 import classNames from 'classnames/bind';
 import styles from './UpdateQuestion.scss';
+import { message } from 'antd';
 const cx = classNames.bind(styles);
 
-function UpdateQuestion({ question, handleQuestionUpdate }) {
+function UpdateQuestion({ question, handleQuestionUpdate, closeQuestion }) {
   const [updatedQuestionText, setUpdatedQuestionText] = useState(question.questionText);
   const [updatedDifficultyLevel, setUpdatedDifficultyLevel] = useState(question.difficultyLevel);
+
+  const [messageApi, contextHolder] = message.useMessage();
+    const success = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'Cập nhật thành công',
+        });
+    };
+
+    const showError = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'Cập nhật thất bại',
+        });
+    };
 
   const handleQuestionTextChange = (event) => {
     setUpdatedQuestionText(event.target.value);
@@ -26,6 +42,7 @@ function UpdateQuestion({ question, handleQuestionUpdate }) {
     };
 
     handleQuestionUpdate(updatedQuestionData);
+    success();
   };
 
   return (
@@ -57,6 +74,8 @@ function UpdateQuestion({ question, handleQuestionUpdate }) {
             </select>
           </div>
           <Button className="submit" type="submit">Update</Button>
+          <Button onClick={closeQuestion}>Close</Button>
+          {contextHolder}
         </form>
       </td>
     </tr>

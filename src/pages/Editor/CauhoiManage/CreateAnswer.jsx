@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './CreateAnswer.scss';
 import { useLocation } from 'react-router-dom';
+import { message } from 'antd';
 const cx = classNames.bind(styles);
 
 function CreateAnswer({ setCreatedAnswerData }) {
@@ -13,6 +14,21 @@ function CreateAnswer({ setCreatedAnswerData }) {
   const [answerText, setAnswerText] = useState('');
   const [isCorrect, setIsCorrect] = useState(false);
   const [questions, setQuestions] = useState([]);
+
+  const [messageApi, contextHolder] = message.useMessage();
+    const success = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'Thêm mới thành công',
+        });
+    };
+
+    const showError = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'Thêm mới thất bại',
+        });
+    };
 
   const config = {
     headers: {
@@ -45,9 +61,11 @@ function CreateAnswer({ setCreatedAnswerData }) {
       if (localStorage.getItem('role') === 'Editor') {
         console.log('Câu trả lời đã được tạo:', response.data);
         setCreatedAnswerData(prevData => [...prevData, response.data]);
+        success();
       }
     } catch (error) {
       console.error('Lỗi khi tạo câu trả lời:', error);
+      showError();
     }
   };
 
@@ -74,6 +92,7 @@ function CreateAnswer({ setCreatedAnswerData }) {
           </select>
         </div>
         <button onClick={handleCreateAnswer}>Tạo câu trả lời</button>
+        {contextHolder}
       </div>
     </div>
   );

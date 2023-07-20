@@ -12,6 +12,19 @@ function SignIn() {
     const [error, setError] = useState('');
 
     const [messageApi, contextHolder] = message.useMessage();
+    const success = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'Đăng nhập thành công',
+        });
+    };
+
+    const showError = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'Đăng nhập thất bại',
+        });
+    };
     const handleLogin = async (event) => {
         event.preventDefault();
 
@@ -72,8 +85,9 @@ function SignIn() {
                         })
                         .catch((error) => console.log('error', error));
                 }
+                success();
             } else {
-                showError();
+                throw new Error('Login failed');
             }
         } catch (error) {
             console.log('error', error);
@@ -136,6 +150,7 @@ function SignIn() {
                             <button type="submit" className="btn-submit">
                                 <span>Login</span>
                             </button>
+                            {contextHolder}
                         </form>
                         <div className="suggestion">
                             {' '}

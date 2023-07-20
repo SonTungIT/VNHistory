@@ -5,6 +5,7 @@ import config from '~/config';
 import logoImage from '~/images/logo.png';
 import { DatePicker, Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { message } from 'antd';
 
 const onChange = (date, dateString) => {
     console.log(date, dateString);
@@ -19,6 +20,21 @@ function Register() {
     const [passwordError, setPasswordError] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+
+    const [messageApi, contextHolder] = message.useMessage();
+    const success = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'Đăng ký thành công',
+        });
+    };
+
+    const showError = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'Đăng ký thất bại',
+        });
+    };
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -79,6 +95,7 @@ function Register() {
             if (result === 'Register is successfully.') {
                 console.log(result);
                 navigate('/signIn');
+                success();
             } else {
                 try {
                     const errorData = JSON.parse(result);
@@ -86,6 +103,7 @@ function Register() {
                     setError(errorRender);
                 } catch (error) {
                     console.log('Failed to parse error data:', error);
+                    showError();
                 }
             }
         } catch (error) {
@@ -175,6 +193,7 @@ function Register() {
                             <button type="submit" className="btn-submit">
                                 <span>Đăng Ký</span>
                             </button>
+                            {contextHolder}
                             {error && <div className="password-error">{error}</div>}
                         </form>
                         <div className="suggestion">

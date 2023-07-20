@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './CreateQuestion.scss';
+import { message } from 'antd';
 const cx = classNames.bind(styles);
 
 function CreateQuestion({ setCreatedQuestionData }) {
@@ -9,6 +10,21 @@ function CreateQuestion({ setCreatedQuestionData }) {
   const [eventId, setEventId] = useState(0);
   const [questionText, setQuestionText] = useState('');
   const [difficultyLevel, setDifficultyLevel] = useState('');
+
+  const [messageApi, contextHolder] = message.useMessage();
+    const success = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'Thêm mới thành công',
+        });
+    };
+
+    const showError = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'Thêm mới thất bại',
+        });
+    };
 
   useEffect(() => {
     // Fetch events data
@@ -50,9 +66,11 @@ function CreateQuestion({ setCreatedQuestionData }) {
         console.log('Created question:', response.data);
         setCreatedQuestionData(prevData => [...prevData, response.data]);
       }
+      success();
       // Update the created question data
     } catch (error) {
       console.error('Error creating question:', error);
+      showError();
       // Handle the error
     }
   };
@@ -76,11 +94,20 @@ function CreateQuestion({ setCreatedQuestionData }) {
           <label>Question Text:</label>
           <input type="text" value={questionText} onChange={e => setQuestionText(e.target.value)} />
         </div>
-        <div className={cx('DifficultyLevel')}>
+        {/* <div className={cx('DifficultyLevel')}>
           <label>Difficulty Level:</label>
           <input type="text" value={difficultyLevel} onChange={e => setDifficultyLevel(e.target.value)} />
+        </div> */}
+        <div className={cx('DifficultyLevel')}>
+          <label>Difficulty Level:</label>
+          <select value={difficultyLevel} onChange={e => setDifficultyLevel(e.target.value)}>
+            <option value="Easy">Easy</option>
+            <option value="Normal">Normal</option>
+            <option value="Hard">Hard</option>
+          </select>
         </div>
         <button onClick={handleCreateQuestion}>Create Question</button>
+        {contextHolder}
       </div>
     </div>
   );
