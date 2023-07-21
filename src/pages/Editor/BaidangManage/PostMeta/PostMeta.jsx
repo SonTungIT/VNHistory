@@ -11,17 +11,16 @@ function PostMeta({ closeModal }) {
     const [contents, setContents] = useState('');
     const [views, setViews] = useState([]);
 
-    console.log(views);
-
     const navigate = useNavigate();
-    const [posts, setPosts] = useState([]);
 
     const location = useLocation();
 
     useEffect(() => {
-        // Lấy dữ liệu views từ state của react-router
         if (location.state && location.state.views) {
             setViews(location.state.views);
+            if (location.state.views.length > 0) {
+                setPostId(location.state.views[0].postId); // Set postId from views.postId
+            }
         }
     }, [location]);
 
@@ -66,6 +65,7 @@ function PostMeta({ closeModal }) {
                 if (result.message === 'PostMeta Created successfully') {
                     success();
                     closeModal(false);
+                    navigate('/BaidangMange');
                     window.location.reload();
                 } else {
                     showError(); // Call showError here if the API response is not successful
@@ -82,38 +82,7 @@ function PostMeta({ closeModal }) {
         setContents('');
     };
 
-    useEffect(() => {
-        // Fetch data from the API
-        if (!localStorage.getItem('accessToken')) {
-            navigate('/');
-            return;
-        }
-        fetchData();
-    }, []);
-
-    const fetchData = () => {
-        var myHeaders = new Headers();
-        myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
-
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow',
-        };
-
-        fetch('https://vietnamhistory.azurewebsites.net/api/posts', requestOptions)
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error(response.status);
-            })
-            .then((result) => {
-                // Update the events state with the retrieved data
-                setPosts(result.data);
-            })
-            .catch((error) => console.log('error', error));
-    };
+    console.log(postId);
 
     return (
         <>
