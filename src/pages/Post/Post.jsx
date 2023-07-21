@@ -17,6 +17,7 @@ function Post() {
     const [postData, setPostData] = useState(null);
     const [metaContent, setMetaContent] = useState([]);
     const contentsRef = useRef(null);
+    const [imagesData, setImagesData] = useState();
 
     useEffect(() => {
         const fetchPostData = async () => {
@@ -24,6 +25,10 @@ function Post() {
                 const response = await fetch(`https://vietnamhistory.azurewebsites.net/api/posts/${postId}`);
                 const result = await response.json();
                 setPostData(result);
+                // console.error('Két quả:', result.data.images[0].url);
+                const allImages = result.data.images.map((image) => image.url);
+                // console.error('Két quả 222:', allImages);
+                setImagesData(allImages);
             } catch (error) {
                 console.error('Error fetching post data:', error);
             }
@@ -123,10 +128,9 @@ function Post() {
                                 <p className={cx('title-date')}>{formatDate(postData.data.createdAt)}</p>
                             </div>
                             <div className={cx('poster')}>
-                                <img
-                                    src="https://giasuviet.com.vn/wp-content/uploads/2015/09/phuong-phap-hoc-mon-lich-su-lop-12-hieu-qua-va-nho-lau.jpg"
-                                    alt="img"
-                                />
+                                {imagesData.map((imageUrl, index) => (
+                                    <img key={index} src={imageUrl} alt={`img-${index}`} />
+                                ))}
                             </div>
                             <div className={cx('detail-post')}>{postData.data.summary}</div>
                             <div className={cx('postmeta')}>
