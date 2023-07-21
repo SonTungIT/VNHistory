@@ -3,14 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import './PostMeta.scss';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 import { message } from 'antd';
+import { Link, useLocation } from 'react-router-dom';
 
 function PostMeta({ closeModal }) {
     const [postId, setPostId] = useState('');
     const [keys, setKeys] = useState('');
     const [contents, setContents] = useState('');
+    const [views, setViews] = useState([]);
+
+    console.log(views);
 
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
+
+    const location = useLocation();
+
+    useEffect(() => {
+        // Lấy dữ liệu views từ state của react-router
+        if (location.state && location.state.views) {
+            setViews(location.state.views);
+        }
+    }, [location]);
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = () => {
@@ -112,22 +125,6 @@ function PostMeta({ closeModal }) {
                     <form className="form-input" onSubmit={handleSubmit}>
                         <div className="body">
                             <label className="label-input">
-                                <div className="input-detail">
-                                    <p>Bài đăng trước: </p>
-                                    <select
-                                        className="selecte-options"
-                                        value={postId}
-                                        onChange={(e) => setPostId(e.target.value)}
-                                        required
-                                    >
-                                        <option value="">Chọn bài đăng trước</option>
-                                        {posts.map((post) => (
-                                            <option key={post.postId} value={post.postId}>
-                                                {post.metaTitle} - {post.postId}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
                                 <div className="input-detail">
                                     <p>keys: </p>
                                     <input

@@ -16,16 +16,16 @@ export const SidebarDataEditor = [
         iconClosed: <ArrowDownIcon />,
         iconOpened: <ArrowLeftIcon />,
 
-        subNav: [
-            {
-                title: 'Quản lý PostMeta',
-                path: config.routes.postmeta,
-            },
-            // {
-            //     title: 'Quản lý PostCmt',
-            //     path: config.routes.postcmt,
-            // },
-        ],
+        // subNav: [
+        //     {
+        //         title: 'Quản lý PostMeta',
+        //         path: config.routes.postmeta,
+        //     },
+        //     {
+        //         title: 'Quản lý PostCmt',
+        //         path: config.routes.postcmt,
+        //     },
+        // ],
     },
     {
         title: 'QUẢN LÝ THỂ LOẠI',
