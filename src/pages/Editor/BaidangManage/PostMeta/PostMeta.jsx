@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './PostMeta.scss';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 import { message } from 'antd';
 
-function PostMeta() {
+function PostMeta({ closeModal }) {
     const [postId, setPostId] = useState('');
     const [keys, setKeys] = useState('');
     const [contents, setContents] = useState('');
+
+    const navigate = useNavigate();
+    const [posts, setPosts] = useState([]);
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = () => {
@@ -48,6 +52,8 @@ function PostMeta() {
             .then((result) => {
                 if (result.message === 'PostMeta Created successfully') {
                     success();
+                    closeModal(false);
+                    window.location.reload();
                 } else {
                     showError(); // Call showError here if the API response is not successful
                 }
@@ -63,60 +69,97 @@ function PostMeta() {
         setContents('');
     };
 
-    const handleCancel = () => {
-        setPostId('');
-        setKeys('');
-        setContents('');
+    useEffect(() => {
+        // Fetch data from the API
+        if (!localStorage.getItem('accessToken')) {
+            navigate('/');
+            return;
+        }
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
+        var myHeaders = new Headers();
+        myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow',
+        };
+
+        fetch('https://vietnamhistory.azurewebsites.net/api/posts', requestOptions)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error(response.status);
+            })
+            .then((result) => {
+                // Update the events state with the retrieved data
+                setPosts(result.data);
+            })
+            .catch((error) => console.log('error', error));
     };
 
     return (
         <>
-            <div className="title-tm">
-                <h2>Thêm Mới PostMeta</h2>
+            <div className="modalBackground">
+                <div className="modalContainer">
+                    <div className="title">
+                        <h2>Thêm Mới PostMeta</h2>
+                    </div>
+                    <form className="form-input" onSubmit={handleSubmit}>
+                        <div className="body">
+                            <label className="label-input">
+                                <div className="input-detail">
+                                    <p>Bài đăng trước: </p>
+                                    <select
+                                        className="selecte-options"
+                                        value={postId}
+                                        onChange={(e) => setPostId(e.target.value)}
+                                        required
+                                    >
+                                        <option value="">Chọn bài đăng trước</option>
+                                        {posts.map((post) => (
+                                            <option key={post.postId} value={post.postId}>
+                                                {post.metaTitle} - {post.postId}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="input-detail">
+                                    <p>keys: </p>
+                                    <input
+                                        type="text"
+                                        placeholder="keys"
+                                        value={keys}
+                                        onChange={(e) => setKeys(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                                <div className="input-detail">
+                                    <p>contents: </p>
+                                    <input
+                                        type="text"
+                                        placeholder="contents"
+                                        value={contents}
+                                        onChange={(e) => setContents(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                            </label>
+                        </div>
+                        <div className="footer">
+                            <Button onClick={() => closeModal(false)}>Hủy bỏ</Button>
+                            {contextHolder}
+                            <Button type="submit" rounded>
+                                Thêm
+                            </Button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <form className="form-input" onSubmit={handleSubmit}>
-                <div className="body-tm">
-                    <label className="label-input">
-                        <div className="input-detail-tm">
-                            <p>postId: </p>
-                            <input
-                                type="text"
-                                placeholder="postId"
-                                value={postId}
-                                onChange={(e) => setPostId(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="input-detail-tm">
-                            <p>keys: </p>
-                            <input
-                                type="text"
-                                placeholder="keys"
-                                value={keys}
-                                onChange={(e) => setKeys(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="input-detail-tm">
-                            <p>contents: </p>
-                            <input
-                                type="text"
-                                placeholder="contents"
-                                value={contents}
-                                onChange={(e) => setContents(e.target.value)}
-                                required
-                            />
-                        </div>
-                    </label>
-                </div>
-                <div className="footer">
-                    <Button onClick={handleCancel}>Hủy bỏ</Button>
-                    {contextHolder}
-                    <Button type="submit" rounded>
-                        Thêm
-                    </Button>
-                </div>
-            </form>
         </>
     );
 }

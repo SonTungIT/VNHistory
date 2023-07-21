@@ -223,7 +223,7 @@ function BaidangDetails() {
                     )}
                 </tbody>
             </table>
-            {ediBDModal && <EditBDModal closeModal={() => setEditBDModal(false)} post={selectedPost} />}
+            {ediBDModal && <EditBDModal closeModal={() => setEditBDModal(false)} post={selectedPost} posts={posts} />}
             {addImage && <AddImage closeModal={() => setAddImage(false)} post={selectedPost} />}
         </LayoutAdmin>
     );

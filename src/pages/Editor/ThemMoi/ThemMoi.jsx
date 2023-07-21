@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import LayoutAdmin from '~/pages/Admin/LayoutAdmin';
 import classNames from 'classnames/bind';
 import styles from './ThemMoi.scss';
@@ -9,7 +10,6 @@ import { DatePicker, Space, message } from 'antd';
 import PostMeta from '../BaidangManage/PostMeta/PostMeta';
 import PostCmt from '../BaidangManage/PostCmt/PostCmt';
 import moment from 'moment'; // Import moment here
-import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -26,9 +26,12 @@ function ThemMoi() {
     const [categoryNames, setCategoryNames] = useState([]);
     const [eventNames, setEventNames] = useState('');
     const navigate = useNavigate();
-    const [posts, setPosts] = useState([]);
-    console.log(posts);
     const [categories, setCategories] = useState([]);
+
+    const [posts, setPosts] = useState([]);
+    const [events, setEvents] = useState([]);
+
+    console.log(events);
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = () => {
@@ -146,6 +149,19 @@ function ThemMoi() {
             .then((result) => {
                 // Update the events state with the retrieved data
                 setPosts(result.data);
+            })
+            .catch((error) => console.log('error', error));
+
+        fetch('https://vietnamhistory.azurewebsites.net/api/events', requestOptions)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error(response.status);
+            })
+            .then((result) => {
+                // Update the events state with the retrieved data
+                setEvents(result.data);
             })
             .catch((error) => console.log('error', error));
     };
@@ -269,12 +285,19 @@ function ThemMoi() {
                                 {/* eventNames */}
                                 <div className="input-detail-tm">
                                     <p>Sự kiện: </p>
-                                    <input
-                                        type="text"
-                                        placeholder="eventName"
+                                    <select
+                                        className="selecte-options"
                                         value={eventNames.split(',').join(', ')}
                                         onChange={(e) => setEventNames(e.target.value)}
-                                    />
+                                        required
+                                    >
+                                        <option value="">Chọn bài sự kiện</option>
+                                        {events.map((event) => (
+                                            <option key={event.eventId} value={event.eventId}>
+                                                {event.eventName} - {event.eventId}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                             </label>
                         </div>

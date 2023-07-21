@@ -7,16 +7,25 @@ import TableMeta from './TableMeta';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 import { AddIcon } from '~/components/GlobalStyles/Layout/components/Icons';
 import config from '~/config';
+import PostMeta from '../BaidangManage/PostMeta/PostMeta';
 
 const cx = classNames.bind(styles);
 
 function PostMetaManage() {
+    const [openModal, setOpenModal] = useState(false);
+
     return (
         <>
             <LayoutAdmin>
                 <div className={cx('header')}>
                     <div>PostMeta</div>
-                    <Button primary leftIcon={<AddIcon />} to={config.routes.ThemMoi}>
+                    <Button
+                        primary
+                        leftIcon={<AddIcon />}
+                        onClick={() => {
+                            setOpenModal(true);
+                        }}
+                    >
                         THÊM MỚI
                     </Button>
                 </div>
@@ -27,6 +36,7 @@ function PostMetaManage() {
                     <Pagination defaultCurrent={1} total={50} />
                 </div>
             </LayoutAdmin>
+            {openModal && <PostMeta closeModal={setOpenModal} />}
         </>
     );
 }

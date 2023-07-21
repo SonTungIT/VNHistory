@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import '../../Admin/Table.scss';
-import { AddIcon, DeleteIcon, EditIcon } from '~/components/GlobalStyles/Layout/components/Icons';
+import { AddIcon, DeleteIcon, EditIcon, VisibilityIcon } from '~/components/GlobalStyles/Layout/components/Icons';
 import EditBDModal from './BDModal/EditBDModal';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 import AddImage from './AddImage/AddImage';
+import config from '~/config';
+import TableMeta from '../PostMetaManage/TableMeta';
 
 function TableBD() {
     const [posts, setPosts] = useState([]);
@@ -12,6 +14,7 @@ function TableBD() {
     const [ediBDModal, setEditBDModal] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
     const [addImage, setAddImage] = useState(false);
+    const [views, setViews] = useState([]);
 
     const infoUser = JSON.parse(localStorage.getItem('infoUser'));
 
@@ -98,25 +101,29 @@ function TableBD() {
         }
     };
 
-    // const handleAddImage = (postId) => {
-    //     var myHeaders = new Headers();
-    //     myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+    const handleView = (postId) => {
+        var myHeaders = new Headers();
+        myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
 
-    //     var requestOptions = {
-    //         method: 'POST',
-    //         headers: myHeaders,
-    //         redirect: 'follow',
-    //     };
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow',
+        };
 
-    //     fetch(`https://vietnamhistory.azurewebsites.net/api/images/posts/${postId}`, requestOptions)
-    //         .then((response) => response.text())
-    //         .then((result) => {
-    //             console.log(result);
-    //             // If the deletion was successful, update the userData state
-    //             setPosts(posts.filter((post) => post.postId !== postId));
-    //         })
-    //         .catch((error) => console.log('error', error));
-    //   };
+        fetch(`https://vietnamhistory.azurewebsites.net/api/postmetas/post/${postId}/meta`, requestOptions)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error(response.status);
+            })
+            .then((result) => {
+                // Lưu dữ liệu views vào state của react-router và chuyển sang trang TableMeta
+                navigate(`/BaidangMange/postmeta`, { state: { views: result.data } });
+            })
+            .catch((error) => console.log('error', error));
+    };
 
     return (
         <>
@@ -127,9 +134,9 @@ function TableBD() {
                         {/* <th className="th-user">slug</th> */}
                         <th className="th-user">Tóm tắt</th>
                         <th className="th-user">Chế độ</th>
-                        <th className="th-user">Ngày tạo</th>
-                        <th className="th-user">Ngày cập nhật</th>
-                        <th className="th-user">publishedAt</th>
+                        {/* <th className="th-user">Ngày tạo</th> */}
+                        {/* <th className="th-user">Ngày cập nhật</th> */}
+                        <th className="th-user">Ngày công khai</th>
                         <th className="th-user">Nội dung</th>
                         <th className="th-user">Thể loại</th>
                         <th className="th-user">Sự kiện</th>
@@ -163,8 +170,8 @@ function TableBD() {
                                         {isExpanded ? post.summary : truncatedSummary}
                                     </td>
                                     <td className="td-user">{post.published === 1 ? 'Công khai' : 'Riêng tư'}</td>
-                                    <td className="td-user">{formatDate(post.createdAt)}</td>
-                                    <td className="td-user">{formatDate(post.updatedAt)}</td>
+                                    {/* <td className="td-user">{formatDate(post.createdAt)}</td> */}
+                                    {/* <td className="td-user">{formatDate(post.updatedAt)}</td> */}
                                     <td className="td-user">{formatDate(post.publishedAt)}</td>
                                     <td className="td-user" onClick={() => handleRowClick(post.postId)}>
                                         {isExpanded ? post.content || '' : truncatedContent || ''}
@@ -178,8 +185,10 @@ function TableBD() {
                                             <AddIcon />
                                         </button>
                                     </td>
-
                                     <td className="td-user">
+                                        <button className="btn-function" onClick={() => handleView(post.postId)}>
+                                            <VisibilityIcon />
+                                        </button>
                                         <button className="btn-function" onClick={() => handleEdit(post)}>
                                             <EditIcon />
                                         </button>

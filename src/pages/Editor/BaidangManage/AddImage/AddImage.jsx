@@ -63,7 +63,14 @@ function AddImage({ setCreatedImageData, closeModal, post }) {
                             </div>
                             <div className="input-detail">
                                 <p>Loại: </p>
-                                <input type="text" value={Type} onChange={(e) => setType(e.target.value)} />
+                                <select
+                                    className="selecte-options"
+                                    value={Type}
+                                    onChange={(e) => setType(e.target.value)}
+                                >
+                                    <option value="jpg">jpg</option>
+                                    <option value="png">png</option>
+                                </select>
                             </div>
                             <div className="input-detail">
                                 <input

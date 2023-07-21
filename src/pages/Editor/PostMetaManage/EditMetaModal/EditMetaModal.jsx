@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import './EditMetaModal.scss';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 import { message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 function EditMetaModal({ closeModal, postmeta }) {
     const [postId, setPostId] = useState(postmeta.postId);
     const [keys, setKeys] = useState(postmeta.keys);
     const [contents, setContents] = useState(postmeta.contents);
     const [updateSuccess, setUpdateSuccess] = useState(false);
+    const navigate = useNavigate();
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = () => {
@@ -47,6 +49,7 @@ function EditMetaModal({ closeModal, postmeta }) {
             .then((result) => {
                 if (result.message === 'PostMeta updated successfully') {
                     success();
+                    navigate('/BaidangMange');
                     window.location.reload();
                 }
             })
@@ -89,10 +92,10 @@ function EditMetaModal({ closeModal, postmeta }) {
                             <div className="ant-divider" role="separator"></div>
                             <div className="footer">
                                 {contextHolder}
+                                <Button onClick={closeModal}>Close</Button>
                                 <Button rounded onClick={handleUpdate}>
                                     Update
                                 </Button>
-                                <Button onClick={closeModal}>Close</Button>
                             </div>
                         </div>
                     </div>

@@ -4,6 +4,7 @@ import Button from '~/components/GlobalStyles/Layout/components/Button';
 import { DatePicker, Space } from 'antd';
 import LayoutAdmin from '~/pages/Admin/LayoutAdmin';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 function EditBDModal({ closeModal, post, posts }) {
     const [authorId, setAuthorId] = useState(post.authorId);
@@ -17,6 +18,7 @@ function EditBDModal({ closeModal, post, posts }) {
     const [publishedDate, setPublishedDate] = useState(null);
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const [content, setContent] = useState(post.content);
+    const navigate = useNavigate();
 
     console.log(posts);
 
@@ -53,6 +55,7 @@ function EditBDModal({ closeModal, post, posts }) {
             .then((result) => {
                 console.log(result); // Handle the response as needed
                 setUpdateSuccess(true); // Set updateSuccess state to true to close the modal or show a success message
+                navigate('/BaidangMange');
                 window.location.reload();
             })
             .catch((error) => console.log('error', error));
@@ -118,7 +121,7 @@ function EditBDModal({ closeModal, post, posts }) {
                                             <input type="text" value={slug} onChange={(e) => setSlug(e.target.value)} />
                                         </div>
                                         <div className="input-detail-bd">
-                                            <p>tóm tắt: </p>
+                                            <p>Tóm tắt: </p>
                                             <input
                                                 type="text"
                                                 value={summary}
@@ -159,7 +162,7 @@ function EditBDModal({ closeModal, post, posts }) {
                                                 </Space>
                                             </div> */}
                                             <div className="input-detail-bd">
-                                                <p>publishedAt: </p>
+                                                <p>Ngày công khai: </p>
                                                 <Space direction="vertical">
                                                     <DatePicker
                                                         className="inp-form"
@@ -170,7 +173,7 @@ function EditBDModal({ closeModal, post, posts }) {
                                             </div>
                                         </div>
                                         <div className="input-detail-bd">
-                                            <p>content: </p>
+                                            <p>Nội dung: </p>
                                             <input
                                                 type="text"
                                                 value={content}

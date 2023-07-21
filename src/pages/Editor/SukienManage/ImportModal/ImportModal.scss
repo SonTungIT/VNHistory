@@ -14,7 +14,8 @@
 }
 
 .modalContainer {
-    width: 500px;
+    min-width: 500px;
+    width: auto;
     height: auto;
     padding-bottom: 20px;
     border-radius: 12px;
@@ -94,6 +95,7 @@
 .label-input {
     display: flex;
     flex-direction: column;
+    width: 90%;
 
     .input-detail {
         @include flex(center, space-between, unset);
@@ -101,6 +103,7 @@
         margin-bottom: 10px;
         p {
             font-size: 16px;
+            text-align: start;
         }
     }
 

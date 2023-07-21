@@ -1,41 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import '../../Admin/Table.scss';
-import { AddIcon, DeleteIcon, EditIcon } from '~/components/GlobalStyles/Layout/components/Icons';
+import { AddIcon, DeleteIcon, EditIcon, VisibilityIcon } from '~/components/GlobalStyles/Layout/components/Icons';
 import EditMetaModal from './EditMetaModal/EditMetaModal';
+import { Link, useLocation } from 'react-router-dom';
 
 function TableMeta() {
-    const [postmetas, setPostmetas] = useState([]);
-    const [editPostMeta, setPostMeta] = useState(false);
-    const [selectedMeta, setSelectedMeta] = useState(null);
+    const [views, setViews] = useState([]);
+    const [selectedMeta, setSelectedMeta] = useState(null); // State to store the selected meta for editing
+    const [editPostMeta, setEditPostMeta] = useState(false); // State to control the EditMetaModal visibility
+
+    const location = useLocation();
 
     useEffect(() => {
-        // Fetch data from the API
-        fetchData();
-    }, []);
-
-    const fetchData = () => {
-        var myHeaders = new Headers();
-        myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
-
-        var requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow',
-        };
-
-        fetch('https://vietnamhistory.azurewebsites.net/api/postmetas', requestOptions)
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error(response.status);
-            })
-            .then((result) => {
-                // Update the events state with the retrieved data
-                setPostmetas(result.data);
-            })
-            .catch((error) => console.log('error', error));
-    };
+        // Lấy dữ liệu views từ state của react-router
+        if (location.state && location.state.views) {
+            setViews(location.state.views);
+        }
+    }, [location]);
 
     const handleDelete = (postId, id) => {
         var myHeaders = new Headers();
@@ -51,7 +32,7 @@ function TableMeta() {
             .then((response) => {
                 if (response.ok) {
                     // Remove the deleted postmeta from the postmetas state
-                    setPostmetas(postmetas.filter((postmeta) => postmeta.id !== id));
+                    setViews(views.filter((view) => view.id !== id));
                 } else {
                     throw new Error(response.status);
                 }
@@ -59,9 +40,11 @@ function TableMeta() {
             .catch((error) => console.log('error', error));
     };
 
-    const handleEdit = (postmeta) => {
-        setSelectedMeta(postmeta);
-        setPostMeta(true);
+    const handleEdit = (id) => {
+        // Find the selected view by id
+        const selectedView = views.find((view) => view.id === id);
+        setSelectedMeta(selectedView);
+        setEditPostMeta(true);
     };
 
     return (
@@ -69,28 +52,21 @@ function TableMeta() {
             <table className="table-user">
                 <thead>
                     <tr>
-                        <th className="th-user">id</th>
-                        <th className="th-user">postId</th>
                         <th className="th-user">keys</th>
                         <th className="th-user">contents</th>
                         <th className="th-user"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {postmetas.map((postmeta) => (
-                        <tr>
-                            <td className="td-user">{postmeta.id}</td>
-                            <td className="td-user">{postmeta.postId}</td>
-                            <td className="td-user">{postmeta.keys}</td>
-                            <td className="td-user">{postmeta.contents}</td>
+                    {views.map((view) => (
+                        <tr key={view.id}>
+                            <td className="td-user">{view.keys}</td>
+                            <td className="td-user">{view.contents}</td>
                             <td className="td-user">
-                                <button className="btn-function" onClick={() => handleEdit(postmeta)}>
+                                <button className="btn-function" onClick={() => handleEdit(view.id)}>
                                     <EditIcon />
                                 </button>
-                                <button
-                                    className="btn-function"
-                                    onClick={() => handleDelete(postmeta.postId, postmeta.id)}
-                                >
+                                <button className="btn-function" onClick={() => handleDelete(view.postId, view.id)}>
                                     <DeleteIcon />
                                 </button>
                             </td>
@@ -98,7 +74,12 @@ function TableMeta() {
                     ))}
                 </tbody>
             </table>
-            {editPostMeta && <EditMetaModal closeModal={() => setPostMeta(false)} postmeta={selectedMeta} />}
+            {editPostMeta && (
+                <EditMetaModal
+                    postmeta={selectedMeta} // Pass the selected metadata to the modal component
+                    closeModal={() => setEditPostMeta(false)}
+                />
+            )}
         </>
     );
 }
