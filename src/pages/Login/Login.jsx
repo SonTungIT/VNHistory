@@ -12,6 +12,7 @@ const cx = classNames.bind(styles);
 function Login() {
     const [posts, setPosts] = useState([]);
     const [selectedPostId, setSelectedPostId] = useState(null);
+    const [imagesData, setImagesData] = useState();
 
     useEffect(() => {
         // Fetch data from the API
@@ -38,6 +39,10 @@ function Login() {
             .then((result) => {
                 // Update the events state with the retrieved data
                 setPosts(result.data);
+                console.log(result);
+                const allImages = result.data.map((datas) => datas.images.map((image) => image.url));
+                // console.error('Két quả 222:', result.data.map((datas) => datas.images.map((image) => image.url)));
+                setImagesData(allImages);
             })
             .catch((error) => console.log('error', error));
     };
@@ -114,10 +119,9 @@ function Login() {
                     >
                         <div className={cx('title')}>{posts[0].metaTitle}</div>
                         <div className={cx('poster')}>
-                            <img
-                                src="https://giasuviet.com.vn/wp-content/uploads/2015/09/phuong-phap-hoc-mon-lich-su-lop-12-hieu-qua-va-nho-lau.jpg"
-                                alt="img"
-                            />
+                            {imagesData[0].map((imageUrl, index) => (
+                                <img key={index} src={imageUrl} alt={`img-${index}`} />
+                            ))}
                             <div className={cx('details')}>
                                 <span>{posts[0].summary}</span>
                                 <p>{formatDate(posts[0].createdAt)}</p>
@@ -164,10 +168,9 @@ function Login() {
             {posts.slice(1).map((post) => (
                 <Button key={post.postId} onClick={() => handleButtonClick(post.postId)}>
                     <div className={cx('list-event')}>
-                        <img
-                            src="https://nguoikesu.com/images/wiki/nha-nguyen/f3ddf4ba5ac21a0f1ab37de7ccf99789.jpg"
-                            alt="img"
-                        />
+                        {post.images.map((image, index) => (
+                            <img key={index} src={image.url} alt={`img-${index}`} />
+                        ))}
                         <div className={cx('details-event')}>
                             <span>{post.metaTitle}</span>
                             <p>{post.summary}</p>
