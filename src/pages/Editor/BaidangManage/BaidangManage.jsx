@@ -56,7 +56,7 @@ function BaidangManage() {
                     <TableBD />
                 </div>
                 <div className={cx('footer')}>
-                    <Pagination defaultCurrent={1} total={50} />
+                    {/* <Pagination defaultCurrent={1} total={50} /> */}
                 </div>
             </LayoutAdmin>
             {openModal && <BDModal closeModal={setOpenModal} />}

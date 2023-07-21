@@ -158,6 +158,9 @@ function Post() {
                                             <h4 className={cx('postmeta-keys-title')}>
                                                 {index + 1}. {item.keys}
                                             </h4>
+                                            {item.images.map((image, index) => (
+                                                <img key={index} src={image.url} alt={`img-${index}`} />
+                                            ))}
                                             <p className={cx('postmeta-keys-childs')}>{item.contents}</p>
                                         </div>
                                     ))}

@@ -12,6 +12,7 @@ function PostDetail() {
     const location = useLocation();
     const searchResults = new URLSearchParams(location.search).get('searchResults');
     const parsedResults = JSON.parse(searchResults);
+    const [imagesData, setImagesData] = useState();
 
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -63,6 +64,9 @@ function PostDetail() {
             .then((response) => response.json())
             .then((result) => {
                 const encodedResults = encodeURIComponent(JSON.stringify(result));
+                const allImages = result.data.map((datas) => datas.images.map((image) => image.url));
+                setImagesData(allImages);
+                // console.log(result.data.map((datas) => datas.images.map((image) => image.url)));
                 window.location.href = `/PostDetail?searchResults=${encodedResults}`;
             })
             .catch((error) => console.log('error', error));
@@ -84,10 +88,9 @@ function PostDetail() {
                     if (post) {
                         return (
                             <div className={cx('list-event')} key={index}>
-                                <img
-                                    src="https://nguoikesu.com/images/wiki/nha-nguyen/f3ddf4ba5ac21a0f1ab37de7ccf99789.jpg"
-                                    alt="img"
-                                />
+                                {post.images.map((image, index) => (
+                                    <img key={index} src={image.url} alt={`img-${index}`} />
+                                ))}
                                 <div className={cx('details-event')}>
                                     <span>{post.metaTitle}</span>
                                     <p>{post.summary}</p>

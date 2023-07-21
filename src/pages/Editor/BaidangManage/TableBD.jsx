@@ -7,6 +7,7 @@ import Button from '~/components/GlobalStyles/Layout/components/Button';
 import AddImage from './AddImage/AddImage';
 import config from '~/config';
 import TableMeta from '../PostMetaManage/TableMeta';
+import { Pagination } from 'antd';
 
 function TableBD() {
     const [posts, setPosts] = useState([]);
@@ -130,6 +131,16 @@ function TableBD() {
             .catch((error) => console.log('error', error));
     };
 
+    // const [currentPage, setCurrentPage] = useState(1);
+    // const [itemsPerPage, setItemsPerPage] = useState(2);
+    // const indexOfLastItem = currentPage * itemsPerPage;
+    // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    // const currentItems = posts.slice(indexOfFirstItem, indexOfLastItem);
+
+    // const handlePageChange = (event, value) => {
+    //     setCurrentPage(value);
+    // };
+
     return (
         <>
             <table className="table-user">
@@ -217,6 +228,16 @@ function TableBD() {
                     })}
                 </tbody>
             </table>
+            {/* <div className='footer'>
+                <Pagination
+                    count={Math.ceil(posts.length / itemsPerPage)}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    showFirstButton
+                    showLastButton
+                    color="primary"
+                />
+            </div> */}
             {ediBDModal && <EditBDModal closeModal={() => setEditBDModal(false)} post={selectedPost} posts={posts} />}
             {addImage && <AddImage closeModal={() => setAddImage(false)} post={selectedPost} />}
         </>

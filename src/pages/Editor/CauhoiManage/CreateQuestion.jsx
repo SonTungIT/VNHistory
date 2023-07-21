@@ -3,13 +3,19 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './CreateQuestion.scss';
 import { message } from 'antd';
+import { useLocation } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function CreateQuestion({ setCreatedQuestionData }) {
   const [events, setEvents] = useState([]);
-  const [eventId, setEventId] = useState(0);
+  // const [eventId, setEventId] = useState(0);
   const [questionText, setQuestionText] = useState('');
   const [difficultyLevel, setDifficultyLevel] = useState('');
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const eventId = queryParams.get('eventId');
+  console.log(location.search);
 
   const [messageApi, contextHolder] = message.useMessage();
     const success = () => {
@@ -30,7 +36,7 @@ function CreateQuestion({ setCreatedQuestionData }) {
     // Fetch events data
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('https://vietnamhistory.azurewebsites.net/api/events');
+        const response = await axios.get(`https://vietnamhistory.azurewebsites.net/api/events/${eventId}`);
         setEvents(response.data.data);
       } catch (error) {
         console.error('Error fetching events:', error);
@@ -81,14 +87,7 @@ function CreateQuestion({ setCreatedQuestionData }) {
         <h2 className={cx('title')}>Create Question</h2>
         <div className={cx('EventID')}>
           <label>Event:</label>
-          <select value={eventId} onChange={e => setEventId(parseInt(e.target.value))}>
-            <option value={0}>Select an event</option>
-            {events.map(event => (
-              <option key={event.eventId} value={event.eventId}>
-                {event.eventName}
-              </option>
-            ))}
-          </select>
+          <label>{events.eventName}</label>
         </div>
         <div className={cx('QuestionText')}>
           <label>Question Text:</label>
