@@ -57,6 +57,8 @@ function ThemMoi() {
 
         const currentDateTime = moment().toISOString();
 
+        const eventNamesArray = eventNames.split(',').map((eventName) => eventName.trim());
+
         const payload = {
             parentId: parentId ? Number(parentId) : null,
             metaTitle,
@@ -68,7 +70,7 @@ function ThemMoi() {
             publishedAt: currentDateTime,
             content,
             categoryNames,
-            eventNames,
+            eventNames: eventNamesArray,
         };
 
         var requestOptions = {
@@ -190,9 +192,9 @@ function ThemMoi() {
                                             className="selecte-options"
                                             value={parentId}
                                             onChange={(e) => setParentId(e.target.value)}
-                                            required
                                         >
                                             <option value="">Chọn bài đăng trước</option>
+                                            <option value={null}>Không có</option>
                                             {posts.map((post) => (
                                                 <option key={post.postId} value={post.postId}>
                                                     {post.metaTitle} - {post.postId}
@@ -289,9 +291,9 @@ function ThemMoi() {
                                         className="selecte-options"
                                         value={eventNames.split(',').join(', ')}
                                         onChange={(e) => setEventNames(e.target.value)}
-                                        required
                                     >
                                         <option value="">Chọn bài sự kiện</option>
+                                        <option value={null}>Không có</option>
                                         {events.map((event) => (
                                             <option key={event.eventId} value={event.eventId}>
                                                 {event.eventName} - {event.eventId}

@@ -55,7 +55,6 @@ function AddImage({ setCreatedImageData, closeModal, post }) {
                 </div>
                 <div className="form-input">
                     <div className="body">
-                        <div>Cài Đặt</div>
                         <label className="label-input">
                             <div className="input-detail">
                                 <p>Tên ảnh: </p>

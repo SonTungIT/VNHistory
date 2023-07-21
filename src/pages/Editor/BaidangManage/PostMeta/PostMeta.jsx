@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PostMeta.scss';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
@@ -15,12 +15,21 @@ function PostMeta({ closeModal }) {
 
     const location = useLocation();
 
+    console.log(views);
+
     useEffect(() => {
         if (location.state && location.state.views) {
             setViews(location.state.views);
             if (location.state.views.length > 0) {
                 setPostId(location.state.views[0].postId); // Set postId from views.postId
             }
+        }
+    }, [location]);
+
+    useEffect(() => {
+        // Lấy dữ liệu views từ state của react-router
+        if (location.state && location.state.postId) {
+            setPostId(location.state.postId);
         }
     }, [location]);
 
@@ -65,8 +74,8 @@ function PostMeta({ closeModal }) {
                 if (result.message === 'PostMeta Created successfully') {
                     success();
                     closeModal(false);
-                    navigate('/BaidangMange');
-                    window.location.reload();
+                    console.log('Updated views:', views); // Check the updated views here
+                    window.location.href = window.location.href;
                 } else {
                     showError(); // Call showError here if the API response is not successful
                 }
@@ -95,7 +104,7 @@ function PostMeta({ closeModal }) {
                         <div className="body">
                             <label className="label-input">
                                 <div className="input-detail">
-                                    <p>keys: </p>
+                                    <p>Từ khóa: </p>
                                     <input
                                         type="text"
                                         placeholder="keys"
@@ -105,7 +114,7 @@ function PostMeta({ closeModal }) {
                                     />
                                 </div>
                                 <div className="input-detail">
-                                    <p>contents: </p>
+                                    <p>Nội dung: </p>
                                     <input
                                         type="text"
                                         placeholder="contents"

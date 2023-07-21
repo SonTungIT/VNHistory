@@ -116,10 +116,15 @@ function TableBD() {
                 if (response.ok) {
                     return response.json();
                 }
-                throw new Error(response.status);
+                // Bỏ qua lỗi 404 và chuyển hướng đến trang mới với postId
+                if (response.status === 404) {
+                    navigate(`/BaidangMange/postmeta`, { state: { postId: postId } });
+                } else {
+                    throw new Error(response.status);
+                }
             })
             .then((result) => {
-                // Lưu dữ liệu views vào state của react-router và chuyển sang trang TableMeta
+                // Nếu dữ liệu không rỗng, chuyển hướng đến trang mới
                 navigate(`/BaidangMange/postmeta`, { state: { views: result.data } });
             })
             .catch((error) => console.log('error', error));

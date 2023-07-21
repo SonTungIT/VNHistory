@@ -65,22 +65,17 @@ function EditMetaModal({ closeModal, postmeta }) {
                 <div className="modalBackground">
                     <div className="modalContainer">
                         <div className="title">
-                            <h1>Cập Nhật Thể Loại</h1>
+                            <h1>Cập Nhật POSTMETA</h1>
                         </div>
                         <div className="form-input">
                             <div className="body">
-                                <div>Cài Đặt</div>
                                 <label className="label-input">
                                     <div className="input-detail">
-                                        <p>postId: </p>
-                                        <input type="text" value={postId} onChange={(e) => setPostId(e.target.value)} />
-                                    </div>
-                                    <div className="input-detail">
-                                        <p>keys: </p>
+                                        <p>Từ khóa: </p>
                                         <input type="text" value={keys} onChange={(e) => setKeys(e.target.value)} />
                                     </div>
                                     <div className="input-detail">
-                                        <p>contents: </p>
+                                        <p>Nội dung: </p>
                                         <input
                                             type="text"
                                             value={contents}

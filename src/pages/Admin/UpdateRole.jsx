@@ -1,22 +1,31 @@
 import React, { useState } from 'react';
 import './UpdateRole.scss';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
-import { DatePicker, Space } from 'antd';
+import { message } from 'antd';
 
-const onChange = (date, dateString) => {
-    console.log(date, dateString);
-};
+function UpdateRole({ closeModal, user }) {
+    const [role, setRole] = useState(''); // State to hold the input value for role
+    const [updateSuccess, setUpdateSuccess] = useState(false); // State to track if the update was successful
 
-function UpdateRole({ closeModal, event }) {
-    const [eventName, setEventName] = useState(event.eventName);
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [description, setDescription] = useState(event.description);
-    const [updateSuccess, setUpdateSuccess] = useState(false);
+    const [messageApi, contextHolder] = message.useMessage();
+    const success = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'Thêm mới thành công',
+        });
+    };
 
+    const showError = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'Somethings wrong !',
+        });
+    };
+
+    console.log(user);
     const handleUpdate = () => {
         const accessToken = localStorage.getItem('accessToken');
-        const url = `https://vietnamhistory.azurewebsites.net/api/events/${event.eventId}`;
+        const url = `https://vietnamhistory.azurewebsites.net/api/User/UpdateRole`;
 
         const requestOptions = {
             method: 'PUT',
@@ -25,96 +34,71 @@ function UpdateRole({ closeModal, event }) {
                 Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-                eventName,
-                startDate: startDate.toISOString(),
-                endDate: endDate.toISOString(),
-                description,
+                userId: user.userId,
+                role: role,
             }),
         };
 
         fetch(url, requestOptions)
-            .then((response) => response.text())
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then((result) => {
-                console.log(result);
-                setUpdateSuccess(true);
+                if (result.message === 'Update role successfully') {
+                    success();
+                    setUpdateSuccess(true);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                } else {
+                    showError(); // Call showError here if the API response is not successful
+                }
             })
             .catch((error) => {
-                console.log('Error', error);
+                console.error('Error:', error);
                 // Handle error
             });
     };
 
-    const handleStartDateChange = (date) => {
-        setStartDate(date);
-    };
-
-    const handleEndDateChange = (date) => {
-        setEndDate(date);
-    };
-
     return (
         <>
-            {updateSuccess ? null : (
-                <div className="modalBackground">
-                    <div className="modalContainer">
-                        <div className="title">
-                            <h1>Cập Nhật Sự Kiện</h1>
+            <div className="modalBackground">
+                <div className="modalContainer">
+                    <div className="title">
+                        <h1>Cập Nhật Chức Vụ</h1>
+                    </div>
+                    <div className="form-input">
+                        <div className="body">
+                            <label className="label-input">
+                                <div className="input-detail">
+                                    <p>role: </p>
+                                    <select
+                                        className="selecte-options"
+                                        value={role}
+                                        onChange={(event) => setRole(event.target.value)}
+                                        placeholder="Select a role"
+                                    >
+                                        <option value="Admin">Admin</option>
+                                        <option value="Member">Member</option>
+                                        <option value="Editor">Editor</option>
+                                    </select>
+                                </div>
+                            </label>
                         </div>
-                        <div className="form-input">
-                            <div className="body">
-                                <div>Cài Đặt</div>
-                                <label className="label-input">
-                                    <div className="input-detail">
-                                        <p>Tên sự kiện: </p>
-                                        <input
-                                            type="text"
-                                            value={eventName}
-                                            onChange={(e) => setEventName(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="input-detail">
-                                        <p>Ngày bắt đầu: </p>
-                                        <Space direction="vertical">
-                                            <DatePicker
-                                                className="inp-form"
-                                                defaultValue={startDate}
-                                                onChange={handleStartDateChange}
-                                            />
-                                        </Space>
-                                    </div>
-
-                                    <div className="input-detail">
-                                        <p>Ngày kết thúc: </p>
-                                        <Space direction="vertical">
-                                            <DatePicker
-                                                className="inp-form"
-                                                defaultValue={endDate}
-                                                onChange={handleEndDateChange}
-                                            />
-                                        </Space>
-                                    </div>
-
-                                    <div className="input-detail">
-                                        <p>Mô tả: </p>
-                                        <input
-                                            type="text"
-                                            value={description}
-                                            onChange={(e) => setDescription(e.target.value)}
-                                        />
-                                    </div>
-                                </label>
-                            </div>
-                            <div className="ant-divider" role="separator"></div>
-                            <div className="footer">
-                                <Button rounded onClick={handleUpdate}>
-                                    Update
-                                </Button>
-                                <Button onClick={closeModal}>Close</Button>
-                            </div>
+                        <div className="ant-divider" role="separator"></div>
+                        <div className="footer">
+                            <Button onClick={closeModal}>Close</Button>
+                            <Button rounded onClick={handleUpdate}>
+                                Update
+                            </Button>
+                            {contextHolder}
                         </div>
                     </div>
                 </div>
-            )}
+            </div>
         </>
     );
 }

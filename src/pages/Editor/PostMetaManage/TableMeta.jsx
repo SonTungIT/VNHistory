@@ -11,6 +11,8 @@ function TableMeta() {
 
     const location = useLocation();
 
+    console.log(views);
+
     useEffect(() => {
         // Lấy dữ liệu views từ state của react-router
         if (location.state && location.state.views) {
@@ -52,8 +54,8 @@ function TableMeta() {
             <table className="table-user">
                 <thead>
                     <tr>
-                        <th className="th-user">keys</th>
-                        <th className="th-user">contents</th>
+                        <th className="th-user">Từ khóa</th>
+                        <th className="th-user">Nội dung</th>
                         <th className="th-user"></th>
                     </tr>
                 </thead>

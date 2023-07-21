@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './BDModal.scss';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
-import { DatePicker, Space } from 'antd';
+import { DatePicker, Space, message } from 'antd';
 import LayoutAdmin from '~/pages/Admin/LayoutAdmin';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
@@ -19,6 +19,21 @@ function EditBDModal({ closeModal, post, posts }) {
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const [content, setContent] = useState(post.content);
     const navigate = useNavigate();
+
+    const [messageApi, contextHolder] = message.useMessage();
+    const success = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'Thêm mới thành công',
+        });
+    };
+
+    const showError = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'Somethings wrong !',
+        });
+    };
 
     console.log(posts);
 
@@ -53,10 +68,14 @@ function EditBDModal({ closeModal, post, posts }) {
         fetch(`https://vietnamhistory.azurewebsites.net/api/posts/${post.postId}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                console.log(result); // Handle the response as needed
-                setUpdateSuccess(true); // Set updateSuccess state to true to close the modal or show a success message
-                navigate('/BaidangMange');
-                window.location.reload();
+                if (result.message === 'Post updated successfully') {
+                    success();
+                    console.log(result); // Handle the response as needed
+                    setUpdateSuccess(true); // Set updateSuccess state to true to close the modal or show a success message
+                    navigate('/BaidangMange');
+                } else {
+                    showError(); // Call showError here if the API response is not successful
+                }
             })
             .catch((error) => console.log('error', error));
     };
@@ -188,6 +207,7 @@ function EditBDModal({ closeModal, post, posts }) {
                                     <Button rounded onClick={handleUpdate}>
                                         Update
                                     </Button>
+                                    {contextHolder}
                                 </div>
                             </div>
                         </div>

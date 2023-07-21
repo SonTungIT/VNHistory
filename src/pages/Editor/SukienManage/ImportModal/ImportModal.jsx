@@ -44,6 +44,7 @@ function ImportModal({ closeModal }) {
             .then((result) => {
                 console.log(result);
                 closeModal(false);
+                window.location.reload();
             })
             .catch((error) => console.log('error', error));
     };
@@ -64,7 +65,6 @@ function ImportModal({ closeModal }) {
                 </div>
                 <form className="form-input" onSubmit={handleSubmit}>
                     <div className="body">
-                        <div>Cài Đặt</div>
                         <label className="label-input">
                             <div className="input-detail">
                                 <p>Tên sự kiện: </p>
