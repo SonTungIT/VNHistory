@@ -19,6 +19,7 @@ function EditBDModal({ closeModal, post, posts }) {
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const [content, setContent] = useState(post.content);
     const navigate = useNavigate();
+    const [modeChangedToPublic, setModeChangedToPublic] = useState(false);
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = () => {
@@ -45,6 +46,9 @@ function EditBDModal({ closeModal, post, posts }) {
         const currentDateTime = new Date();
         setUpdateDate(currentDateTime);
 
+        const isModeChangedToPublic =
+            published === '1' && (!post.published || !publishedDate || publishedDate !== post.publishedAt);
+
         const updatedPost = {
             // authorId,
             parentId: parentId ? parentId : null,
@@ -54,7 +58,7 @@ function EditBDModal({ closeModal, post, posts }) {
             published,
             createdAt: startDate ? startDate.toISOString() : null,
             updatedAt: currentDateTime.toISOString(),
-            publishedAt: publishedDate ? publishedDate.toISOString() : null,
+            publishedAt: isModeChangedToPublic ? currentDateTime.toISOString() : post.publishedAt,
             content,
         };
 
@@ -73,6 +77,7 @@ function EditBDModal({ closeModal, post, posts }) {
                     console.log(result); // Handle the response as needed
                     setUpdateSuccess(true); // Set updateSuccess state to true to close the modal or show a success message
                     navigate('/BaidangMange');
+                    window.location.reload();
                 } else {
                     showError(); // Call showError here if the API response is not successful
                 }
@@ -90,6 +95,13 @@ function EditBDModal({ closeModal, post, posts }) {
 
     const handlePublishedDateChange = (date) => {
         setPublishedDate(date);
+    };
+
+    const handlePublishedChange = (value) => {
+        setPublished(value);
+        if (value === '1') {
+            setModeChangedToPublic(true);
+        }
     };
 
     return (
@@ -152,7 +164,7 @@ function EditBDModal({ closeModal, post, posts }) {
                                             <select
                                                 className="selecte-options"
                                                 value={published}
-                                                onChange={(e) => setPublished(e.target.value)}
+                                                onChange={(e) => handlePublishedChange(e.target.value)}
                                                 required
                                             >
                                                 <option value="1">Công khai</option>
@@ -180,7 +192,7 @@ function EditBDModal({ closeModal, post, posts }) {
                                                     />
                                                 </Space>
                                             </div> */}
-                                            <div className="input-detail-bd">
+                                            {/* <div className="input-detail-bd">
                                                 <p>Ngày công khai: </p>
                                                 <Space direction="vertical">
                                                     <DatePicker
@@ -189,7 +201,7 @@ function EditBDModal({ closeModal, post, posts }) {
                                                         onChange={handlePublishedDateChange}
                                                     />
                                                 </Space>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <div className="input-detail-bd">
                                             <p>Nội dung: </p>
