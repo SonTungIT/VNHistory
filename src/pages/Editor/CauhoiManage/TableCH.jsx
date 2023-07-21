@@ -2,18 +2,11 @@ import React, { useEffect, useState } from 'react';
 import '../../Admin/Table.scss';
 import Menu from '~/components/Popper/Menu';
 import {
-<<<<<<< HEAD
     DeleteIcon,
     HorizontalIcon,
     VisibilityIcon,
     EditIcon,
-=======
-  DeleteIcon,
-  HorizontalIcon,
-  VisibilityIcon,
-  EditIcon,
-  AddIcon,
->>>>>>> 813ac3f031a7e58a59c4dea3d5df36618f86425e
+    AddIcon,
 } from '~/components/GlobalStyles/Layout/components/Icons';
 import axios from 'axios';
 import UpdateQuestion from './UpdateQuestion';
@@ -32,7 +25,7 @@ function TableCH() {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const eventId = queryParams.get('eventId');
-    console.log(eventId);
+    console.log(location.search);
 
     const [questionData, setQuestionData] = useState([]);
     const [answerData, setAnswerData] = useState([]);
@@ -145,150 +138,98 @@ function TableCH() {
             .catch((error) => console.log('error', error));
     };
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = questionData.slice(indexOfFirstItem, indexOfLastItem);
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
+    };
+
     return (
-        <table className="table-user">
-            <thead>
-                <tr>
-                    <th className="th-user">Text câu hỏi</th>
-                    <th className="th-user">Độ khó</th>
-                    <th className="th-user">View Answer</th>
-                    <th className="th-user"></th>
-                </tr>
-            </thead>
-            <tbody>
-                {questionData.map((question) => {
-                    const answer = answerData.find((answer) => answer.questionId === question.questionId);
-                    const isUpdating = question.questionId === selectedQuestionId;
+        <div className="container-ch">
+            <table className="table-user">
+                <thead>
+                    <Button primary leftIcon={<AddIcon />} to={`/CreateQuestion?eventId=${eventId}`}>
+                        THÊM MỚI QUESTION
+                    </Button>
+                    <tr>
+                        <th className="th-user">Text câu hỏi</th>
+                        <th className="th-user">Độ khó</th>
+                        <th className="th-user">View Answer</th>
+                        <th className="th-user"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {questionData.map((question) => {
+                        const answer = answerData.find((answer) => answer.questionId === question.questionId);
+                        const isUpdating = question.questionId === selectedQuestionId;
 
-<<<<<<< HEAD
-                    return (
-                        <React.Fragment key={question.questionId}>
-                            <tr>
-                                <td className="td-user">{question.questionText}</td>
-                                <td className="td-user">{question.difficultyLevel}</td>
-                                <td className="td-user">
-                                    <button className="btn-function">
-                                        <Link to={`/UpdateAnswer?questionId=${question.questionId}`}>
-                                            <VisibilityIcon />
-                                        </Link>
-                                    </button>
-                                </td>
-                                <td className="td-user">
-                                    {/* {answer
-=======
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = questionData.slice(indexOfFirstItem, indexOfLastItem);
-
-  const handlePageChange = (event, value) => {
-      setCurrentPage(value);
-  };
-
-  return (
-    <div className='container-ch'>
-    <table className="table-user">
-      <thead>
-        <Button primary leftIcon={<AddIcon />} to={`/CreateQuestion?eventId=${eventId}`}>
-          THÊM MỚI QUESTION
-        </Button>
-        <tr>
-          <th className="th-user">Text câu hỏi</th>
-          <th className="th-user">Độ khó</th>
-          <th className="th-user">View Answer</th>
-          <th className="th-user"></th>
-        </tr>
-      </thead>
-      <tbody>
-        {questionData.map((question) => {
-          const answer = answerData.find(
-            (answer) => answer.questionId === question.questionId
-          );
-          const isUpdating = question.questionId === selectedQuestionId;
-
-          return (
-            <React.Fragment key={question.questionId}>
-              <tr>
-                <td className="td-user">{question.questionText}</td>
-                <td className="td-user">{question.difficultyLevel}</td>
-                <td className="td-user">
-                  <button className="btn-function">
-                      <Link to={`/UpdateAnswer?questionId=${question.questionId}`}>
-                        <VisibilityIcon/>
-                      </Link>
-                    </button>
-                </td>
-                <td className="td-user">
-                  {/* {answer
->>>>>>> 813ac3f031a7e58a59c4dea3d5df36618f86425e
+                        return (
+                            <React.Fragment key={question.questionId}>
+                                <tr>
+                                    <td className="td-user">{question.questionText}</td>
+                                    <td className="td-user">{question.difficultyLevel}</td>
+                                    <td className="td-user">
+                                        <button className="btn-function">
+                                            <Link to={`/UpdateAnswer?questionId=${question.questionId}`}>
+                                                <VisibilityIcon />
+                                            </Link>
+                                        </button>
+                                    </td>
+                                    <td className="td-user">
+                                        {/* {answer
                     ? answer.answerItems.map((answer) => answer.answerText).join(', ')
                     : ''} */}
 
-                                    {isUpdating ? (
-                                        <UpdateQuestion
-                                            question={updatedQuestionData}
-                                            handleQuestionUpdate={handleQuestionUpdate}
-                                        />
-                                    ) : (
+                                        {isUpdating ? (
+                                            <UpdateQuestion
+                                                question={updatedQuestionData}
+                                                handleQuestionUpdate={handleQuestionUpdate}
+                                            />
+                                        ) : (
+                                            <button
+                                                className="btn-function"
+                                                onClick={() => handleUpdateQuestion(question.questionId)}
+                                                //   to={config.routes.UpdateQuestion}
+                                            >
+                                                <EditIcon />
+                                            </button>
+                                        )}
+
                                         <button
                                             className="btn-function"
-                                            onClick={() => handleUpdateQuestion(question.questionId)}
-                                            //   to={config.routes.UpdateQuestion}
+                                            onClick={() => handleDelete(question.questionId)}
                                         >
-                                            <EditIcon />
+                                            <DeleteIcon />
                                         </button>
-                                    )}
-
-<<<<<<< HEAD
-                                    <button className="btn-function" onClick={() => handleDelete(question.questionId)}>
-                                        <DeleteIcon />
-                                    </button>
-                                </td>
-                            </tr>
-                            {isUpdating && (
-                                <tr>
-                                    <td colSpan={4}>{/* Render the update form */}</td>
+                                    </td>
                                 </tr>
-                            )}
-                        </React.Fragment>
-                    );
-                })}
-            </tbody>
-        </table>
+                                {isUpdating && (
+                                    <tr>
+                                        <td colSpan={4}>{/* Render the update form */}</td>
+                                    </tr>
+                                )}
+                            </React.Fragment>
+                        );
+                    })}
+                </tbody>
+            </table>
+            <div className={cx('footer')}>
+                <Pagination
+                    count={Math.ceil(questionData.length / itemsPerPage)}
+                    page={currentPage}
+                    defaultCurrent={1}
+                    onChange={handlePageChange}
+                    showFirstButton
+                    showLastButton
+                    color="primary"
+                />
+            </div>
+        </div>
     );
-=======
-                    <button className="btn-function" onClick={() => handleDelete(question.questionId)}>
-                      <DeleteIcon />
-                    </button>
-                </td>
-              </tr>
-              {isUpdating && (
-                <tr>
-                  <td colSpan={4}>
-                    {/* Render the update form */}
-                  </td>
-                </tr>
-              )}
-            </React.Fragment>
-          );
-        })}
-      </tbody>
-    </table>
-    <div className={cx('footer')}>
-      <Pagination
-        count={Math.ceil(questionData.length / itemsPerPage)}
-        page={currentPage}
-        defaultCurrent={1}
-        onChange={handlePageChange}
-        showFirstButton
-        showLastButton
-        color="primary"
-      />
-    </div>
-    </div>
-  );
->>>>>>> 813ac3f031a7e58a59c4dea3d5df36618f86425e
 }
 
 export default TableCH;

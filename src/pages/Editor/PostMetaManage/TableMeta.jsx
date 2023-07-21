@@ -66,14 +66,9 @@ function TableMeta() {
             <table className="table-user">
                 <thead>
                     <tr>
-<<<<<<< HEAD
                         <th className="th-user">Từ khóa</th>
                         <th className="th-user">Nội dung</th>
-=======
-                        <th className="th-user">keys</th>
-                        <th className="th-user">contents</th>
                         <th className="th-user">Ảnh</th>
->>>>>>> 813ac3f031a7e58a59c4dea3d5df36618f86425e
                         <th className="th-user"></th>
                     </tr>
                 </thead>
