@@ -3,6 +3,7 @@ import styles from './Quiz10.scss';
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { message } from 'antd';
 
 const cx = classNames.bind(styles);
 
@@ -13,6 +14,21 @@ function Quiz10() {
   const [score, setScore] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const [userScore, setUserScore] = useState(0);
+
+  const [messageApi, contextHolder] = message.useMessage();
+    const success = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'Thêm mới thành công',
+        });
+    };
+
+    const showError = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'Lỗi khi tạo câu hỏi!',
+        });
+    };
 
   useEffect(() => {
     const getQuizQuestions = async () => {
@@ -47,6 +63,7 @@ function Quiz10() {
         setQuestions(retrievedQuestions);
       } catch (error) {
         console.error('Error retrieving quiz questions:', error);
+        showError();
       }
     };
 
@@ -108,6 +125,7 @@ function Quiz10() {
 
   return (
     <div className={cx('wapper-quiz10')}>
+      {contextHolder}
       <div className={cx('inner-quiz10')}>
         <div className={cx('Quiz10')}>
           {questions.length > 0 ? (

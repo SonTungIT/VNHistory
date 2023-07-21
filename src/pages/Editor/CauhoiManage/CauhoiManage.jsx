@@ -19,9 +19,9 @@ function CauhoiManage() {
         <LayoutAdmin>
             <div className={cx('header')}>
                 <div>Câu hỏi</div>
-                <Button primary leftIcon={<AddIcon />} to={config.routes.CreateQuestion} setCreatedQuestionData={setCreatedQuestionData}>
+                {/* <Button primary leftIcon={<AddIcon />} to={config.routes.CreateQuestion} setCreatedQuestionData={setCreatedQuestionData}>
                         THÊM MỚI QUESTION
-                </Button>
+                </Button> */}
                 {/* <Button primary leftIcon={<AddIcon />} to={config.routes.CreateAnswer} setCreatedAnswerData={setCreatedAnswerData}>
                         THÊM MỚI ANSWER
                 </Button> */}
@@ -35,7 +35,7 @@ function CauhoiManage() {
                 <TableCH questionData={createdQuestionData} answerData={createdAnswerData} />
             </div>
             <div className={cx('footer')}>
-                <Pagination defaultCurrent={1} total={50} />
+                {/* <Pagination defaultCurrent={1} total={50} /> */}
             </div>
         </LayoutAdmin>
     );

@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 import classNames from 'classnames/bind';
 import styles from './UpdateAnswer.scss';
-import { AddIcon, DeleteIcon } from '~/components/GlobalStyles/Layout/components/Icons';
+import { AddIcon, DeleteIcon, EditIcon } from '~/components/GlobalStyles/Layout/components/Icons';
 import config from '~/config';
 import { message } from 'antd';
 
@@ -144,7 +144,7 @@ function UpdateAnswer() {
       <table>
         <thead>
           <tr>
-            <th>Answer ID</th>
+            <th>STT</th>
             <th>Answer Text</th>
             <th>Answer Correct</th>
             <th>Update</th>
@@ -152,9 +152,9 @@ function UpdateAnswer() {
           </tr>
         </thead>
         <tbody>
-          {answerData.map((answer) => (
+          {answerData.map((answer, index) => (
             <tr key={answer.answerId}>
-              <td>{answer.answerId}</td>
+              <td>{index + 1}</td>
               <td>
                 <input
                   className={cx('input-answer')}
@@ -174,8 +174,8 @@ function UpdateAnswer() {
                 </select>
               </td>
               <td>
-                <Button className={cx('submit')} onClick={() => handleUpdateAnswer(answer.answerId)}>
-                  Update
+                <Button onClick={() => handleUpdateAnswer(answer.answerId)}>
+                  <EditIcon/>
                 </Button>
                 {contextHolder}
               </td>

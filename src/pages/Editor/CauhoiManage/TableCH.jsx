@@ -6,6 +6,7 @@ import {
   HorizontalIcon,
   VisibilityIcon,
   EditIcon,
+  AddIcon,
 } from '~/components/GlobalStyles/Layout/components/Icons';
 import axios from 'axios';
 import UpdateQuestion from './UpdateQuestion';
@@ -14,6 +15,11 @@ import Button from '~/components/GlobalStyles/Layout/components/Button';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import '../../Admin/Table.scss';
+import { Pagination } from 'antd';
+import classNames from 'classnames/bind';
+import styles from './TableCH.scss';
+
+const cx = classNames.bind(styles);
 
 function TableCH() {
   const location = useLocation();
@@ -135,9 +141,23 @@ function TableCH() {
         .catch((error) => console.log('error', error));
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = questionData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (event, value) => {
+      setCurrentPage(value);
+  };
+
   return (
+    <div className='container-ch'>
     <table className="table-user">
       <thead>
+        <Button primary leftIcon={<AddIcon />} to={`/CreateQuestion?eventId=${eventId}`}>
+          THÊM MỚI QUESTION
+        </Button>
         <tr>
           <th className="th-user">Text câu hỏi</th>
           <th className="th-user">Độ khó</th>
@@ -202,6 +222,18 @@ function TableCH() {
         })}
       </tbody>
     </table>
+    <div className={cx('footer')}>
+      <Pagination
+        count={Math.ceil(questionData.length / itemsPerPage)}
+        page={currentPage}
+        defaultCurrent={1}
+        onChange={handlePageChange}
+        showFirstButton
+        showLastButton
+        color="primary"
+      />
+    </div>
+    </div>
   );
 }
 
