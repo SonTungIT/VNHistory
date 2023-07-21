@@ -5,7 +5,7 @@ import { DatePicker, Space } from 'antd';
 import LayoutAdmin from '~/pages/Admin/LayoutAdmin';
 import moment from 'moment';
 
-function EditBDModal({ closeModal, post }) {
+function EditBDModal({ closeModal, post, posts }) {
     const [authorId, setAuthorId] = useState(post.authorId);
     const [parentId, setParentId] = useState(post.parentId);
     const [metaTitle, setMetaTitle] = useState(post.metaTitle);
@@ -17,6 +17,8 @@ function EditBDModal({ closeModal, post }) {
     const [publishedDate, setPublishedDate] = useState(null);
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const [content, setContent] = useState(post.content);
+
+    console.log(posts);
 
     const handleUpdate = () => {
         const myHeaders = new Headers();
@@ -90,11 +92,18 @@ function EditBDModal({ closeModal, post }) {
                                         </div> */}
                                         <div className="input-detail-bd">
                                             <p>Bài đăng trước: </p>
-                                            <input
-                                                type="text"
+                                            <select
+                                                className="selecte-options"
                                                 value={parentId}
                                                 onChange={(e) => setParentId(e.target.value)}
-                                            />
+                                            >
+                                                <option value="">Chọn bài đăng trước</option>
+                                                {posts.map((post) => (
+                                                    <option key={post.postId} value={post.postId}>
+                                                        {post.metaTitle} - {post.postId}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
                                         <div className="input-detail-bd">
                                             <p>Tiêu đề: </p>

@@ -9,6 +9,7 @@ import { DatePicker, Space, message } from 'antd';
 import PostMeta from '../BaidangManage/PostMeta/PostMeta';
 import PostCmt from '../BaidangManage/PostCmt/PostCmt';
 import moment from 'moment'; // Import moment here
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -23,8 +24,10 @@ function ThemMoi() {
     const [publishedAt, setPublishedAt] = useState(null);
     const [content, setContent] = useState('');
     const [categoryNames, setCategoryNames] = useState([]);
-    const [eventNames, setEventNames] = useState([]);
-
+    const [eventNames, setEventNames] = useState('');
+    const navigate = useNavigate();
+    const [posts, setPosts] = useState([]);
+    console.log(posts);
     const [categories, setCategories] = useState([]);
 
     const [messageApi, contextHolder] = message.useMessage();
@@ -114,6 +117,39 @@ function ThemMoi() {
         }
     };
 
+    useEffect(() => {
+        // Fetch data from the API
+        if (!localStorage.getItem('accessToken')) {
+            navigate('/');
+            return;
+        }
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
+        var myHeaders = new Headers();
+        myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow',
+        };
+
+        fetch('https://vietnamhistory.azurewebsites.net/api/posts', requestOptions)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error(response.status);
+            })
+            .then((result) => {
+                // Update the events state with the retrieved data
+                setPosts(result.data);
+            })
+            .catch((error) => console.log('error', error));
+    };
+
     return (
         <>
             <LayoutAdmin>
@@ -134,12 +170,19 @@ function ThemMoi() {
                                 {parentId !== null && (
                                     <div className="input-detail-tm">
                                         <p>Bài đăng trước: </p>
-                                        <input
-                                            type="text"
-                                            placeholder="parentId"
+                                        <select
+                                            className="selecte-options"
                                             value={parentId}
                                             onChange={(e) => setParentId(e.target.value)}
-                                        />
+                                            required
+                                        >
+                                            <option value="">Chọn bài đăng trước</option>
+                                            {posts.map((post) => (
+                                                <option key={post.postId} value={post.postId}>
+                                                    {post.metaTitle} - {post.postId}
+                                                </option>
+                                            ))}
+                                        </select>
                                     </div>
                                 )}
                                 {/* metaTitle */}
@@ -229,8 +272,8 @@ function ThemMoi() {
                                     <input
                                         type="text"
                                         placeholder="eventName"
-                                        value={eventNames.join(', ')}
-                                        onChange={(e) => setEventNames(e.target.value.split(', '))}
+                                        value={eventNames.split(',').join(', ')}
+                                        onChange={(e) => setEventNames(e.target.value)}
                                     />
                                 </div>
                             </label>
