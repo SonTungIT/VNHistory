@@ -3,6 +3,7 @@ import '../../Admin/Table.scss';
 import { AddIcon, DeleteIcon, EditIcon, VisibilityIcon } from '~/components/GlobalStyles/Layout/components/Icons';
 import EditMetaModal from './EditMetaModal/EditMetaModal';
 import { Link, useLocation } from 'react-router-dom';
+import AddImage from './../BaidangManage/AddImage/AddMetaImage';
 
 function TableMeta() {
     const [views, setViews] = useState([]);
@@ -10,6 +11,7 @@ function TableMeta() {
     const [editPostMeta, setEditPostMeta] = useState(false); // State to control the EditMetaModal visibility
 
     const location = useLocation();
+    console.log(location.state.views.map((ids) => ids.id));
 
     useEffect(() => {
         // Lấy dữ liệu views từ state của react-router
@@ -46,6 +48,16 @@ function TableMeta() {
         setSelectedMeta(selectedView);
         setEditPostMeta(true);
     };
+    const [selectedPost, setSelectedPost] = useState(null);
+    const [addImage, setAddImage] = useState(false);
+
+    const handleAddImg = (postId, id) => {
+        setSelectedPost(postId);
+        setSelectedMeta(id);
+        setAddImage(true);
+        console.log(postId);
+        console.log(id);
+    };
 
     return (
         <>
@@ -54,6 +66,7 @@ function TableMeta() {
                     <tr>
                         <th className="th-user">keys</th>
                         <th className="th-user">contents</th>
+                        <th className="th-user">Ảnh</th>
                         <th className="th-user"></th>
                     </tr>
                 </thead>
@@ -62,6 +75,14 @@ function TableMeta() {
                         <tr key={view.id}>
                             <td className="td-user">{view.keys}</td>
                             <td className="td-user">{view.contents}</td>
+                            <td className="td-user">
+                                <button className="btn-function" onClick={() => handleAddImg(view.postId, view.id)}>
+                                    <AddIcon />
+                                </button>
+                                {/* {post.images.map((image, index) => (
+                                    <img key={index} src={image.url} alt={`img-${index}`} />
+                                ))} */}
+                            </td>
                             <td className="td-user">
                                 <button className="btn-function" onClick={() => handleEdit(view.id)}>
                                     <EditIcon />
@@ -80,6 +101,7 @@ function TableMeta() {
                     closeModal={() => setEditPostMeta(false)}
                 />
             )}
+            {addImage && <AddImage closeModal={() => setAddImage(false)} post={selectedPost} id={selectedMeta} />}
         </>
     );
 }
