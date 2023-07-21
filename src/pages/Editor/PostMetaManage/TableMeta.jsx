@@ -11,7 +11,6 @@ function TableMeta() {
     const [editPostMeta, setEditPostMeta] = useState(false); // State to control the EditMetaModal visibility
 
     const location = useLocation();
-    console.log(location.state.views.map((ids) => ids.id));
 
     console.log(views);
 

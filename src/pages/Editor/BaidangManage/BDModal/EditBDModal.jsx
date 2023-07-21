@@ -209,6 +209,7 @@ function EditBDModal({ closeModal, post, posts }) {
                                                 type="text"
                                                 value={content}
                                                 onChange={(e) => setContent(e.target.value)}
+                                                required
                                             />
                                         </div>
                                     </label>

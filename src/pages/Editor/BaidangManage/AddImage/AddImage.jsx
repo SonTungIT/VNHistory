@@ -1,11 +1,27 @@
 import React, { useState } from 'react';
 import Button from '~/components/GlobalStyles/Layout/components/Button';
 import axios from 'axios';
+import { message } from 'antd';
+
 function AddImage({ setCreatedImageData, closeModal, post }) {
     // const [image, setImage] = useState();
     const [Name, setName] = useState();
     const [Type, setType] = useState();
     const [imageFile, setImageFile] = useState();
+    const [messageApi, contextHolder] = message.useMessage();
+    const success = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'Thêm mới thành công',
+        });
+    };
+
+    const showError = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'Somethings wrong !',
+        });
+    };
 
     const handleAddImage = (e) => {
         // const file = e.target.files[0]
@@ -37,9 +53,13 @@ function AddImage({ setCreatedImageData, closeModal, post }) {
             );
 
             if (localStorage.getItem('role') === 'Editor') {
-                console.log('Add Image:', response.data);
-                setCreatedImageData((prevData) => [...prevData, response.data]);
-                window.location.reload();
+                if (response.data.message === 'Image added to post successfully') {
+                    success();
+                    setCreatedImageData((prevData) => [...prevData, response.data]);
+                    window.location.reload();
+                } else {
+                    showError(); // Call showError here if the API response is not successful
+                }
             }
             // Update the created question data
         } catch (error) {
@@ -83,6 +103,7 @@ function AddImage({ setCreatedImageData, closeModal, post }) {
                     <div className="ant-divider" role="separator"></div>
                     <div className="footer">
                         <Button onClick={closeModal}>Close</Button>
+                        {contextHolder}
                         <Button rounded onClick={handleCreateQuestion}>
                             Thêm ảnh
                         </Button>

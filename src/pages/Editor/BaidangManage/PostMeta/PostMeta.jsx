@@ -74,8 +74,7 @@ function PostMeta({ closeModal }) {
                 if (result.message === 'PostMeta Created successfully') {
                     success();
                     closeModal(false);
-                    console.log('Updated views:', views); // Check the updated views here
-                    window.location.href = window.location.href;
+                    navigate('/BaidangMange');
                 } else {
                     showError(); // Call showError here if the API response is not successful
                 }

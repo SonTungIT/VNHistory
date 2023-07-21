@@ -10,6 +10,15 @@ import { DatePicker, Space, message } from 'antd';
 import PostMeta from '../BaidangManage/PostMeta/PostMeta';
 import PostCmt from '../BaidangManage/PostCmt/PostCmt';
 import moment from 'moment'; // Import moment here
+import { Select } from 'antd';
+
+const options = [];
+for (let i = 10; i < 36; i++) {
+    options.push({
+        value: i.toString(36) + i,
+        label: i.toString(36) + i,
+    });
+}
 
 const cx = classNames.bind(styles);
 
@@ -31,7 +40,9 @@ function ThemMoi() {
     const [posts, setPosts] = useState([]);
     const [events, setEvents] = useState([]);
 
-    console.log(events);
+    const handleChange = (value) => {
+        setCategoryNames(value);
+    };
 
     const [messageApi, contextHolder] = message.useMessage();
     const success = () => {
@@ -266,23 +277,19 @@ function ThemMoi() {
                                 {/* category */}
                                 <div className="input-detail-tm">
                                     <p>Thể loại: </p>
-                                    <select
-                                        className="selecte-options"
-                                        value={categoryNames}
-                                        onChange={(e) =>
-                                            setCategoryNames(
-                                                Array.from(e.target.selectedOptions, (option) => option.value),
-                                            )
-                                        }
-                                        required
+                                    <Select
+                                        mode="tags"
+                                        style={{ width: '100%' }}
+                                        placeholder="Chọn thể loại"
+                                        onChange={handleChange}
+                                        value={categoryNames} // Set the value to the selected categories
                                     >
-                                        <option value="">Chọn thể loại</option>
                                         {categories.map((category) => (
-                                            <option key={category.id} value={category.name}>
+                                            <Select.Option key={category.id} value={category.categoryName}>
                                                 {category.categoryName}
-                                            </option>
+                                            </Select.Option>
                                         ))}
-                                    </select>
+                                    </Select>
                                 </div>
                                 {/* eventNames */}
                                 <div className="input-detail-tm">
