@@ -60,7 +60,7 @@ function CreateAnswer({ setCreatedAnswerData }) {
       const response = await axios.post('https://vietnamhistory.azurewebsites.net/api/Anwsers/createAnswer', answerData, config);
       if (localStorage.getItem('role') === 'Editor') {
         console.log('Câu trả lời đã được tạo:', response.data);
-        setCreatedAnswerData(prevData => [...prevData, response.data]);
+        // setCreatedAnswerData(prevData => [...prevData, response.data]);
         success();
       }
     } catch (error) {

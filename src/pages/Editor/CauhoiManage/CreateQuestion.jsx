@@ -70,9 +70,9 @@ function CreateQuestion({ setCreatedQuestionData }) {
 
       if (localStorage.getItem('role') === 'Editor') {
         console.log('Created question:', response.data);
-        setCreatedQuestionData(prevData => [...prevData, response.data]);
+        // setCreatedQuestionData(prevData => [...prevData, response.data]);
+        success();
       }
-      success();
       // Update the created question data
     } catch (error) {
       console.error('Error creating question:', error);

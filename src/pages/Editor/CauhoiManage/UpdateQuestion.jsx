@@ -69,7 +69,7 @@ function UpdateQuestion({ question, handleQuestionUpdate, closeQuestion }) {
               onChange={handleDifficultyLevelChange}
             >
               <option value="Easy">Easy</option>
-              <option value="Medium">Normal</option>
+              <option value="Normal">Normal</option>
               <option value="Hard">Hard</option>
             </select>
           </div>
