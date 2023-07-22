@@ -100,6 +100,7 @@ function CreateQuestion({ setCreatedQuestionData }) {
         <div className={cx('DifficultyLevel')}>
           <label>Difficulty Level:</label>
           <select value={difficultyLevel} onChange={e => setDifficultyLevel(e.target.value)}>
+            <option>Level</option>
             <option value="Easy">Easy</option>
             <option value="Normal">Normal</option>
             <option value="Hard">Hard</option>
