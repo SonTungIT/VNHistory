@@ -277,19 +277,23 @@ function ThemMoi() {
                                 {/* category */}
                                 <div className="input-detail-tm">
                                     <p>Thể loại: </p>
-                                    <Select
-                                        mode="tags"
-                                        style={{ width: '100%' }}
-                                        placeholder="Chọn thể loại"
-                                        onChange={handleChange}
-                                        value={categoryNames} // Set the value to the selected categories
+                                    <select
+                                        className="selecte-options"
+                                        value={categoryNames}
+                                        onChange={(e) =>
+                                            setCategoryNames(
+                                                Array.from(e.target.selectedOptions, (option) => option.value),
+                                            )
+                                        }
+                                        required
                                     >
+                                        <option value="">Chọn thể loại</option>
                                         {categories.map((category) => (
-                                            <Select.Option key={category.id} value={category.categoryName}>
+                                            <option key={category.id} value={category.name}>
                                                 {category.categoryName}
-                                            </Select.Option>
+                                            </option>
                                         ))}
-                                    </Select>
+                                    </select>
                                 </div>
                                 {/* eventNames */}
                                 <div className="input-detail-tm">
